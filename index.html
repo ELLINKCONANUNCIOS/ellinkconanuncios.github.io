@@ -1,0 +1,99 @@
+<a href="vip.html">Zona VIP</a>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Catálogo de Juegos</title>
+
+<style>
+  /* ======= COLORES BASE ======= */
+  :root {
+    --fondo: #111;
+    --tarjeta: #1e1e1e;
+    --tarjeta-hover: #2a2a2a;
+    --texto: #fff;
+    --azul: #3498db;
+    --naranja: #e67e22;
+  }
+
+  /* ======= ESTILO GENERAL ======= */
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  /* ======= CATÁLOGO (3 POR FILA) ======= */
+  .catalogo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  /* ======= TARJETAS DE JUEGO ======= */
+  .juego-card {
+    background: var(--tarjeta);
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+  }
+
+  .juego-card:hover {
+    background: var(--tarjeta-hover);
+    transform: scale(1.03);
+  }
+
+  /* ======= IMAGEN PEQUEÑA ======= */
+  .juego-card img {
+    width: 100%;
+    height: 110px;   /* ← MÁS PEQUEÑA */
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  h3, p {
+    margin: 10px 0;
+  }
+</style>
+
+</head>
+<body>
+
+<h1>Catálogo de Juegos</h1>
+
+<div class="catalogo">
+
+  <!-- Daily Lives of my Countryside -->
+  <div class="juego-card" onclick="location.href='juegos/juego1.html'">
+    <img src="imagenes/Daily Lives of my Countryside/Daily Lives of my Countryside1.jpg" alt="Juego 1">
+    <h3>Daily Lives of my Countryside</h3>
+    <p>novela visual, simulación de vida </p>
+  </div>
+
+  <!-- JUEGO 2 -->
+  <div class="juego-card" onclick="location.href='juego2.html'">
+    <img src="imagenes/juego2.jpg" alt="Juego 2">
+    <h3>Juego 2</h3>
+    <p>Terror / Supervivencia</p>
+  </div>
+
+  <!-- JUEGO 3 -->
+  <div class="juego-card" onclick="location.href='juego3.html'">
+    <img src="imagenes/juego3.jpg" alt="Juego 3">
+    <h3>Juego 3</h3>
+    <p>Plataformas</p>
+  </div>
+
+</div>
+
+</body>
+</html>
