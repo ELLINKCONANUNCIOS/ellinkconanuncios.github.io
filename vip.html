@@ -117,45 +117,50 @@ p {
 <script>
 console.log("SCRIPT VIP CARGADO");
 
-// Detectar cookie VIP
-const esVIP = document.cookie.includes("vip=true");
-const estadoVIP = document.getElementById("estadoVIP");
+const backend = "https://backend-premium-production-29b1.up.railway.app";
 
-// Mostrar mensaje según estado VIP
-if (esVIP) {
-  estadoVIP.innerHTML = `
-    <div class="vip-ok">
-      ✔ Eres VIP — Acceso completo desbloqueado
-    </div>
-    <button id="btnRegaloVIP" class="btn btn-patreon">
-      🎁 Activar animación VIP
-    </button>
-  `;
-} else {
-  estadoVIP.innerHTML = `
-    <div class="vip-no">
-      ✖ No eres VIP — Inicia sesión para desbloquear
-    </div>
-  `;
-}
+// ⭐ 1. Verificar VIP con backend (no solo cookie)
+fetch(`${backend}/vip-check`, { credentials: "include" })
+  .then(res => res.json())
+  .then(data => {
+    const estadoVIP = document.getElementById("estadoVIP");
 
-// ⭐ OCULTAR BOTÓN DE PATREON SI YA ES VIP
-if (esVIP) {
-  const btnPatreon = document.getElementById("btnPatreon");
-  if (btnPatreon) btnPatreon.style.display = "none";
-}
+    if (!data.vip) {
+      estadoVIP.innerHTML = `
+        <div class="vip-no">
+          ✖ No eres VIP — Inicia sesión para desbloquear
+        </div>
+      `;
+      return; // No mostrar animación ni botones
+    }
 
-// ⭐ ACTIVAR ANIMACIÓN VIP
-if (esVIP) {
-  const canvas = document.getElementById("canvasGojo");
-  const btnRegalo = document.getElementById("btnRegaloVIP");
+    // ⭐ Si es VIP
+    estadoVIP.innerHTML = `
+      <div class="vip-ok">
+        ✔ Eres VIP — Acceso completo desbloqueado
+      </div>
+      <button id="btnRegaloVIP" class="btn btn-patreon">
+        🎁 Activar animación VIP
+      </button>
+    `;
 
-  btnRegalo.addEventListener("click", () => {
-    console.log("ANIMACIÓN VIP ACTIVADA");
-    canvas.style.display = "block";
-    iniciarGojoReal();   // ⭐ Aquí empieza tu animación real
+    // Ocultar botón Patreon
+    const btnPatreon = document.getElementById("btnPatreon");
+    if (btnPatreon) btnPatreon.style.display = "none";
+
+    // Activar animación
+    const canvas = document.getElementById("canvasGojo");
+    const btnRegalo = document.getElementById("btnRegaloVIP");
+
+    btnRegalo.addEventListener("click", () => {
+      console.log("ANIMACIÓN VIP ACTIVADA");
+      canvas.style.display = "block";
+      iniciarGojoReal(); // Aquí va tu animación completa
+    });
+  })
+  .catch(err => {
+    console.error("Error verificando VIP:", err);
   });
-}
 </script>
 
 <!-- ⭐ AQUÍ PEGAS TU ANIMACIÓN COMPLETA -->
