@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Zona VIP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+/* ===== ESTILO VIP ===== */
+body {
+  background: #0d0d0d;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.box {
+  background: #1a1a1a;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  max-width: 600px;
+  margin: auto;
+}
+
+p {
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.beneficios {
+  text-align: left;
+  max-width: 500px;
+  margin: 20px auto;
+  color: #ccc;
+}
+
+.beneficios li {
+  margin-bottom: 10px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  margin: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+}
+
+.btn-patreon { background: #e67e22; }
+.btn-patreon:hover { background: #d35400; }
+
+.btn-volver { background: #3498db; }
+.btn-volver:hover { background: #2980b9; }
+
+.vip-ok {
+  background: #2ecc71;
+  padding: 10px;
+  border-radius: 8px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.vip-no {
+  background: #e74c3c;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+</style>
+
+</head>
+<body>
+
+<!-- ⭐ CANVAS PARA TU ANIMACIÓN VIP -->
+<canvas id="canvasGojo" style="display:none;"></canvas>
+
+<audio id="gojoAudio">
+  <source src="sonidos/gojo.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ===== CONTENIDO VIP ===== -->
+<h1>Zona VIP</h1>
+
+<div class="box">
+  <p>Accede a descargas sin anuncios, enlaces directos y contenido exclusivo.</p>
+
+  <div id="estadoVIP"></div>
+
+  <h3>Beneficios VIP</h3>
+  <ul class="beneficios">
+    <li>✔ Descargas sin anuncios</li>
+    <li>✔ Enlaces directos premium</li>
+    <li>✔ Acceso anticipado a nuevos juegos</li>
+    <li>✔ Soporte prioritario</li>
+  </ul>
+
+  <!-- ⭐ BOTÓN DE PATREON (SE OCULTA SI YA ES VIP) -->
+  <a id="btnPatreon" href="http://localhost:3000/patreon-login" class="btn btn-patreon">
+  Iniciar sesión con Patreon
+</a>
+
+  <a href="index.html" class="btn btn-volver">← Volver al catálogo</a>
+</div>
+
+<script>
+console.log("SCRIPT VIP CARGADO");
+
+// Detectar cookie VIP
+const esVIP = document.cookie.includes("vip=true");
+const estadoVIP = document.getElementById("estadoVIP");
+
+// Mostrar mensaje según estado VIP
+if (esVIP) {
+  estadoVIP.innerHTML = `
+    <div class="vip-ok">
+      ✔ Eres VIP — Acceso completo desbloqueado
+    </div>
+    <button id="btnRegaloVIP" class="btn btn-patreon">
+      🎁 Activar animación VIP
+    </button>
+  `;
+} else {
+  estadoVIP.innerHTML = `
+    <div class="vip-no">
+      ✖ No eres VIP — Inicia sesión para desbloquear
+    </div>
+  `;
+}
+
+// ⭐ OCULTAR BOTÓN DE PATREON SI YA ES VIP
+if (esVIP) {
+  const btnPatreon = document.getElementById("btnPatreon");
+  if (btnPatreon) btnPatreon.style.display = "none";
+}
+
+// ⭐ ACTIVAR ANIMACIÓN VIP
+if (esVIP) {
+  const canvas = document.getElementById("canvasGojo");
+  const btnRegalo = document.getElementById("btnRegaloVIP");
+
+  btnRegalo.addEventListener("click", () => {
+    console.log("ANIMACIÓN VIP ACTIVADA");
+    canvas.style.display = "block";
+    iniciarGojoReal();   // ⭐ Aquí empieza tu animación real
+  });
+}
+</script>
+
+<!-- ⭐ AQUÍ PEGAS TU ANIMACIÓN COMPLETA -->
+<script>
+function iniciarGojoReal() {
+
+    const canvas = document.getElementById("canvasGojo");
+    const ctx = canvas.getContext("2d");
+
+const audio = document.getElementById("gojoAudio");
+audio.currentTime = 0;
+audio.volume = 0.7;
+audio.play().catch(() => {});
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    /* ============================================================
+       ⭐ FASES Y VARIABLES
+    ============================================================ */
+
+    let phase = "FLASH";
+    let timer = 0;
+
+    const FLASH_FRAMES = 180;
+    const SPACE_FRAMES = 650;
+    const BLINK_FRAMES = 20;
+    const MINI_FLASH_FRAMES = 30;
+    const HOLE_FRAMES = 900;
+    const WHITE_SPOT_FRAMES = 100;
+
+    /* ============================================================
+       ⭐ ESTRELLAS
+    ============================================================ */
+
+    const stars = [];
+    const STAR_COUNT = 900;
+
+    class Star {
+        constructor() { this.reset(); }
+
+        reset() {
+            this.x = (Math.random() - 0.5) * canvas.width * 3;
+            this.y = (Math.random() - 0.5) * canvas.height * 3;
+            this.speed = Math.random() * 12 + 10;
+            this.color = "rgba(255,255,255,0.9)";
+        }
+
+        update() {
+            const dx = canvas.width / 2 - this.x;
+            const dy = canvas.height / 2 - this.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+
+            this.x += (dx / dist) * this.speed;
+            this.y += (dy / dist) * this.speed;
+
+            if (dist < 20) this.reset();
+        }
+
+        draw() {
+            ctx.save();
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = 2;
+
+            const dx = canvas.width / 2 - this.x;
+            const dy = canvas.height / 2 - this.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(
+                this.x + (dx / dist) * 30,
+                this.y + (dy / dist) * 30
+            );
+            ctx.stroke();
+
+            ctx.restore();
+        }
+    }
+
+    for (let i = 0; i < STAR_COUNT; i++) stars.push(new Star());
+
+    /* ============================================================
+       ⭐ SPLATTER
+    ============================================================ */
+
+    let mainSplatter = [];
+    let topSplatter = [];
+    let bottomSplatter = [];
+
+    function precalcSplatter(startX, startY, endX, endY, steps, baseWidth, baseRadiusSize, isRound) {
+        let data = [];
+        for (let i = 0; i <= steps; i++) {
+            const t = i / steps;
+            const baseX = startX + (endX - startX) * t;
+            const baseY = startY + (endY - startY) * t;
+
+            const wave = Math.sin(t * Math.PI);
+            const maxSpread = isRound ? (baseWidth * 0.45) : (baseWidth * wave + baseWidth * 0.2);
+
+            const offsetX = (Math.random() - 0.5) * maxSpread;
+            const offsetY = (Math.random() - 0.5) * maxSpread;
+
+            const radius = isRound
+                ? (Math.random() * 8 + baseRadiusSize)
+                : (Math.random() * (baseRadiusSize * 0.8) + baseRadiusSize * 0.4 * wave);
+
+            const hasScatter = Math.random() > 0.72;
+            const scatterOffsetX = (Math.random() - 0.5) * (maxSpread * 2.5);
+            const scatterOffsetY = (Math.random() - 0.5) * (maxSpread * 2.5);
+            const scatterRadius = Math.random() * 5 + 1.5;
+
+            const biteChance = isRound ? 0.65 : 0.93;
+            const hasBite = Math.random() > biteChance;
+
+            const biteRadiusMultiplier = isRound ? 0.75 : 0.45;
+            const biteRadius = Math.random() * (baseRadiusSize * biteRadiusMultiplier) + (isRound ? 8 : 3);
+
+            const biteSpread = isRound ? baseRadiusSize * 0.9 : baseRadiusSize * 0.6;
+            const biteOffsetX = (Math.random() - 0.5) * biteSpread;
+            const biteOffsetY = (Math.random() - 0.5) * biteSpread;
+
+            data.push({
+                x: baseX + offsetX, y: baseY + offsetY, radius: radius,
+                hasScatter: hasScatter, sx: baseX + scatterOffsetX, sy: baseY + scatterOffsetY, sRadius: scatterRadius,
+                hasBite: hasBite, bx: baseX + biteOffsetX, by: baseY + biteOffsetY, bRadius: biteRadius
+            });
+        }
+        return data;
+    }
+
+    function prepareSplatter() {
+        mainSplatter = precalcSplatter(
+            -150, canvas.height + 150,
+            canvas.width + 150, -150,
+            500, 100, 28, false
+        );
+
+        topSplatter = precalcSplatter(
+            canvas.width * 0.22, canvas.height * 0.24,
+            canvas.width * 0.26, canvas.height * 0.20,
+            120, 25, 36, true
+        );
+
+        bottomSplatter = precalcSplatter(
+            canvas.width * 0.72, canvas.height * 0.80,
+            canvas.width * 0.76, canvas.height * 0.76,
+            120, 25, 36, true
+        );
+    }
+
+    prepareSplatter();
+
+    function drawSplatterNode(p) {
+        ctx.save();
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (p.hasScatter) {
+            ctx.beginPath();
+            ctx.arc(p.sx, p.sy, p.sRadius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        if (p.hasBite) {
+            ctx.fillStyle = "#000";
+            ctx.beginPath();
+            ctx.arc(p.bx, p.by, p.bRadius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        ctx.restore();
+    }
+
+    /* ============================================================
+       ⭐ TODAS TUS FASES
+    ============================================================ */
+
+    function phaseFlash() {
+        ctx.fillStyle = "#000003";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        stars.forEach(s => { s.update(); s.draw(); });
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        let radius = (timer / FLASH_FRAMES) * (Math.min(canvas.width, canvas.height) * 1.2);
+
+        ctx.save();
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
+    function phaseSpace() {
+
+        let grad = ctx.createRadialGradient(
+            canvas.width/2, canvas.height/2, 0,
+            canvas.width/2, canvas.height/2, canvas.width * 3
+        );
+        grad.addColorStop(0, "rgba(0, 0, 25, 0.95)");
+        grad.addColorStop(0.4, "rgba(0, 15, 45, 0.85)");
+        grad.addColorStop(1, "rgba(0, 0, 0, 1)");
+
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.save();
+        let centerGlow = ctx.createRadialGradient(
+            canvas.width/2, canvas.height/2, 0,
+            canvas.width/2, canvas.height/2, canvas.width * 0.4
+        );
+        centerGlow.addColorStop(0, "rgba(255,255,255,0.9)");
+        centerGlow.addColorStop(1, "transparent");
+
+        ctx.globalCompositeOperation = "lighter";
+        ctx.fillStyle = centerGlow;
+        ctx.beginPath();
+        ctx.arc(canvas.width/2, canvas.height/2, canvas.width * 0.4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        stars.forEach(s => { s.update(); s.draw(); });
+    }
+
+    function phaseBlink() {
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        let intensity = Math.sin((timer / BLINK_FRAMES) * Math.PI);
+
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+
+        let flash = ctx.createRadialGradient(
+            canvas.width/2, canvas.height/2, 0,
+            canvas.width/2, canvas.height/2, Math.min(canvas.width, canvas.height) * 0.9
+        );
+
+        flash.addColorStop(0, `rgba(255,255,255,${intensity})`);
+        flash.addColorStop(1, "transparent");
+
+        ctx.fillStyle = flash;
+        ctx.beginPath();
+        ctx.arc(canvas.width/2, canvas.height/2, Math.min(canvas.width, canvas.height) * 0.9, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    function phaseMiniFlash() {
+
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+
+        let intensity = Math.sin((timer / MINI_FLASH_FRAMES) * Math.PI);
+
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+
+        let miniFlash = ctx.createRadialGradient(
+            cx, cy, 0,
+            cx, cy, canvas.width * 0.25
+        );
+
+        miniFlash.addColorStop(0, `rgba(255,255,255,${intensity})`);
+        miniFlash.addColorStop(0.4, `rgba(255,255,255,${intensity * 0.6})`);
+        miniFlash.addColorStop(1, "transparent");
+
+        ctx.fillStyle = miniFlash;
+        ctx.beginPath();
+        ctx.arc(cx, cy, canvas.width * 0.25, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    function phaseHole() {
+
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+        const radius = Math.min(canvas.width, canvas.height) * 0.28;
+        const time = Date.now() * 0.001;
+
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+
+        let ring = ctx.createRadialGradient(
+            cx, cy, radius * 0.9,
+            cx, cy, radius * 1.5
+        );
+        ring.addColorStop(0, "rgba(255,255,255,0.95)");
+        ring.addColorStop(0.2, "rgba(255,230,180,0.85)");
+        ring.addColorStop(0.45, "rgba(255,200,120,0.55)");
+        ring.addColorStop(1, "transparent");
+
+        ctx.fillStyle = ring;
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius * 1.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        let haloTop = ctx.createRadialGradient(
+            cx, cy - radius * 0.55, radius * 0.2,
+            cx, cy - radius * 0.55, radius * 1.3
+        );
+        haloTop.addColorStop(0, "rgba(255,255,255,0.7)");
+        haloTop.addColorStop(1, "transparent");
+
+        ctx.fillStyle = haloTop;
+        ctx.beginPath();
+        ctx.arc(cx, cy - radius * 0.55, radius * 1.3, 0, Math.PI * 2);
+        ctx.fill();
+
+        let haloBottom = ctx.createRadialGradient(
+            cx, cy + radius * 0.55, radius * 0.2,
+            cx, cy + radius * 0.55, radius * 1.3
+        );
+        haloBottom.addColorStop(0, "rgba(255,255,255,0.7)");
+        haloBottom.addColorStop(1, "transparent");
+
+        ctx.fillStyle = haloBottom;
+        ctx.beginPath();
+        ctx.arc(cx, cy + radius * 0.55, radius * 1.3, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+
+        let revealSpeed = 14;
+
+        let delayMain = 240;
+        let delayTop = delayMain + 60;
+        let delayBottom = delayMain + 120;
+
+        let revealCount = Math.max(0, Math.min(mainSplatter.length, (timer - delayMain) * revealSpeed));
+        let revealCountTop = Math.max(0, Math.min(topSplatter.length, (timer - delayTop) * revealSpeed));
+        let revealCountBottom = Math.max(0, Math.min(bottomSplatter.length, (timer - delayBottom) * revealSpeed));
+
+        for (let i = 0; i < revealCount; i++) drawSplatterNode(mainSplatter[i]);
+        for (let i = 0; i < revealCountTop; i++) drawSplatterNode(topSplatter[i]);
+        for (let i = 0; i < revealCountBottom; i++) drawSplatterNode(bottomSplatter[i]);
+
+        ctx.restore();
+
+        ctx.save();
+        ctx.strokeStyle = "rgba(255,255,255,0.25)";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius * 1.35 + Math.sin(time * 2) * 3, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.save();
+        ctx.fillStyle = "#000";
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
+    function phaseWhiteSpot() {
+
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+        const radius = Math.min(canvas.width, canvas.height) * 0.28;
+
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+
+        let ring = ctx.createRadialGradient(
+            cx, cy, radius * 0.9,
+            cx, cy, radius * 1.5
+        );
+
+        ring.addColorStop(0, "rgba(255,255,255,0.95)");
+        ring.addColorStop(0.2, "rgba(255,230,180,0.85)");
+        ring.addColorStop(0.45, "rgba(255,200,120,0.55)");
+        ring.addColorStop(1, "transparent");
+
+        ctx.fillStyle = ring;
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius * 1.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+
+        let haloTop = ctx.createRadialGradient(
+            cx, cy - radius * 0.55, radius * 0.2,
+            cx, cy - radius * 0.55, radius * 1.3
+        );
+        haloTop.addColorStop(0, "rgba(255,255,255,0.7)");
+        haloTop.addColorStop(1, "transparent");
+
+        ctx.fillStyle = haloTop;
+        ctx.beginPath();
+        ctx.arc(cx, cy - radius * 0.55, radius * 1.3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+
+        let haloBottom = ctx.createRadialGradient(
+            cx, cy + radius * 0.55, radius * 0.2,
+            cx, cy + radius * 0.55, radius * 1.3
+        );
+        haloBottom.addColorStop(0, "rgba(255,255,255,0.7)");
+        haloBottom.addColorStop(1, "transparent");
+
+        ctx.fillStyle = haloBottom;
+        ctx.beginPath();
+        ctx.arc(cx, cy + radius * 0.55, radius * 1.3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.save();
+        ctx.fillStyle = "#000";
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
+/* ============================================================
+   ⭐ SISTEMA PRINCIPAL DE ANIMACIÓN ⭐
+   ============================================================ */
+
+function animate() {
+    timer++;
+
+    if (phase === "FLASH" && timer > FLASH_FRAMES) { phase = "SPACE"; timer = 0; }
+    else if (phase === "SPACE" && timer > SPACE_FRAMES) { phase = "BLINK"; timer = 0; }
+    else if (phase === "BLINK" && timer > BLINK_FRAMES) { phase = "MINI_FLASH"; timer = 0; }
+    else if (phase === "MINI_FLASH" && timer > MINI_FLASH_FRAMES) { phase = "HOLE"; timer = 0; }
+    else if (phase === "HOLE" && timer > HOLE_FRAMES) { phase = "WHITE_SPOT"; timer = 0; }
+    else if (phase === "WHITE_SPOT" && timer > WHITE_SPOT_FRAMES) { phase = "END"; }
+  
+    if (audio.currentTime >= audio.duration) {
+    phase = "END";
+}
+
+    // ⭐ CUANDO TERMINA LA ANIMACIÓN
+   if (phase === "END") {
+
+    // ⭐ Espera 1.5 segundos antes de ocultar la animación
+    setTimeout(() => {
+        canvas.style.display = "none";
+        audio.pause();
+    }, 1000);  // ← aquí decides cuánto dura extra
+
+    return;
+}
+
+
+    // ⭐ LLAMAR FASES
+    if (phase === "FLASH") phaseFlash();
+    else if (phase === "SPACE") phaseSpace();
+    else if (phase === "BLINK") phaseBlink();
+    else if (phase === "MINI_FLASH") phaseMiniFlash();
+    else if (phase === "HOLE") phaseHole();
+    else if (phase === "WHITE_SPOT") phaseWhiteSpot();
+
+    requestAnimationFrame(animate);
+}
+setTimeout(() => {
+    canvas.style.display = "block";   // ⭐ Muestra el canvas más tarde
+    animate();                        // ⭐ Inicia la animación más tarde
+}, 500); // ← 1200ms = 1.2 segundos de retraso
+
+}
+</script>
