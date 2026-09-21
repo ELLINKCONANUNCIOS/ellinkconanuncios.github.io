@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Daily Lives of My Countryside - Descargar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --fondo: #111;
+      --texto: #fff;
+      --azul: #3498db;
+      --naranja: #e67e22;
+      --verde: #2ecc71;
+      --tarjeta: #1e1e1e;
+      --tarjeta-hover: #2a2a2a;
+    }
+
+    body {
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h2 { margin-bottom: 15px; font-size: 28px; }
+
+    .juego-img {
+      width: 70%;
+      max-width: 300px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #333;
+    }
+
+    .descripcion-fija {
+      max-width: 600px;
+      margin: 0 auto 25px auto;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    .menu-contenedor { margin-bottom: 25px; }
+
+    .menu-btn {
+      background: var(--tarjeta);
+      color: #aaa;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-block;
+      font-weight: bold;
+      transition: 0.3s;
+      border: 1px solid #333;
+    }
+
+    .menu-btn:hover { background: var(--tarjeta-hover); color: #fff; transform: scale(1.05); }
+    .menu-btn.activo { background: var(--azul); color: white; border-color: var(--azul); }
+
+    .seccion-contenido {
+      max-width: 650px;
+      margin: 0 auto;
+      background: var(--tarjeta);
+      padding: 25px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      min-height: 150px;
+    }
+
+    .section { display: none; }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 10px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .btn-normal { background: var(--azul); }
+    .btn-normal:hover { background: #2980b9; }
+
+    .btn-pc { background: var(--verde); }
+    .btn-pc:hover { background: #27ae60; }
+
+    .btn-premium { background: var(--naranja); }
+    .btn-premium:hover { background: #d35400; }
+
+    /* ⭐ Galería vertical */
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    /* ⭐ Imágenes con zoom */
+    .galeria-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .galeria-grid img:hover {
+      transform: scale(1.02);
+    }
+
+    /* ⭐ Fondo oscuro del zoom */
+    #zoom-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    /* ⭐ Imagen ampliada */
+    #zoom-overlay img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+
+    .detalles-lista { text-align: left; padding-left: 20px; margin: 0; }
+    .detalles-lista li { margin-bottom: 10px; color: #ccc; }
+
+    .back-link { display: inline-block; margin-top: 25px; color: var(--azul); text-decoration: none; font-weight: bold; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <h2>Daily Lives of My Countryside</h2>
+
+  <!-- ⭐ Imagen principal corregida -->
+  <img src="../imagenes/Daily Lives of my Countryside/Daily Lives of my Countryside1.jpg" class="juego-img">
+
+  <p class="descripcion-fija">
+    Disfruta de la vida en el campo en este increíble juego de simulación y rol. 
+    Explora la granja, interactúa con divertidos personajes y gestiona tus actividades diarias.
+  </p>
+
+  <!-- Menú -->
+  <div class="menu-contenedor">
+    <div id="btn-android" class="menu-btn" onclick="cambiarSeccion('android')">Descargar Android</div>
+    <div id="btn-pc" class="menu-btn" onclick="cambiarSeccion('pc')">Descargar PC</div>
+    <div id="btn-galeria" class="menu-btn" onclick="cambiarSeccion('galeria')">Galería</div>
+    <div id="btn-detalles" class="menu-btn" onclick="cambiarSeccion('detalles')">Detalles</div>
+  </div>
+
+  <div class="seccion-contenido">
+
+    <!-- ANDROID -->
+    <div id="android" class="section">
+      <h3>Enlaces para Android</h3>
+      <p>La descarga normal contiene publicidad. La Premium es directa mediante Patreon.</p>
+
+      <a href="https://cuty.io/Y7RGa4qbFeNk" class="btn btn-normal" target="_blank">
+        Descargar normal (Anuncios)
+      </a>
+
+      <a class="btn btn-premium" onclick="premiumAndroid()">
+        Descargar sin anuncios (Premium)
+      </a>
+    </div>
+
+    <script>
+    function premiumAndroid() {
+      if (document.cookie.includes('vip=true')) {
+        window.location.href = 'https://pixeldrain.com/u/qZbiPgAQ';
+      } else {
+        window.location.href = '../vip.html';
+      }
+    }
+    </script>
+
+    <!-- PC -->
+    <div id="pc" class="section">
+      <h3>Enlaces para Windows PC</h3>
+      <p>Descarga la versión adaptada para computadora.</p>
+
+      <a href="https://cuty.io/krWvvHoeB" class="btn btn-pc" target="_blank">
+        Descargar para PC (Anuncios)
+      </a>
+
+      <a class="btn btn-premium" onclick="premiumPC()">
+        Descargar sin anuncios (Premium)
+      </a>
+    </div>
+
+    <script>
+    function premiumPC() {
+      if (document.cookie.includes('vip=true')) {
+        window.location.href = 'https://pixeldrain.com/u/gy6hJTxv';
+      } else {
+        window.location.href = '../vip.html';
+      }
+    }
+    </script>
+
+    <!-- GALERÍA -->
+    <div id="galeria" class="section">
+      <h3>Capturas de Pantalla</h3>
+      <div class="galeria-grid">
+        <img src="../imagenes/Daily Lives of my Countryside/Daily Lives of my Countryside1.jpg" onclick="zoomImagen(this.src)">
+        <img src="../imagenes/Daily Lives of my Countryside/Daily Lives of my Countryside2.jpg" onclick="zoomImagen(this.src)">
+        <img src="../imagenes/Daily Lives of my Countryside/Daily Lives of my Countryside3.jpg" onclick="zoomImagen(this.src)">
+        <img src="../imagenes/Daily Lives of my Countryside/Daily Lives of my Countryside4.jpg" onclick="zoomImagen(this.src)">
+        <img src="../imagenes/Daily Lives of my Countryside/Daily Lives of my Countryside5.jpg" onclick="zoomImagen(this.src)">
+      </div>
+    </div>
+
+    <!-- ⭐ Overlay para zoom -->
+    <div id="zoom-overlay" onclick="cerrarZoom()">
+      <img id="zoom-img">
+    </div>
+
+    <!-- DETALLES -->
+    <div id="detalles" class="section">
+      <h3>Ficha Técnica</h3>
+      <ul class="detalles-lista">
+        <li><strong>Versión:</strong> 0.3.5.3</li>
+        <li><strong>Plataforma:</strong> Android / PC</li>
+        <li><strong>Última actualización:</strong> 2026</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <br>
+  <!-- ⭐ Botón corregido -->
+  <a href="../index.html" class="back-link">← Volver al catálogo</a>
+
+  <script>
+    function cambiarSeccion(idSeccion) {
+      document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+      document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('activo'));
+      document.getElementById(idSeccion).style.display = 'block';
+      document.getElementById('btn-' + idSeccion).classList.add('activo');
+    }
+
+    window.onload = function() {
+      cambiarSeccion('android');
+    };
+
+    /* ⭐ ZOOM */
+    function zoomImagen(src) {
+      document.getElementById("zoom-img").src = src;
+      document.getElementById("zoom-overlay").style.display = "flex";
+    }
+
+    function cerrarZoom() {
+      document.getElementById("zoom-overlay").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
