@@ -1,27 +1,15 @@
-<a href="vip.html">Zona VIP</a>
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Catálogo de Juegos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-  /* ======= COLORES BASE ======= */
-  :root {
-    --fondo: #111;
-    --tarjeta: #1e1e1e;
-    --tarjeta-hover: #2a2a2a;
-    --texto: #fff;
-    --azul: #3498db;
-    --naranja: #e67e22;
-  }
-
-  /* ======= ESTILO GENERAL ======= */
   body {
-    background: var(--fondo);
-    color: var(--texto);
-    font-family: Arial, sans-serif;
-    margin: 0;
+    background: #111;
+    color: white;
+    font-family: Arial;
     padding: 20px;
   }
 
@@ -30,70 +18,202 @@
     margin-bottom: 30px;
   }
 
-  /* ======= CATÁLOGO (3 POR FILA) ======= */
+  /* ===== CATÁLOGO ===== */
   .catalogo {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
   }
 
-  /* ======= TARJETAS DE JUEGO ======= */
   .juego-card {
-    background: var(--tarjeta);
+    background: #1e1e1e;
     padding: 15px;
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s;
-    text-align: center;
   }
 
   .juego-card:hover {
-    background: var(--tarjeta-hover);
+    background: #2a2a2a;
     transform: scale(1.03);
   }
 
-  /* ======= IMAGEN PEQUEÑA ======= */
   .juego-card img {
     width: 100%;
-    height: 110px;   /* ← MÁS PEQUEÑA */
+    height: 140px;
     object-fit: cover;
     border-radius: 10px;
   }
 
-  h3, p {
-    margin: 10px 0;
+  /* ===== PAGINACIÓN ===== */
+  .paginacion {
+    margin-top: 35px;
+    text-align: center;
+    font-size: 18px;
   }
+
+  .paginacion span {
+    display: inline-block;
+    margin: 0 8px;
+    padding: 8px 12px;
+    background: #1e1e1e;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .paginacion span:hover {
+    background: #2a2a2a;
+  }
+
+  .activa {
+    background: #3498db;
+  }
+.btn-vip {
+  display: inline-block;
+  background: #e67e22;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(0, 150, 255, 0.4);
+  animation: vipPulse 2s infinite ease-in-out;
+}
+
+@keyframes vipPulse {
+  0% { box-shadow: 0 0 10px rgba(0,150,255,0.4); }
+  50% { box-shadow: 0 0 20px rgba(0,150,255,0.8); }
+  100% { box-shadow: 0 0 10px rgba(0,150,255,0.4); }
+}
+
+.btn-vip:hover {
+  background: #d35400;
+  transform: scale(1.05);
+}
+.input-busqueda {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 15px;
+  margin: 0 auto 25px auto;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #1e1e1e;
+  color: white;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.input-busqueda:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 10px #3498db;
+}
+
 </style>
 
 </head>
 <body>
 
+<a href="vip.html" class="btn-vip">Zona VIP</a>
+
+<input type="text" id="buscador" placeholder="Buscar juego..." oninput="buscarJuego()" class="input-busqueda">
+
 <h1>Catálogo de Juegos</h1>
 
-<div class="catalogo">
+<div id="catalogo" class="catalogo"></div>
+<div id="paginacion" class="paginacion"></div>
 
-  <!-- Daily Lives of my Countryside -->
-  <div class="juego-card" onclick="location.href='juegos/juego1.html'">
-    <img src="imagenes/DailyLives/Daily-Lives1.jpg" alt="Juego 1">
-    <h3>Daily Lives of my Countryside</h3>
-    <p>novela visual, simulación de vida </p>
-  </div>
+<script>
+const juegosPorPagina = 30;
+let juegos = [];
+let paginaActual = 1;
 
-  <!-- JUEGO 2 -->
-  <div class="juego-card" onclick="location.href='juego2.html'">
-    <img src="imagenes/juego2.jpg" alt="Juego 2">
-    <h3>Juego 2</h3>
-    <p>Terror / Supervivencia</p>
-  </div>
+async function cargarJuegos() {
+  try {
+    const res = await fetch("juegos.json");
+    juegos = await res.json();
+    mostrarPagina(1);
+  } catch (e) {
+    console.error("Error cargando juegos.json:", e);
+  }
+}
 
-  <!-- JUEGO 3 -->
-  <div class="juego-card" onclick="location.href='juego3.html'">
-    <img src="imagenes/juego3.jpg" alt="Juego 3">
-    <h3>Juego 3</h3>
-    <p>Plataformas</p>
-  </div>
+function mostrarPagina(num) {
+  paginaActual = num;
 
-</div>
+  const inicio = (num - 1) * juegosPorPagina;
+  const fin = inicio + juegosPorPagina;
+  const juegosPagina = juegos.slice(inicio, fin);
+
+  document.getElementById("catalogo").innerHTML = juegosPagina.map(j => `
+    <div class="juego-card" onclick="location.href='${j.link}'">
+      <img src="${j.imagen}">
+      <h3>${j.titulo}</h3>
+      <p>${j.version} • ${j.idioma} • ${j.plataformas}</p>
+    </div>
+  `).join("");
+
+  generarPaginacion();
+}
+
+function generarPaginacion() {
+  const totalPaginas = Math.ceil(juegos.length / juegosPorPagina);
+  let html = "";
+
+  // Página 1
+  html += `<span class="${paginaActual === 1 ? 'activa' : ''}" onclick="mostrarPagina(1)">1</span>`;
+
+  // Página 2 solo si existe
+  if (totalPaginas >= 2) {
+    html += `<span class="${paginaActual === 2 ? 'activa' : ''}" onclick="mostrarPagina(2)">2</span>`;
+  }
+
+  // Mostrar "..." solo si hay más de 3 páginas
+  if (totalPaginas > 3) {
+    html += `<span>...</span>`;
+  }
+
+  // Última página (solo si es mayor que 2)
+  if (totalPaginas > 2) {
+    html += `<span class="${paginaActual === totalPaginas ? 'activa' : ''}" onclick="mostrarPagina(${totalPaginas})">${totalPaginas}</span>`;
+  }
+
+  // Botón siguiente
+  if (paginaActual < totalPaginas) {
+    html += `<span onclick="mostrarPagina(${paginaActual + 1})">Siguiente →</span>`;
+  }
+
+  document.getElementById("paginacion").innerHTML = html;
+}
+function buscarJuego() {
+  const texto = document.getElementById("buscador").value.toLowerCase();
+
+  if (texto.trim() === "") {
+    mostrarPagina(1);
+    return;
+  }
+
+  const filtrados = juegos.filter(j =>
+    j.titulo.toLowerCase().includes(texto)
+  );
+
+  document.getElementById("catalogo").innerHTML = filtrados.map(j => `
+    <div class="juego-card" onclick="location.href='${j.link}'">
+      <img src="${j.imagen}">
+      <h3>${j.titulo}</h3>
+      <p>${j.version} • ${j.idioma} • ${j.plataformas}</p>
+    </div>
+  `).join("");
+
+  document.getElementById("paginacion").innerHTML = "";
+}
+
+cargarJuegos();
+</script>
 
 </body>
 </html>

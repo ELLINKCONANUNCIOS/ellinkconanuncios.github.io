@@ -1,0 +1,18 @@
+[
+  {
+    "titulo": "Daily Lives of my Countryside",
+    "version": "v0.3.5.3",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "imagen": "imagenes/Daily Lives of my Countryside/Daily Lives of my Countryside1.jpg",
+    "link": "juegos/dailylives.html"
+  },
+  {
+    "titulo": "Locked in Chastity",
+    "version": "v0.57",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "imagen": "imagenes/locked-in-chastity.jpg",
+    "link": "juegos/lockedinchastity.html"
+  }
+]
