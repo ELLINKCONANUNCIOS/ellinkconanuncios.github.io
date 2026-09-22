@@ -86,12 +86,11 @@ p {
 <!-- ⭐ CANVAS PARA TU ANIMACIÓN VIP -->
 <canvas id="canvasGojo" style="display:none;"></canvas>
 
-<!-- ⭐ AUDIO (corregido para que SIEMPRE suene) -->
+<!-- ⭐ AUDIO -->
 <audio id="gojoAudio" preload="auto">
   <source src="sonidos/gojo.mp3" type="audio/mpeg">
 </audio>
 
-<!-- ===== CONTENIDO VIP ===== -->
 <h1>Zona VIP</h1>
 
 <div class="box">
@@ -108,68 +107,54 @@ p {
   </ul>
 
   <!-- ⭐ BOTÓN DE PATREON -->
-  <a href="https://backend-premium-production-29b1.up.railway.app/login" class="btn-patreon">
-  Iniciar sesión con Patreon
-</a>
+  <a id="btnPatreon" href="https://backend-premium-production-29b1.up.railway.app/login" class="btn btn-patreon">
+    Iniciar sesión con Patreon
+  </a>
 
   <a href="index.html" class="btn btn-volver">← Volver al catálogo</a>
 </div>
 
 <script>
-console.log("SCRIPT VIP CARGADO");
+console.log("VIP HTML CARGADO");
 
-const backend = "https://backend-premium-production-29b1.up.railway.app";
+// ⭐ Detectar cookie VIP
+const esVIP = document.cookie.includes("vip=true");
+const estadoVIP = document.getElementById("estadoVIP");
+const btnPatreon = document.getElementById("btnPatreon");
 
-// ⭐ 1. Verificar VIP con backend
-fetch(`${backend}/vip-check`, { credentials: "include" })
-  .then(res => res.json())
-  .then(data => {
-    const estadoVIP = document.getElementById("estadoVIP");
+if (esVIP) {
+  estadoVIP.innerHTML = `
+    <div class="vip-ok">
+      ✔ Eres VIP — Acceso completo desbloqueado
+    </div>
+    <button id="btnRegaloVIP" class="btn btn-patreon">
+      🎁 Activar animación VIP
+    </button>
+  `;
 
-    if (!data.vip) {
-      estadoVIP.innerHTML = `
-        <div class="vip-no">
-          ✖ No eres VIP — Inicia sesión para desbloquear
-        </div>
-      `;
-      return;
-    }
+  btnPatreon.style.display = "none";
 
-    // ⭐ Si es VIP
-    estadoVIP.innerHTML = `
-      <div class="vip-ok">
-        ✔ Eres VIP — Acceso completo desbloqueado
-      </div>
-      <button id="btnRegaloVIP" class="btn btn-patreon">
-        🎁 Activar animación VIP
-      </button>
-    `;
+  const canvas = document.getElementById("canvasGojo");
+  const btnRegalo = document.getElementById("btnRegaloVIP");
+  const audio = document.getElementById("gojoAudio");
 
-    // Ocultar botón Patreon
-    const btnPatreon = document.getElementById("btnPatreon");
-    if (btnPatreon) btnPatreon.style.display = "none";
+  btnRegalo.addEventListener("click", () => {
+    audio.muted = false;
+    audio.volume = 1.0;
+    audio.currentTime = 0;
+    audio.play().catch(err => console.log("Autoplay bloqueado:", err));
 
-    // ⭐ Activar animación
-    const canvas = document.getElementById("canvasGojo");
-    const btnRegalo = document.getElementById("btnRegaloVIP");
-    const audio = document.getElementById("gojoAudio");
-
-    btnRegalo.addEventListener("click", () => {
-      console.log("ANIMACIÓN VIP ACTIVADA");
-
-      // ⭐ CORRECCIÓN DEL AUDIO (esto hace que SIEMPRE suene)
-      audio.muted = false;
-      audio.volume = 1.0;
-      audio.currentTime = 0;
-      audio.play().catch(err => console.log("Autoplay bloqueado:", err));
-
-      canvas.style.display = "block";
-      iniciarGojoReal(); // ⭐ Aquí va tu animación real
-    });
-  })
-  .catch(err => {
-    console.error("Error verificando VIP:", err);
+    canvas.style.display = "block";
+    iniciarGojoReal();
   });
+
+} else {
+  estadoVIP.innerHTML = `
+    <div class="vip-no">
+      ✖ No eres VIP — Inicia sesión para desbloquear
+    </div>
+  `;
+}
 </script>
 
 <!-- ⭐ AQUÍ PEGAS TU ANIMACIÓN COMPLETA -->
