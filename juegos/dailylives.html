@@ -92,14 +92,12 @@
     .btn-premium { background: var(--naranja); }
     .btn-premium:hover { background: #d35400; }
 
-    /* ⭐ Galería vertical */
     .galeria-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 20px;
     }
 
-    /* ⭐ Imágenes con zoom */
     .galeria-grid img {
       width: 100%;
       height: auto;
@@ -112,7 +110,6 @@
       transform: scale(1.02);
     }
 
-    /* ⭐ Fondo oscuro del zoom */
     #zoom-overlay {
       position: fixed;
       top: 0;
@@ -126,7 +123,6 @@
       z-index: 9999;
     }
 
-    /* ⭐ Imagen ampliada */
     #zoom-overlay img {
       max-width: 90%;
       max-height: 90%;
@@ -138,21 +134,47 @@
 
     .back-link { display: inline-block; margin-top: 25px; color: var(--azul); text-decoration: none; font-weight: bold; }
     .back-link:hover { text-decoration: underline; }
+
+.btn-vip {
+  display: inline-block;
+  background: #e67e22;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(0, 150, 255, 0.4);
+  animation: vipPulse 2s infinite ease-in-out;
+}
+
+@keyframes vipPulse {
+  0% { box-shadow: 0 0 10px rgba(0,150,255,0.4); }
+  50% { box-shadow: 0 0 20px rgba(0,150,255,0.8); }
+  100% { box-shadow: 0 0 10px rgba(0,150,255,0.4); }
+}
+
+.btn-vip:hover {
+  background: #d35400;
+  transform: scale(1.05);
+}
+
   </style>
 </head>
 <body>
 
+<a href="../vip.html" class="btn-vip">Zona VIP</a>
+
   <h2>Daily Lives of My Countryside</h2>
 
-  <!-- ⭐ Imagen principal corregida -->
-  <img src="../imagenes/DailyLives/Daily-Livese1.jpg" class="juego-img">
+  <img src="../imagenes/DailyLives/Daily-Lives1.jpg" class="juego-img">
 
   <p class="descripcion-fija">
     Disfruta de la vida en el campo en este increíble juego de simulación y rol. 
     Explora la granja, interactúa con divertidos personajes y gestiona tus actividades diarias.
   </p>
 
-  <!-- Menú -->
   <div class="menu-contenedor">
     <div id="btn-android" class="menu-btn" onclick="cambiarSeccion('android')">Descargar Android</div>
     <div id="btn-pc" class="menu-btn" onclick="cambiarSeccion('pc')">Descargar PC</div>
@@ -162,7 +184,6 @@
 
   <div class="seccion-contenido">
 
-    <!-- ANDROID -->
     <div id="android" class="section">
       <h3>Enlaces para Android</h3>
       <p>La descarga normal contiene publicidad. La Premium es directa mediante Patreon.</p>
@@ -186,7 +207,6 @@
     }
     </script>
 
-    <!-- PC -->
     <div id="pc" class="section">
       <h3>Enlaces para Windows PC</h3>
       <p>Descarga la versión adaptada para computadora.</p>
@@ -210,7 +230,6 @@
     }
     </script>
 
-    <!-- GALERÍA -->
     <div id="galeria" class="section">
       <h3>Capturas de Pantalla</h3>
       <div class="galeria-grid">
@@ -222,12 +241,10 @@
       </div>
     </div>
 
-    <!-- ⭐ Overlay para zoom -->
     <div id="zoom-overlay" onclick="cerrarZoom()">
       <img id="zoom-img">
     </div>
 
-    <!-- DETALLES -->
     <div id="detalles" class="section">
       <h3>Ficha Técnica</h3>
       <ul class="detalles-lista">
@@ -240,7 +257,6 @@
   </div>
 
   <br>
-  <!-- ⭐ Botón corregido -->
   <a href="../index.html" class="back-link">← Volver al catálogo</a>
 
   <script>
@@ -255,7 +271,6 @@
       cambiarSeccion('android');
     };
 
-    /* ⭐ ZOOM */
     function zoomImagen(src) {
       document.getElementById("zoom-img").src = src;
       document.getElementById("zoom-overlay").style.display = "flex";
