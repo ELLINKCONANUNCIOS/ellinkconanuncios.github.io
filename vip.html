@@ -117,44 +117,61 @@ p {
 <script>
 console.log("VIP HTML CARGADO");
 
-// ⭐ Detectar cookie VIP
-const esVIP = document.cookie.includes("vip=true");
+const backend = "https://backend-premium-production-29b1.up.railway.app";
 const estadoVIP = document.getElementById("estadoVIP");
 const btnPatreon = document.getElementById("btnPatreon");
 
-if (esVIP) {
-  estadoVIP.innerHTML = `
-    <div class="vip-ok">
-      ✔ Eres VIP — Acceso completo desbloqueado
-    </div>
-    <button id="btnRegaloVIP" class="btn btn-patreon">
-      🎁 Activar animación VIP
-    </button>
-  `;
+// ⭐ Verificar VIP desde el backend (NO desde document.cookie)
+async function verificarVIP() {
+  try {
+    const res = await fetch(backend + "/vip-check", {
+      method: "GET",
+      credentials: "include" // ⭐ Necesario para leer cookie VIP cross-site
+    });
 
-  btnPatreon.style.display = "none";
+    const data = await res.json();
 
-  const canvas = document.getElementById("canvasGojo");
-  const btnRegalo = document.getElementById("btnRegaloVIP");
-  const audio = document.getElementById("gojoAudio");
+    if (data.vip) {
+      estadoVIP.innerHTML = `
+        <div class="vip-ok">
+          ✔ Eres VIP — Acceso completo desbloqueado
+        </div>
+        <button id="btnRegaloVIP" class="btn btn-patreon">
+          🎁 Activar animación VIP
+        </button>
+      `;
 
-  btnRegalo.addEventListener("click", () => {
-    audio.muted = false;
-    audio.volume = 1.0;
-    audio.currentTime = 0;
-    audio.play().catch(err => console.log("Autoplay bloqueado:", err));
+      btnPatreon.style.display = "none";
 
-    canvas.style.display = "block";
-    iniciarGojoReal();
-  });
+      const canvas = document.getElementById("canvasGojo");
+      const btnRegalo = document.getElementById("btnRegaloVIP");
+      const audio = document.getElementById("gojoAudio");
 
-} else {
-  estadoVIP.innerHTML = `
-    <div class="vip-no">
-      ✖ No eres VIP — Inicia sesión para desbloquear
-    </div>
-  `;
+      btnRegalo.addEventListener("click", () => {
+        audio.muted = false;
+        audio.volume = 1.0;
+        audio.currentTime = 0;
+        audio.play().catch(err => console.log("Autoplay bloqueado:", err));
+
+        canvas.style.display = "block";
+        iniciarGojoReal();
+      });
+
+    } else {
+      estadoVIP.innerHTML = `
+        <div class="vip-no">
+          ✖ No eres VIP — Inicia sesión para desbloquear
+        </div>
+      `;
+    }
+
+  } catch (err) {
+    console.error("Error verificando VIP:", err);
+  }
 }
+
+// ⭐ Ejecutar verificación al cargar la página
+verificarVIP();
 </script>
 
 <!-- ⭐ AQUÍ PEGAS TU ANIMACIÓN COMPLETA -->
