@@ -83,14 +83,6 @@ p {
 </head>
 <body>
 
-<!-- ⭐ CANVAS PARA TU ANIMACIÓN VIP -->
-<canvas id="canvasGojo" style="display:none;"></canvas>
-
-<!-- ⭐ AUDIO -->
-<audio id="gojoAudio" preload="auto">
-  <source src="sonidos/gojo.mp3" type="audio/mpeg">
-</audio>
-
 <h1>Zona VIP</h1>
 
 <div class="box">
@@ -121,12 +113,12 @@ const backend = "https://backend-premium-production-29b1.up.railway.app";
 const estadoVIP = document.getElementById("estadoVIP");
 const btnPatreon = document.getElementById("btnPatreon");
 
-// ⭐ Verificar VIP desde el backend (NO desde document.cookie)
+// ⭐ Verificar VIP desde el backend
 async function verificarVIP() {
   try {
     const res = await fetch(backend + "/vip-check", {
       method: "GET",
-      credentials: "include" // ⭐ Necesario para leer cookie VIP cross-site
+      credentials: "include"
     });
 
     const data = await res.json();
@@ -136,26 +128,9 @@ async function verificarVIP() {
         <div class="vip-ok">
           ✔ Eres VIP — Acceso completo desbloqueado
         </div>
-        <button id="btnRegaloVIP" class="btn btn-patreon">
-          🎁 Activar animación VIP
-        </button>
       `;
 
       btnPatreon.style.display = "none";
-
-      const canvas = document.getElementById("canvasGojo");
-      const btnRegalo = document.getElementById("btnRegaloVIP");
-      const audio = document.getElementById("gojoAudio");
-
-      btnRegalo.addEventListener("click", () => {
-        audio.muted = false;
-        audio.volume = 1.0;
-        audio.currentTime = 0;
-        audio.play().catch(err => console.log("Autoplay bloqueado:", err));
-
-        canvas.style.display = "block";
-        iniciarGojoReal();
-      });
 
     } else {
       estadoVIP.innerHTML = `
