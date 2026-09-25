@@ -78,10 +78,33 @@ p {
   font-weight: bold;
   margin-bottom: 20px;
 }
+
+/* ⭐ Botón de animación */
+#btnAnimacionVIP {
+  display: none;
+  background: #9b59b6;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+}
+#btnAnimacionVIP:hover {
+  background: #8e44ad;
+}
 </style>
 
 </head>
 <body>
+
+<!-- ⭐ CANVAS PARA TU ANIMACIÓN VIP -->
+<canvas id="canvasGojo" style="display:none;"></canvas>
+
+<!-- ⭐ AUDIO -->
+<audio id="gojoAudio" preload="auto">
+  <source src="sonidos/gojo.mp3" type="audio/mpeg">
+</audio>
 
 <h1>Zona VIP</h1>
 
@@ -89,6 +112,9 @@ p {
   <p>Accede a descargas sin anuncios, enlaces directos y contenido exclusivo.</p>
 
   <div id="estadoVIP"></div>
+
+  <!-- ⭐ Botón para activar animación -->
+  <button id="btnAnimacionVIP">🎁 Activar animación VIP</button>
 
   <h3>Beneficios VIP</h3>
   <ul class="beneficios">
@@ -112,8 +138,11 @@ console.log("VIP HTML CARGADO");
 const backend = "https://backend-premium-production-29b1.up.railway.app";
 const estadoVIP = document.getElementById("estadoVIP");
 const btnPatreon = document.getElementById("btnPatreon");
+const btnAnimacion = document.getElementById("btnAnimacionVIP");
+const canvas = document.getElementById("canvasGojo");
+const audio = document.getElementById("gojoAudio");
 
-// ⭐ Verificar VIP desde el backend
+// ⭐ Verificar VIP desde el backend (con cookies cross-site)
 async function verificarVIP() {
   try {
     const res = await fetch(backend + "/vip-check", {
@@ -131,6 +160,18 @@ async function verificarVIP() {
       `;
 
       btnPatreon.style.display = "none";
+      btnAnimacion.style.display = "inline-block";
+
+      // ⭐ Activar animación VIP
+      btnAnimacion.addEventListener("click", () => {
+        audio.muted = false;
+        audio.volume = 1.0;
+        audio.currentTime = 0;
+        audio.play().catch(err => console.log("Autoplay bloqueado:", err));
+
+        canvas.style.display = "block";
+        iniciarGojoReal(); // ⭐ Tu animación
+      });
 
     } else {
       estadoVIP.innerHTML = `
@@ -148,6 +189,7 @@ async function verificarVIP() {
 // ⭐ Ejecutar verificación al cargar la página
 verificarVIP();
 </script>
+
 
 <!-- ⭐ AQUÍ PEGAS TU ANIMACIÓN COMPLETA -->
 <script>
