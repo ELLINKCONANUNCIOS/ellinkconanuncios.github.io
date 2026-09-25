@@ -89,7 +89,7 @@
     .btn-pc { background: var(--verde); }
     .btn-pc:hover { background: #27ae60; }
 
-    .btn-premium { background: var(--naranja); }
+    .btn-premium { background: var(--naranja); cursor: pointer; }
     .btn-premium:hover { background: #d35400; }
 
     .galeria-grid {
@@ -184,6 +184,7 @@
 
   <div class="seccion-contenido">
 
+    <!-- ⭐ ANDROID -->
     <div id="android" class="section">
       <h3>Enlaces para Android</h3>
       <p>La descarga normal contiene publicidad. La Premium es directa mediante Patreon.</p>
@@ -192,21 +193,12 @@
         Descargar normal (Anuncios)
       </a>
 
-      async function premiumAndroid() {
-  const res = await fetch("https://backend-premium-production-29b1.up.railway.app/vip-check", {
-    credentials: "include"
-  });
+      <a class="btn btn-premium" onclick="premiumAndroid()">
+        Descargar sin anuncios (Premium)
+      </a>
+    </div>
 
-  const data = await res.json();
-
-  if (data.vip) {
-    window.location.href = "https://pixeldrain.com/u/qZbiPgAQ"; // PREMIUM REAL
-  } else {
-    window.location.href = "../vip.html"; // NO VIP → redirigir
-  }
-}
-    </script>
-
+    <!-- ⭐ PC -->
     <div id="pc" class="section">
       <h3>Enlaces para Windows PC</h3>
       <p>Descarga la versión adaptada para computadora.</p>
@@ -215,21 +207,12 @@
         Descargar para PC (Anuncios)
       </a>
 
-     async function premiumPC() {
-  const res = await fetch("https://backend-premium-production-29b1.up.railway.app/vip-check", {
-    credentials: "include"
-  });
+      <a class="btn btn-premium" onclick="premiumPC()">
+        Descargar sin anuncios (Premium)
+      </a>
+    </div>
 
-  const data = await res.json();
-
-  if (data.vip) {
-    window.location.href = "https://pixeldrain.com/u/gy6hJTxv"; // PREMIUM REAL
-  } else {
-    window.location.href = "../vip.html"; // NO VIP → redirigir
-  }
-}
-
-
+    <!-- ⭐ GALERÍA -->
     <div id="galeria" class="section">
       <h3>Capturas de Pantalla</h3>
       <div class="galeria-grid">
@@ -245,6 +228,7 @@
       <img id="zoom-img">
     </div>
 
+    <!-- ⭐ DETALLES -->
     <div id="detalles" class="section">
       <h3>Ficha Técnica</h3>
       <ul class="detalles-lista">
@@ -260,6 +244,8 @@
   <a href="../index.html" class="back-link">← Volver al catálogo</a>
 
   <script>
+    const backend = "https://backend-premium-production-29b1.up.railway.app";
+
     function cambiarSeccion(idSeccion) {
       document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
       document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('activo'));
@@ -278,6 +264,30 @@
 
     function cerrarZoom() {
       document.getElementById("zoom-overlay").style.display = "none";
+    }
+
+    // ⭐ PREMIUM ANDROID
+    async function premiumAndroid() {
+      const res = await fetch(backend + "/vip-check", { credentials: "include" });
+      const data = await res.json();
+
+      if (data.vip) {
+        window.location.href = "https://pixeldrain.com/u/qZbiPgAQ";
+      } else {
+        window.location.href = "../vip.html";
+      }
+    }
+
+    // ⭐ PREMIUM PC
+    async function premiumPC() {
+      const res = await fetch(backend + "/vip-check", { credentials: "include" });
+      const data = await res.json();
+
+      if (data.vip) {
+        window.location.href = "https://pixeldrain.com/u/gy6hJTxv";
+      } else {
+        window.location.href = "../vip.html";
+      }
     }
   </script>
 
