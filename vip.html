@@ -58,16 +58,6 @@
       font-weight: bold;
     }
 
-    /* ANIMACIÓN GOJO */
-    #gojoCanvas {
-      width: 100%;
-      max-width: 600px;
-      height: 300px;
-      background: black;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-
     .beneficios {
       text-align: left;
       margin-top: 20px;
@@ -89,6 +79,16 @@
     .beneficios li {
       padding: 6px 0;
       font-size: 16px;
+    }
+
+    /* CANVAS para tu animación Gojo */
+    #gojoCanvas {
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+      background: transparent; /* SIN MANCHA NEGRA */
+      border-radius: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -121,24 +121,23 @@
      href="index.html"
      class="btn btn-catalogo"
      style="display:none;">
-     Volver al catálogo
+     ← Volver al catálogo
   </a>
 
   <!-- Beneficios VIP -->
   <div id="beneficiosVIP" class="beneficios" style="display:none;">
     <h3>Beneficios VIP</h3>
     <ul>
-      <li>✔ Descargas premium sin publicidad</li>
+      <li>✔ Descargas sin anuncios</li>
+      <li>✔ Enlaces directos premium</li>
       <li>✔ Acceso anticipado a nuevos juegos</li>
-      <li>✔ Contenido exclusivo solo para miembros</li>
-      <li>✔ Animación especial al iniciar sesión</li>
       <li>✔ Soporte prioritario</li>
     </ul>
   </div>
 
 </div>
 
-<!-- CANVAS GOJO -->
+<!-- CANVAS donde tú pegarás tu animación Gojo -->
 <canvas id="gojoCanvas"></canvas>
 
 <script>
