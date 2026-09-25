@@ -104,44 +104,47 @@
 <script>
 const backend = "https://backend-premium-production-29b1.up.railway.app";
 
-// ⭐ Verificar VIP
-fetch(backend + "/vip-check", { credentials: "include" })
-  .then(r => r.json())
-  .then(data => {
-    const estadoVIP = document.getElementById("estadoVIP");
-    const btnPatreon = document.getElementById("btnPatreon");
-    const btnLogoutVIP = document.getElementById("btnLogoutVIP");
-
-    if (data.vip) {
-      estadoVIP.innerHTML = `
-        <div class="vip-ok">
-          ✔ Eres VIP — Acceso completo desbloqueado
-        </div>
-      `;
-
-      btnPatreon.style.display = "none";
-      btnLogoutVIP.style.display = "inline-block"; // ⭐ Mostrar botón cerrar sesión
-
-    } else {
-      estadoVIP.innerHTML = `
-        <div class="vip-no">
-          ✖ No eres VIP — Inicia sesión para desbloquear
-        </div>
-      `;
-    }
-  });
-
-// ⭐ Mostrar mensaje si viene desde callback sin membresía
+// ⭐ Detectar si viene desde callback sin membresía
 const params = new URLSearchParams(window.location.search);
+
 if (params.has("no_membresia")) {
   document.getElementById("estadoVIP").innerHTML = `
     <div class="vip-no">
       ✖ No tienes una membresía activa — Debes suscribirte para acceder al contenido VIP
     </div>
   `;
+  // ⭐ NO ejecutar /vip-check para evitar que el mensaje desaparezca
+  document.getElementById("btnPatreon").style.display = "inline-block";
+  // ⭐ NO mostrar botón cerrar sesión
+  document.getElementById("btnLogoutVIP").style.display = "none";
+} else {
+
+  // ⭐ Verificar VIP normalmente
+  fetch(backend + "/vip-check", { credentials: "include" })
+    .then(r => r.json())
+    .then(data => {
+      const estadoVIP = document.getElementById("estadoVIP");
+      const btnPatreon = document.getElementById("btnPatreon");
+      const btnLogoutVIP = document.getElementById("btnLogoutVIP");
+
+      if (data.vip) {
+        estadoVIP.innerHTML = `
+          <div class="vip-ok">
+            ✔ Eres VIP — Acceso completo desbloqueado
+          </div>
+        `;
+        btnPatreon.style.display = "none";
+        btnLogoutVIP.style.display = "inline-block";
+      } else {
+        estadoVIP.innerHTML = `
+          <div class="vip-no">
+            ✖ No eres VIP — Inicia sesión para desbloquear
+          </div>
+        `;
+      }
+    });
 }
 </script>
-
 
 <!-- ⭐ AQUÍ PEGAS TU ANIMACIÓN COMPLETA -->
 <script>
