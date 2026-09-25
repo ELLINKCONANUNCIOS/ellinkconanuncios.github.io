@@ -20,7 +20,7 @@
       background: #1e1e1e;
       padding: 25px;
       border-radius: 12px;
-      max-width: 600px;
+      max-width: 650px;
       margin: 0 auto;
       border: 1px solid #333;
     }
@@ -36,14 +36,11 @@
       color: white;
     }
 
-    .btn-patreon {
-      background: #e67e22;
-    }
+    .btn-patreon { background: #e67e22; }
+    .btn-patreon:hover { background: #d35400; transform: scale(1.05); }
 
-    .btn-patreon:hover {
-      background: #d35400;
-      transform: scale(1.05);
-    }
+    .btn-catalogo { background: #3498db; }
+    .btn-catalogo:hover { background: #2980b9; transform: scale(1.05); }
 
     .vip-ok {
       background: #2ecc71;
@@ -69,6 +66,29 @@
       background: black;
       border-radius: 10px;
       margin-top: 20px;
+    }
+
+    .beneficios {
+      text-align: left;
+      margin-top: 20px;
+      padding: 15px;
+      background: #222;
+      border-radius: 10px;
+    }
+
+    .beneficios h3 {
+      margin-bottom: 10px;
+      color: #f1c40f;
+    }
+
+    .beneficios ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .beneficios li {
+      padding: 6px 0;
+      font-size: 16px;
     }
   </style>
 </head>
@@ -96,6 +116,26 @@
      Cerrar sesión VIP
   </a>
 
+  <!-- Botón Volver al catálogo -->
+  <a id="btnCatalogo"
+     href="index.html"
+     class="btn btn-catalogo"
+     style="display:none;">
+     Volver al catálogo
+  </a>
+
+  <!-- Beneficios VIP -->
+  <div id="beneficiosVIP" class="beneficios" style="display:none;">
+    <h3>Beneficios VIP</h3>
+    <ul>
+      <li>✔ Descargas premium sin publicidad</li>
+      <li>✔ Acceso anticipado a nuevos juegos</li>
+      <li>✔ Contenido exclusivo solo para miembros</li>
+      <li>✔ Animación especial al iniciar sesión</li>
+      <li>✔ Soporte prioritario</li>
+    </ul>
+  </div>
+
 </div>
 
 <!-- CANVAS GOJO -->
@@ -113,10 +153,9 @@ if (params.has("no_membresia")) {
       ✖ No tienes una membresía activa — Debes suscribirte para acceder al contenido VIP
     </div>
   `;
-  // ⭐ NO ejecutar /vip-check para evitar que el mensaje desaparezca
   document.getElementById("btnPatreon").style.display = "inline-block";
-  // ⭐ NO mostrar botón cerrar sesión
   document.getElementById("btnLogoutVIP").style.display = "none";
+  document.getElementById("btnCatalogo").style.display = "inline-block";
 } else {
 
   // ⭐ Verificar VIP normalmente
@@ -126,6 +165,8 @@ if (params.has("no_membresia")) {
       const estadoVIP = document.getElementById("estadoVIP");
       const btnPatreon = document.getElementById("btnPatreon");
       const btnLogoutVIP = document.getElementById("btnLogoutVIP");
+      const btnCatalogo = document.getElementById("btnCatalogo");
+      const beneficiosVIP = document.getElementById("beneficiosVIP");
 
       if (data.vip) {
         estadoVIP.innerHTML = `
@@ -135,12 +176,15 @@ if (params.has("no_membresia")) {
         `;
         btnPatreon.style.display = "none";
         btnLogoutVIP.style.display = "inline-block";
+        btnCatalogo.style.display = "inline-block";
+        beneficiosVIP.style.display = "block";
       } else {
         estadoVIP.innerHTML = `
           <div class="vip-no">
             ✖ No eres VIP — Inicia sesión para desbloquear
           </div>
         `;
+        btnCatalogo.style.display = "inline-block";
       }
     });
 }
