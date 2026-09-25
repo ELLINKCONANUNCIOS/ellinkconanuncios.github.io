@@ -1,162 +1,116 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Zona VIP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Zona VIP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-/* ===== ESTILO VIP ===== */
-body {
-  background: #0d0d0d;
-  color: white;
-  font-family: Arial;
-  text-align: center;
-  padding: 20px;
-}
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
 
-h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
+    h2 { font-size: 32px; margin-bottom: 10px; }
 
-.box {
-  background: #1a1a1a;
-  padding: 25px;
-  border-radius: 12px;
-  border: 1px solid #333;
-  max-width: 600px;
-  margin: auto;
-}
+    .box {
+      background: #1e1e1e;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+      border: 1px solid #333;
+    }
 
-p {
-  color: #ccc;
-  line-height: 1.6;
-}
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 10px;
+      transition: 0.3s;
+      color: white;
+    }
 
-.beneficios {
-  text-align: left;
-  max-width: 500px;
-  margin: 20px auto;
-  color: #ccc;
-}
+    .btn-patreon {
+      background: #e67e22;
+    }
 
-.beneficios li {
-  margin-bottom: 10px;
-}
+    .btn-patreon:hover {
+      background: #d35400;
+      transform: scale(1.05);
+    }
 
-.btn {
-  display: inline-block;
-  padding: 12px 20px;
-  margin: 10px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  color: white;
-}
+    .vip-ok {
+      background: #2ecc71;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
 
-.btn-patreon { background: #e67e22; }
-.btn-patreon:hover { background: #d35400; }
+    .vip-no {
+      background: #c0392b;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
 
-.btn-volver { background: #3498db; }
-.btn-volver:hover { background: #2980b9; }
-
-.vip-ok {
-  background: #2ecc71;
-  padding: 10px;
-  border-radius: 8px;
-  color: black;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.vip-no {
-  background: #e74c3c;
-  padding: 10px;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-/* ⭐ Botón de animación */
-#btnAnimacionVIP {
-  display: none;
-  background: #9b59b6;
-  padding: 12px 20px;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 15px;
-}
-#btnAnimacionVIP:hover {
-  background: #8e44ad;
-}
-</style>
-
+    /* ANIMACIÓN GOJO */
+    #gojoCanvas {
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+      background: black;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- ⭐ CANVAS PARA TU ANIMACIÓN VIP -->
-<canvas id="canvasGojo" style="display:none;"></canvas>
-
-<!-- ⭐ AUDIO -->
-<audio id="gojoAudio" preload="auto">
-  <source src="sonidos/gojo.mp3" type="audio/mpeg">
-</audio>
-
-<h1>Zona VIP</h1>
+<h2>Zona VIP</h2>
 
 <div class="box">
-  <p>Accede a descargas sin anuncios, enlaces directos y contenido exclusivo.</p>
 
+  <!-- Estado VIP -->
   <div id="estadoVIP"></div>
 
-  <!-- ⭐ Botón para activar animación -->
-  <button id="btnAnimacionVIP">🎁 Activar animación VIP</button>
-
-  <h3>Beneficios VIP</h3>
-  <ul class="beneficios">
-    <li>✔ Descargas sin anuncios</li>
-    <li>✔ Enlaces directos premium</li>
-    <li>✔ Acceso anticipado a nuevos juegos</li>
-    <li>✔ Soporte prioritario</li>
-  </ul>
-
-  <!-- ⭐ BOTÓN DE PATREON -->
-  <a id="btnPatreon" href="https://backend-premium-production-29b1.up.railway.app/login" class="btn btn-patreon">
-    Iniciar sesión con Patreon
+  <!-- Botón Patreon -->
+  <a id="btnPatreon"
+     href="https://backend-premium-production-29b1.up.railway.app/login"
+     class="btn btn-patreon">
+     Iniciar sesión con Patreon
   </a>
 
-  <a href="https://backend-premium-production-29b1.up.railway.app/logout-vip"
-   class="btn btn-patreon"
-   style="background:#c0392b;">
-  Cerrar sesión VIP
-</a>
+  <!-- Botón Cerrar Sesión VIP (oculto por defecto) -->
+  <a id="btnLogoutVIP"
+     href="https://backend-premium-production-29b1.up.railway.app/logout-vip"
+     class="btn btn-patreon"
+     style="background:#c0392b; display:none;">
+     Cerrar sesión VIP
+  </a>
 
-  <a href="index.html" class="btn btn-volver">← Volver al catálogo</a>
 </div>
 
+<!-- CANVAS GOJO -->
+<canvas id="gojoCanvas"></canvas>
+
 <script>
-console.log("VIP HTML CARGADO");
-
 const backend = "https://backend-premium-production-29b1.up.railway.app";
-const estadoVIP = document.getElementById("estadoVIP");
-const btnPatreon = document.getElementById("btnPatreon");
-const btnAnimacion = document.getElementById("btnAnimacionVIP");
-const canvas = document.getElementById("canvasGojo");
-const audio = document.getElementById("gojoAudio");
 
-// ⭐ Verificar VIP desde el backend (con cookies cross-site)
-async function verificarVIP() {
-  try {
-    const res = await fetch(backend + "/vip-check", {
-      method: "GET",
-      credentials: "include"
-    });
-
-    const data = await res.json();
+// ⭐ Verificar VIP
+fetch(backend + "/vip-check", { credentials: "include" })
+  .then(r => r.json())
+  .then(data => {
+    const estadoVIP = document.getElementById("estadoVIP");
+    const btnPatreon = document.getElementById("btnPatreon");
+    const btnLogoutVIP = document.getElementById("btnLogoutVIP");
 
     if (data.vip) {
       estadoVIP.innerHTML = `
@@ -166,18 +120,7 @@ async function verificarVIP() {
       `;
 
       btnPatreon.style.display = "none";
-      btnAnimacion.style.display = "inline-block";
-
-      // ⭐ Activar animación VIP
-      btnAnimacion.addEventListener("click", () => {
-        audio.muted = false;
-        audio.volume = 1.0;
-        audio.currentTime = 0;
-        audio.play().catch(err => console.log("Autoplay bloqueado:", err));
-
-        canvas.style.display = "block";
-        iniciarGojoReal(); // ⭐ Tu animación
-      });
+      btnLogoutVIP.style.display = "inline-block"; // ⭐ Mostrar botón cerrar sesión
 
     } else {
       estadoVIP.innerHTML = `
@@ -186,14 +129,17 @@ async function verificarVIP() {
         </div>
       `;
     }
+  });
 
-  } catch (err) {
-    console.error("Error verificando VIP:", err);
-  }
+// ⭐ Mostrar mensaje si viene desde callback sin membresía
+const params = new URLSearchParams(window.location.search);
+if (params.has("no_membresia")) {
+  document.getElementById("estadoVIP").innerHTML = `
+    <div class="vip-no">
+      ✖ No tienes una membresía activa — Debes suscribirte para acceder al contenido VIP
+    </div>
+  `;
 }
-
-// ⭐ Ejecutar verificación al cargar la página
-verificarVIP();
 </script>
 
 
