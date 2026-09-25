@@ -192,19 +192,19 @@
         Descargar normal (Anuncios)
       </a>
 
-      <a class="btn btn-premium" onclick="premiumAndroid()">
-        Descargar sin anuncios (Premium)
-      </a>
-    </div>
+      async function premiumAndroid() {
+  const res = await fetch("https://backend-premium-production-29b1.up.railway.app/vip-check", {
+    credentials: "include"
+  });
 
-    <script>
-    function premiumAndroid() {
-      if (document.cookie.includes('vip=true')) {
-        window.location.href = 'https://pixeldrain.com/u/qZbiPgAQ';
-      } else {
-        window.location.href = '../vip.html';
-      }
-    }
+  const data = await res.json();
+
+  if (data.vip) {
+    window.location.href = "https://pixeldrain.com/u/qZbiPgAQ"; // PREMIUM REAL
+  } else {
+    window.location.href = "../vip.html"; // NO VIP → redirigir
+  }
+}
     </script>
 
     <div id="pc" class="section">
@@ -215,20 +215,20 @@
         Descargar para PC (Anuncios)
       </a>
 
-      <a class="btn btn-premium" onclick="premiumPC()">
-        Descargar sin anuncios (Premium)
-      </a>
-    </div>
+     async function premiumPC() {
+  const res = await fetch("https://backend-premium-production-29b1.up.railway.app/vip-check", {
+    credentials: "include"
+  });
 
-    <script>
-    function premiumPC() {
-      if (document.cookie.includes('vip=true')) {
-        window.location.href = 'https://pixeldrain.com/u/gy6hJTxv';
-      } else {
-        window.location.href = '../vip.html';
-      }
-    }
-    </script>
+  const data = await res.json();
+
+  if (data.vip) {
+    window.location.href = "https://pixeldrain.com/u/gy6hJTxv"; // PREMIUM REAL
+  } else {
+    window.location.href = "../vip.html"; // NO VIP → redirigir
+  }
+}
+
 
     <div id="galeria" class="section">
       <h3>Capturas de Pantalla</h3>
