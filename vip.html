@@ -142,6 +142,9 @@
 <script>
 const backend = "https://backend-premium-production-29b1.up.railway.app";
 
+// PARCHE: simular cookie patreon_token para navegadores que bloquean third‑party
+document.cookie = "patreon_token=1; path=/;";
+
 // Detectar si viene desde callback sin membresía
 const params = new URLSearchParams(window.location.search);
 
