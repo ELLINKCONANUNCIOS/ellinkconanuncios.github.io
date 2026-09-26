@@ -165,20 +165,25 @@ if (params.has("no_membresia")) {
       const btnLogoutVIP = document.getElementById("btnLogoutVIP");
       const canvas = document.getElementById("gojoCanvas");
 
-      if (data.vip) {
-        estadoVIP.innerHTML = `
-          <div class="vip-ok">
-            ✔ Eres VIP — Acceso completo desbloqueado
-          </div>
-        `;
-        btnPatreon.style.display = "none";
-        btnLogoutVIP.style.display = "inline-block";
+      // Si NO es VIP
+      if (!data.vip) {
 
-        // Mostrar animación Gojo
-        canvas.style.display = "block";
-        iniciarGojoReal();
+        // Detectar si NO hay token de Patreon
+        const hasToken = document.cookie.includes("patreon_token");
 
-      } else {
+        if (!hasToken) {
+          estadoVIP.innerHTML = `
+            <div class="vip-no">
+              ⚠ Tienes una membresía VIP (incluyendo regaladas), pero debes iniciar sesión con Patreon para activarla.
+            </div>
+          `;
+          btnPatreon.style.display = "inline-block";
+          btnLogoutVIP.style.display = "none";
+          canvas.style.display = "none";
+          return;
+        }
+
+        // Si hay token pero Patreon dice NO VIP
         estadoVIP.innerHTML = `
           <div class="vip-no">
             ✖ No eres VIP — Inicia sesión para desbloquear
@@ -187,7 +192,21 @@ if (params.has("no_membresia")) {
         btnPatreon.style.display = "inline-block";
         btnLogoutVIP.style.display = "none";
         canvas.style.display = "none";
+        return;
       }
+
+      // Si SÍ es VIP
+      estadoVIP.innerHTML = `
+        <div class="vip-ok">
+          ✔ Eres VIP — Acceso completo desbloqueado
+        </div>
+      `;
+      btnPatreon.style.display = "none";
+      btnLogoutVIP.style.display = "inline-block";
+
+      // Mostrar animación Gojo
+      canvas.style.display = "block";
+      iniciarGojoReal();
     });
 }
 </script>
