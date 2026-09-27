@@ -29,20 +29,8 @@ const code = params.get("code");
 if (!code) {
     document.body.innerHTML = "<h3>Error: falta el código de Patreon.</h3>";
 } else {
-
-    // Enviar el code al backend
-    fetch(`${backend}/callback?code=${code}`, {
-        method: "GET",
-        credentials: "include"
-    })
-    .then(() => {
-        // Redirigir a VIP.html
-        window.location.href = "vip.html";
-    })
-    .catch(err => {
-        document.body.innerHTML = "<h3>Error activando VIP.</h3>";
-        console.error(err);
-    });
+    // Redirigir directamente al backend (sin fetch)
+    window.location.href = `${backend}/callback?code=${code}`;
 }
 </script>
 
