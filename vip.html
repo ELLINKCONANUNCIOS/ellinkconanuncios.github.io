@@ -140,61 +140,151 @@
 <canvas id="gojoCanvas"></canvas>
 
 <script>
-const backend = "https://backend-premium-production-29b1.up.railway.app";
+const backend =
+  "https://backend-premium-production-29b1.up.railway.app";
 
-// Detectar si viene desde callback sin membresía
-const params = new URLSearchParams(window.location.search);
+const params =
+  new URLSearchParams(window.location.search);
 
-if (params.has("no_membresia")) {
-  document.getElementById("estadoVIP").innerHTML = `
+const estadoVIP =
+  document.getElementById("estadoVIP");
+
+const btnPatreon =
+  document.getElementById("btnPatreon");
+
+const btnLogoutVIP =
+  document.getElementById("btnLogoutVIP");
+
+const canvas =
+  document.getElementById("gojoCanvas");
+
+
+// =========================
+// ERROR DE LOGIN
+// =========================
+
+if (params.has("login_error")) {
+
+  estadoVIP.innerHTML = `
     <div class="vip-no">
-      ✖ No tienes una membresía activa — Debes suscribirte para acceder al contenido VIP
+      ✖ No se pudo iniciar sesión con Patreon.
+      Inténtalo nuevamente.
     </div>
   `;
-  document.getElementById("btnPatreon").style.display = "inline-block";
-  document.getElementById("btnLogoutVIP").style.display = "none";
-  document.getElementById("gojoCanvas").style.display = "none";
-} else {
 
-  // Verificar VIP normalmente
-  fetch(backend + "/vip-check", { credentials: "include" })
-    .then(r => r.json())
-    .then(data => {
-      const estadoVIP = document.getElementById("estadoVIP");
-      const btnPatreon = document.getElementById("btnPatreon");
-      const btnLogoutVIP = document.getElementById("btnLogoutVIP");
-      const canvas = document.getElementById("gojoCanvas");
+  btnPatreon.style.display = "inline-block";
+  btnLogoutVIP.style.display = "none";
+  canvas.style.display = "none";
 
-      // Si NO es VIP
-      if (!data.vip) {
+}
 
-        estadoVIP.innerHTML = `
-          <div class="vip-no">
-            ✖ No eres VIP — Inicia sesión para desbloquear
-          </div>
-        `;
-        btnPatreon.style.display = "inline-block";
-        btnLogoutVIP.style.display = "none";
-        canvas.style.display = "none";
-        return;
-      }
 
-      // Si SÍ es VIP
+// =========================
+// NO TIENE MEMBRESÍA
+// =========================
+
+else if (params.has("no_membresia")) {
+
+  estadoVIP.innerHTML = `
+    <div class="vip-no">
+      ✖ No tienes una membresía activa en Patreon.
+      Debes suscribirte para acceder al contenido VIP.
+    </div>
+  `;
+
+  btnPatreon.style.display = "inline-block";
+  btnLogoutVIP.style.display = "none";
+  canvas.style.display = "none";
+
+}
+
+
+// =========================
+// COMPROBAR VIP
+// =========================
+
+else {
+
+  fetch(
+    backend + "/vip-check",
+    {
+      credentials: "include"
+    }
+  )
+
+  .then(response => {
+
+    if (!response.ok) {
+      throw new Error("Error del servidor");
+    }
+
+    return response.json();
+  })
+
+  .then(data => {
+
+    // =========================
+    // NO VIP
+    // =========================
+
+    if (!data.vip) {
+
       estadoVIP.innerHTML = `
-        <div class="vip-ok">
-          ✔ Eres VIP — Acceso completo desbloqueado
+        <div class="vip-no">
+          ✖ No eres VIP — Inicia sesión con Patreon
+          para desbloquear el contenido.
         </div>
       `;
-      btnPatreon.style.display = "none";
-      btnLogoutVIP.style.display = "inline-block";
 
-      // Mostrar animación Gojo
-      canvas.style.display = "block";
-      iniciarGojoReal();
-    });
+      btnPatreon.style.display = "inline-block";
+      btnLogoutVIP.style.display = "none";
+      canvas.style.display = "none";
+
+      return;
+    }
+
+
+    // =========================
+    // SÍ VIP
+    // =========================
+
+    estadoVIP.innerHTML = `
+      <div class="vip-ok">
+        ✔ Eres VIP — Acceso completo desbloqueado
+      </div>
+    `;
+
+    btnPatreon.style.display = "none";
+    btnLogoutVIP.style.display = "inline-block";
+
+    canvas.style.display = "block";
+
+    iniciarGojoReal();
+
+  })
+
+  .catch(error => {
+
+    console.error(
+      "Error comprobando VIP:",
+      error
+    );
+
+    estadoVIP.innerHTML = `
+      <div class="vip-no">
+        ✖ No se pudo comprobar tu membresía.
+        Inténtalo nuevamente.
+      </div>
+    `;
+
+    btnPatreon.style.display = "inline-block";
+    btnLogoutVIP.style.display = "none";
+    canvas.style.display = "none";
+
+  });
+
 }
 </script>
-
 
 <!-- ⭐ AQUÍ PEGAS TU ANIMACIÓN COMPLETA -->
 <script>
