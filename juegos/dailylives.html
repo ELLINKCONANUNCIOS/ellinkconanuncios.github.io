@@ -243,53 +243,144 @@
   <br>
   <a href="../index.html" class="back-link">← Volver al catálogo</a>
 
-  <script>
-    const backend = "https://backend-premium-production-29b1.up.railway.app";
+ <script>
 
-    function cambiarSeccion(idSeccion) {
-      document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
-      document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('activo'));
-      document.getElementById(idSeccion).style.display = 'block';
-      document.getElementById('btn-' + idSeccion).classList.add('activo');
-    }
+  const backend =
+    "https://backend-premium-production-cef8.up.railway.app";
 
-    window.onload = function() {
-      cambiarSeccion('android');
-    };
 
-    function zoomImagen(src) {
-      document.getElementById("zoom-img").src = src;
-      document.getElementById("zoom-overlay").style.display = "flex";
-    }
+  function cambiarSeccion(idSeccion) {
 
-    function cerrarZoom() {
-      document.getElementById("zoom-overlay").style.display = "none";
-    }
+    document.querySelectorAll('.section')
+      .forEach(sec => sec.style.display = 'none');
 
-    // ⭐ PREMIUM ANDROID
-    async function premiumAndroid() {
-      const res = await fetch(backend + "/vip-check", { credentials: "include" });
-      const data = await res.json();
+    document.querySelectorAll('.menu-btn')
+      .forEach(btn => btn.classList.remove('activo'));
 
-      if (data.vip) {
-        window.location.href = "https://pixeldrain.com/u/qZbiPgAQ";
-      } else {
-        window.location.href = "../vip.html";
+    document.getElementById(idSeccion).style.display = 'block';
+
+    document
+      .getElementById('btn-' + idSeccion)
+      .classList.add('activo');
+  }
+
+
+  window.onload = function() {
+    cambiarSeccion('android');
+  };
+
+
+  function zoomImagen(src) {
+
+    document.getElementById("zoom-img").src = src;
+
+    document.getElementById("zoom-overlay")
+      .style.display = "flex";
+  }
+
+
+  function cerrarZoom() {
+
+    document.getElementById("zoom-overlay")
+      .style.display = "none";
+  }
+
+
+  // =========================
+  // COMPROBAR VIP
+  // =========================
+
+  async function comprobarVIP() {
+
+    const res = await fetch(
+      backend + "/vip-check",
+      {
+        credentials: "include"
       }
+    );
+
+    if (!res.ok) {
+      throw new Error("No se pudo comprobar el estado VIP");
     }
 
-    // ⭐ PREMIUM PC
-    async function premiumPC() {
-      const res = await fetch(backend + "/vip-check", { credentials: "include" });
-      const data = await res.json();
+    const data = await res.json();
 
-      if (data.vip) {
-        window.location.href = "https://pixeldrain.com/u/gy6hJTxv";
+    return data.vip === true;
+  }
+
+
+  // =========================
+  // PREMIUM ANDROID
+  // =========================
+
+  async function premiumAndroid() {
+
+    try {
+
+      const vip = await comprobarVIP();
+
+      if (vip) {
+
+        window.location.href =
+          "https://pixeldrain.com/u/qZbiPgAQ";
+
       } else {
-        window.location.href = "../vip.html";
+
+        window.location.href =
+          "../vip.html";
+
       }
+
+    } catch (error) {
+
+      console.error(
+        "Error comprobando VIP:",
+        error
+      );
+
+      alert(
+        "No se pudo comprobar tu membresía VIP. Inténtalo nuevamente."
+      );
     }
-  </script>
+  }
+
+
+  // =========================
+  // PREMIUM PC
+  // =========================
+
+  async function premiumPC() {
+
+    try {
+
+      const vip = await comprobarVIP();
+
+      if (vip) {
+
+        window.location.href =
+          "https://pixeldrain.com/u/gy6hJTxv";
+
+      } else {
+
+        window.location.href =
+          "../vip.html";
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Error comprobando VIP:",
+        error
+      );
+
+      alert(
+        "No se pudo comprobar tu membresía VIP. Inténtalo nuevamente."
+      );
+    }
+  }
+
+</script>
 
 </body>
 </html>
