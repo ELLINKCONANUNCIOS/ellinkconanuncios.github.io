@@ -4,6 +4,7 @@
     "version": "v0.3.5.3",
     "idioma": "Español",
     "plataformas": "Android/Windows",
+    "categoria": "2D",
     "imagen": "imagenes/DailyLives/Daily-Lives1.jpg",
     "link": "juegos/dailylives.html"
   },
@@ -12,6 +13,7 @@
     "version": "v3.1a",
     "idioma": "Español",
     "plataformas": "Android/Windows",
+    "categoria": "3D",
     "imagen": "imagenes/KonoSubaTHA/KonoSubaTHA1.jpg",
     "link": "juegos/KonoSubaTHA.html"
   },
@@ -20,6 +22,7 @@
     "version": "v0.2.42",
     "idioma": "Español",
     "plataformas": "Android/Windows",
+    "categoria": "3D",
     "imagen": "imagenes/TheLewdestHouse/TheLewdestHouse1.jpg",
     "link": "juegos/TheLewdestHouse.html"
   }
