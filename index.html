@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+
   body {
     background: #111;
     color: white;
@@ -15,10 +17,103 @@
 
   h1 {
     text-align: center;
+    margin-bottom: 25px;
+  }
+
+  /* ===== BOTÓN VIP ===== */
+
+  .btn-vip {
+    display: inline-block;
+    background: #e67e22;
+    padding: 10px 18px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: 0.3s;
+    box-shadow: 0 0 10px rgba(0, 150, 255, 0.4);
+    animation: vipPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes vipPulse {
+    0% {
+      box-shadow: 0 0 10px rgba(0,150,255,0.4);
+    }
+
+    50% {
+      box-shadow: 0 0 20px rgba(0,150,255,0.8);
+    }
+
+    100% {
+      box-shadow: 0 0 10px rgba(0,150,255,0.4);
+    }
+  }
+
+  .btn-vip:hover {
+    background: #d35400;
+    transform: scale(1.05);
+  }
+
+
+  /* ===== BUSCADOR ===== */
+
+  .input-busqueda {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 15px;
+    margin: 0 auto 20px auto;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #1e1e1e;
+    color: white;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  .input-busqueda:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 10px #3498db;
+  }
+
+
+  /* ===== CATEGORÍAS ===== */
+
+  .categorias {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
     margin-bottom: 30px;
   }
 
+  .categoria-btn {
+    background: #1e1e1e;
+    color: white;
+    border: 1px solid #333;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+  }
+
+  .categoria-btn:hover {
+    background: #2a2a2a;
+    transform: translateY(-2px);
+  }
+
+  .categoria-btn.activa {
+    background: #3498db;
+    border-color: #3498db;
+  }
+
+
   /* ===== CATÁLOGO ===== */
+
   .catalogo {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -45,7 +140,31 @@
     border-radius: 10px;
   }
 
+  .juego-card h3 {
+    margin-bottom: 8px;
+  }
+
+  .juego-card p {
+    color: #bbb;
+  }
+
+
+  /* ===== ETIQUETA DE CATEGORÍA ===== */
+
+  .categoria {
+    display: inline-block;
+    background: #3498db;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 9px;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+
+
   /* ===== PAGINACIÓN ===== */
+
   .paginacion {
     margin-top: 35px;
     text-align: center;
@@ -66,154 +185,345 @@
     background: #2a2a2a;
   }
 
-  .activa {
+  .paginacion .activa {
     background: #3498db;
   }
-.btn-vip {
-  display: inline-block;
-  background: #e67e22;
-  padding: 10px 18px;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  margin-bottom: 20px;
-  transition: 0.3s;
-  box-shadow: 0 0 10px rgba(0, 150, 255, 0.4);
-  animation: vipPulse 2s infinite ease-in-out;
-}
-
-@keyframes vipPulse {
-  0% { box-shadow: 0 0 10px rgba(0,150,255,0.4); }
-  50% { box-shadow: 0 0 20px rgba(0,150,255,0.8); }
-  100% { box-shadow: 0 0 10px rgba(0,150,255,0.4); }
-}
-
-.btn-vip:hover {
-  background: #d35400;
-  transform: scale(1.05);
-}
-.input-busqueda {
-  width: 100%;
-  max-width: 400px;
-  padding: 12px 15px;
-  margin: 0 auto 25px auto;
-  display: block;
-  border-radius: 8px;
-  border: 1px solid #333;
-  background: #1e1e1e;
-  color: white;
-  font-size: 16px;
-  transition: 0.3s;
-}
-
-.input-busqueda:focus {
-  outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 10px #3498db;
-}
 
 </style>
 
 </head>
+
 <body>
 
 <a href="vip.html" class="btn-vip">Zona VIP</a>
 
-<input type="text" id="buscador" placeholder="Buscar juego..." oninput="buscarJuego()" class="input-busqueda">
+<input
+  type="text"
+  id="buscador"
+  placeholder="Buscar juego..."
+  oninput="actualizarCatalogo()"
+  class="input-busqueda"
+>
 
 <h1>Catálogo de Juegos</h1>
 
+
+<!-- ===== CATEGORÍAS ===== -->
+
+<div class="categorias">
+
+  <button
+    class="categoria-btn activa"
+    onclick="seleccionarCategoria('Todos', this)">
+    Todos
+  </button>
+
+  <button
+    class="categoria-btn"
+    onclick="seleccionarCategoria('3D', this)">
+    3D
+  </button>
+
+  <button
+    class="categoria-btn"
+    onclick="seleccionarCategoria('2D', this)">
+    2D
+  </button>
+
+  <button
+    class="categoria-btn"
+    onclick="seleccionarCategoria('Pixel Art', this)">
+    Pixel Art
+  </button>
+
+</div>
+
+
 <div id="catalogo" class="catalogo"></div>
+
 <div id="paginacion" class="paginacion"></div>
 
+
 <script>
+
 const juegosPorPagina = 30;
+
 let juegos = [];
+
 let paginaActual = 1;
 
+let categoriaActual = "Todos";
+
+
+/* ==========================================
+   CARGAR JUEGOS
+========================================== */
+
 async function cargarJuegos() {
+
   try {
+
     const res = await fetch("juegos.json");
+
     juegos = await res.json();
+
     mostrarPagina(1);
+
   } catch (e) {
+
     console.error("Error cargando juegos.json:", e);
+
   }
+
 }
+
+
+/* ==========================================
+   SELECCIONAR CATEGORÍA
+========================================== */
+
+function seleccionarCategoria(categoria, boton) {
+
+  categoriaActual = categoria;
+
+  paginaActual = 1;
+
+  // Quitar clase activa de todos los botones
+
+  document.querySelectorAll(".categoria-btn")
+    .forEach(btn => btn.classList.remove("activa"));
+
+  // Activar botón seleccionado
+
+  boton.classList.add("activa");
+
+  actualizarCatalogo();
+
+}
+
+
+/* ==========================================
+   OBTENER JUEGOS FILTRADOS
+========================================== */
+
+function obtenerJuegosFiltrados() {
+
+  const texto =
+    document
+      .getElementById("buscador")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  return juegos.filter(j => {
+
+    const coincideCategoria =
+      categoriaActual === "Todos" ||
+      j.categoria === categoriaActual;
+
+
+    const coincideBusqueda =
+      j.titulo
+        .toLowerCase()
+        .includes(texto);
+
+
+    return coincideCategoria && coincideBusqueda;
+
+  });
+
+}
+
+
+/* ==========================================
+   ACTUALIZAR CATÁLOGO
+========================================== */
+
+function actualizarCatalogo() {
+
+  paginaActual = 1;
+
+  mostrarPagina(1);
+
+}
+
+
+/* ==========================================
+   MOSTRAR PÁGINA
+========================================== */
 
 function mostrarPagina(num) {
+
   paginaActual = num;
 
-  const inicio = (num - 1) * juegosPorPagina;
-  const fin = inicio + juegosPorPagina;
-  const juegosPagina = juegos.slice(inicio, fin);
+  const juegosFiltrados =
+    obtenerJuegosFiltrados();
 
-  document.getElementById("catalogo").innerHTML = juegosPagina.map(j => `
-    <div class="juego-card" onclick="location.href='${j.link}'">
-      <img src="${j.imagen}">
-      <h3>${j.titulo}</h3>
-      <p>${j.version} • ${j.idioma} • ${j.plataformas}</p>
-    </div>
-  `).join("");
 
-  generarPaginacion();
-}
+  const inicio =
+    (num - 1) * juegosPorPagina;
 
-function generarPaginacion() {
-  const totalPaginas = Math.ceil(juegos.length / juegosPorPagina);
-  let html = "";
 
-  // Página 1
-  html += `<span class="${paginaActual === 1 ? 'activa' : ''}" onclick="mostrarPagina(1)">1</span>`;
+  const fin =
+    inicio + juegosPorPagina;
 
-  // Página 2 solo si existe
-  if (totalPaginas >= 2) {
-    html += `<span class="${paginaActual === 2 ? 'activa' : ''}" onclick="mostrarPagina(2)">2</span>`;
-  }
 
-  // Mostrar "..." solo si hay más de 3 páginas
-  if (totalPaginas > 3) {
-    html += `<span>...</span>`;
-  }
+  const juegosPagina =
+    juegosFiltrados.slice(inicio, fin);
 
-  // Última página (solo si es mayor que 2)
-  if (totalPaginas > 2) {
-    html += `<span class="${paginaActual === totalPaginas ? 'activa' : ''}" onclick="mostrarPagina(${totalPaginas})">${totalPaginas}</span>`;
-  }
 
-  // Botón siguiente
-  if (paginaActual < totalPaginas) {
-    html += `<span onclick="mostrarPagina(${paginaActual + 1})">Siguiente →</span>`;
-  }
+  document.getElementById("catalogo").innerHTML =
 
-  document.getElementById("paginacion").innerHTML = html;
-}
-function buscarJuego() {
-  const texto = document.getElementById("buscador").value.toLowerCase();
+    juegosPagina.map(j => `
 
-  if (texto.trim() === "") {
-    mostrarPagina(1);
-    return;
-  }
+      <div
+        class="juego-card"
+        onclick="location.href='${j.link}'"
+      >
 
-  const filtrados = juegos.filter(j =>
-    j.titulo.toLowerCase().includes(texto)
+        <img
+          src="${j.imagen}"
+          alt="${j.titulo}"
+        >
+
+        <h3>${j.titulo}</h3>
+
+        <span class="categoria">
+          ${j.categoria || "Sin categoría"}
+        </span>
+
+        <p>
+          ${j.version}
+          •
+          ${j.idioma}
+          •
+          ${j.plataformas}
+        </p>
+
+      </div>
+
+    `).join("");
+
+
+  generarPaginacion(
+    juegosFiltrados.length
   );
 
-  document.getElementById("catalogo").innerHTML = filtrados.map(j => `
-    <div class="juego-card" onclick="location.href='${j.link}'">
-      <img src="${j.imagen}">
-      <h3>${j.titulo}</h3>
-      <p>${j.version} • ${j.idioma} • ${j.plataformas}</p>
-    </div>
-  `).join("");
-
-  document.getElementById("paginacion").innerHTML = "";
 }
 
+
+/* ==========================================
+   PAGINACIÓN
+========================================== */
+
+function generarPaginacion(totalJuegos) {
+
+  const totalPaginas =
+    Math.ceil(totalJuegos / juegosPorPagina);
+
+
+  let html = "";
+
+
+  if (totalPaginas <= 1) {
+
+    document.getElementById("paginacion").innerHTML = "";
+
+    return;
+
+  }
+
+
+  /* Página 1 */
+
+  html += `
+
+    <span
+      class="${paginaActual === 1 ? 'activa' : ''}"
+      onclick="mostrarPagina(1)"
+    >
+      1
+    </span>
+
+  `;
+
+
+  /* Página 2 */
+
+  if (totalPaginas >= 2) {
+
+    html += `
+
+      <span
+        class="${paginaActual === 2 ? 'activa' : ''}"
+        onclick="mostrarPagina(2)"
+      >
+        2
+      </span>
+
+    `;
+
+  }
+
+
+  /* ... */
+
+  if (totalPaginas > 3) {
+
+    html += `<span>...</span>`;
+
+  }
+
+
+  /* Última página */
+
+  if (totalPaginas > 2) {
+
+    html += `
+
+      <span
+        class="${paginaActual === totalPaginas ? 'activa' : ''}"
+        onclick="mostrarPagina(${totalPaginas})"
+      >
+        ${totalPaginas}
+      </span>
+
+    `;
+
+  }
+
+
+  /* Siguiente */
+
+  if (paginaActual < totalPaginas) {
+
+    html += `
+
+      <span
+        onclick="mostrarPagina(${paginaActual + 1})"
+      >
+        Siguiente →
+      </span>
+
+    `;
+
+  }
+
+
+  document.getElementById("paginacion").innerHTML = html;
+
+}
+
+
+/* ==========================================
+   INICIAR
+========================================== */
+
 cargarJuegos();
+
 </script>
 
 </body>
 </html>
+```
