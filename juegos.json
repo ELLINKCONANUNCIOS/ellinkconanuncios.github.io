@@ -8,6 +8,14 @@
     "link": "juegos/dailylives.html"
   },
   {
+    "titulo": "KonoSuba – The Harem Adventures",
+    "version": "v3.1a",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "imagen": "imagenes/KonoSubaTHA/KonoSubaTHA1.jpg",
+    "link": "juegos/KonoSubaTHA.html"
+  },
+  {
     "titulo": "Locked in Chastity",
     "version": "v0.57",
     "idioma": "Español",
