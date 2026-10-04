@@ -18,6 +18,15 @@
     "link": "juegos/KonoSubaTHA/"
   },
   {
+   "titulo": "Caretaker of Disasters",
+    "version": "v0.2.42",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/CaretakerofDisasters/CaretakerofDisasters1.jpg",
+    "link": "juegos/CaretakerofDisasters/"
+  },
+  {
     "titulo": "The Lewdest House",
     "version": "v0.2.42",
     "idioma": "Español",
