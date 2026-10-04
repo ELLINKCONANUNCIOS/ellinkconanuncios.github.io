@@ -26,6 +26,15 @@
     "imagen": "imagenes/TheLewdestHouse/TheLewdestHouse1.jpg",
     "link": "juegos/TheLewdestHouse/"
   },
+    {
+    "titulo": "Scarlet Law",
+    "version": "v0.4.2",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/ScarletLaw/ScarletLaw1.jpg",
+    "link": "juegos/ScarletLaw/"
+  },
    {
     "titulo": "Afterlife Harem",
     "version": "v0.4.7a",
