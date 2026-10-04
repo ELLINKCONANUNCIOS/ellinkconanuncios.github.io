@@ -25,7 +25,7 @@
     "categoria": "2D",
     "imagen": "imagenes/TheLewdestHouse/TheLewdestHouse1.jpg",
     "link": "juegos/TheLewdestHouse.html"
-  }
+  },
    {
     "titulo": "Afterlife Harem",
     "version": "v0.4.7a",
@@ -34,5 +34,5 @@
     "categoria": "3D",
     "imagen": "imagenes/AfterlifeHarem/AfterlifeHarem1.jpg",
     "link": "juegos/afterlifeharem.html"
-  },
+  }
 ]
