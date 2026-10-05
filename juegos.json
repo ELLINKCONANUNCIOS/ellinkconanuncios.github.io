@@ -8,6 +8,15 @@
     "imagen": "imagenes/DailyLives/Daily-Lives1.jpg",
     "link": "juegos/dailylives/"
   },
+   {
+    "titulo": "Familiar Circumstances (futas)",
+    "version": "v1.3",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/FamiliarCircumstances/FamiliarCircumstances1.jpg",
+    "link": "juegos/FamiliarCircumstances/"
+  },
   {
     "titulo": "KonoSuba – The Harem Adventures",
     "version": "v3.1a",
