@@ -9,6 +9,15 @@
     "link": "juegos/dailylives/"
   },
    {
+    "titulo": "Jujutsu Trainer",
+    "version": "v0.28.1",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/JujutsuTrainer/JujutsuTrainer1.jpg",
+    "link": "juegos/JujutsuTrainer/"
+  },
+   {
     "titulo": "Familiar Circumstances (futas)",
     "version": "v1.3",
     "idioma": "Español",
