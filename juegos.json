@@ -9,6 +9,15 @@
     "link": "juegos/dailylives/"
   },
    {
+    "titulo": "Accord",
+    "version": "v0.28.1",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/Accord/Accord1.jpg",
+    "link": "juegos/Accord/"
+  },
+   {
     "titulo": "Jujutsu Trainer",
     "version": "v0.28.1",
     "idioma": "Español",
