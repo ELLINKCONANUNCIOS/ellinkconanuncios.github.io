@@ -1,5 +1,14 @@
 [
     {
+    "titulo": "Love at First Tail",
+    "version": "v0.6",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/LoveatFirstTail/LoveatFirstTail1.jpg",
+    "link": "juegos/LoveatFirstTail/"
+  },
+    {
     "titulo": "Training Slayer",
     "version": "v1.15",
     "idioma": "Español",
