@@ -9,6 +9,15 @@
     "link": "juegos/dailylives/"
   },
    {
+    "titulo": "True Story Naruto",
+    "version": "v0.1",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/TrueStoryNaruto/TrueStoryNaruto1.jpg",
+    "link": "juegos/TrueStoryNaruto/"
+  },
+   {
     "titulo": "Accord (futas)",
     "version": "v0.28.1",
     "idioma": "Español",
