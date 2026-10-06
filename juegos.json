@@ -1,4 +1,13 @@
 [
+    {
+    "titulo": "Training Slayer",
+    "version": "v1.15",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/TrainingSlayer/TrainingSlayer1.jpg",
+    "link": "juegos/TrainingSlayer/"
+  },
    {
     "titulo": "Stuck in My Game",
     "version": "v0.12",
