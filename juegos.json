@@ -1,4 +1,13 @@
 [
+   {
+    "titulo": "Stuck in My Game",
+    "version": "v0.12",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/StuckinMyGame/StuckinMyGame1.jpg",
+    "link": "juegos/StuckinMyGame/"
+  },
   {
     "titulo": "Daily Lives of my Countryside",
     "version": "v0.3.5.3",
