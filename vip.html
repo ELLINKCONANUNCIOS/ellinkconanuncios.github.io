@@ -14,7 +14,10 @@
       padding: 20px;
     }
 
-    h2 { font-size: 32px; margin-bottom: 10px; }
+    h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
 
     .box {
       background: #1e1e1e;
@@ -25,22 +28,103 @@
       border: 1px solid #333;
     }
 
+    /* =========================
+       BOTONES GENERALES
+       ========================= */
+
     .btn {
       display: inline-block;
-      padding: 12px 20px;
+      padding: 13px 24px;
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
       margin: 10px;
       transition: 0.3s;
       color: white;
+      cursor: pointer;
     }
 
-    .btn-patreon { background: #e67e22; }
-    .btn-patreon:hover { background: #d35400; transform: scale(1.05); }
+   /* =========================
+   BOTÓN INICIAR SESIÓN PATREON
+   ========================= */
 
-    .btn-catalogo { background: #3498db; }
-    .btn-catalogo:hover { background: #2980b9; transform: scale(1.05); }
+.btn-login-patreon {
+  display: inline-block;
+  background: #ff424d;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 16px 32px;
+  border-radius: 10px;
+  text-decoration: none;
+  margin: 10px;
+  transition: 0.3s;
+  box-shadow: none;
+}
+
+.btn-login-patreon:hover {
+  background: #e63946;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255, 66, 77, 0.35);
+}
+
+    /* =========================
+       BOTÓN SUSCRIBIRSE
+       ========================= */
+
+    .btn-suscribirse {
+      background: #ff424d;
+      color: white;
+      font-size: 17px;
+      padding: 13px 24px;
+      box-shadow: 0 0 0 rgba(255, 66, 77, 0);
+    }
+
+    .btn-suscribirse:hover {
+      background: #e63946;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 66, 77, 0.4);
+    }
+/* =========================
+   BOTÓN INICIAR SESIÓN PATREON
+   ========================= */
+
+.btn-login-patreon {
+  display: inline-block;
+  background: #ff424d;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  padding: 13px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  margin: 10px;
+  transition: 0.3s;
+  box-shadow: 0 0 0 rgba(255, 66, 77, 0);
+}
+
+.btn-login-patreon:hover {
+  background: #e63946;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 66, 77, 0.4);
+}
+
+    /* =========================
+       BOTÓN CATÁLOGO
+       ========================= */
+
+    .btn-catalogo {
+      background: #3498db;
+    }
+
+    .btn-catalogo:hover {
+      background: #2980b9;
+      transform: scale(1.05);
+    }
+
+    /* =========================
+       VIP
+       ========================= */
 
     .vip-ok {
       background: #2ecc71;
@@ -57,6 +141,10 @@
       margin-bottom: 15px;
       font-weight: bold;
     }
+
+    /* =========================
+       BENEFICIOS
+       ========================= */
 
     .beneficios {
       text-align: left;
@@ -81,60 +169,140 @@
       font-size: 16px;
     }
 
-    #gojoCanvas {
-      width: 100%;
-      max-width: 600px;
-      height: 300px;
-      background: transparent;
-      border-radius: 10px;
+    /* =========================
+       SECCIÓN PATREON
+       ========================= */
+
+    .patreon-box {
       margin-top: 20px;
-      display: none;
+      padding: 20px;
+      background: #181818;
+      border-radius: 10px;
+      border: 1px solid #333;
     }
+
+    .patreon-box h3 {
+      margin-top: 0;
+      color: #ff424d;
+    }
+
+    .patreon-box p {
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    /* =========================
+       BOTÓN CERRAR SESIÓN
+       ========================= */
+
+    .btn-logout {
+      background: #c0392b;
+    }
+
+    .btn-logout:hover {
+      background: #922b21;
+      transform: scale(1.05);
+    }
+
   </style>
 </head>
+
 <body>
 
 <h2>Zona VIP</h2>
 
 <div class="box">
 
-  <!-- Estado VIP -->
+  <!-- =========================
+       ESTADO VIP
+       ========================= -->
+
   <div id="estadoVIP"></div>
 
-  <!-- Botón Patreon -->
-  <a id="btnPatreon"
-     href="https://backend-premium-production-cef8.up.railway.app/login"
-     class="btn btn-patreon">
-     Iniciar sesión con Patreon
-  </a>
 
-  <!-- Botón Cerrar Sesión VIP -->
-  <a id="btnLogoutVIP"
-     href="https://backend-premium-production-cef8.up.railway.app/logout-vip"
-     class="btn btn-patreon"
-     style="background:#c0392b; display:none;">
-     Cerrar sesión VIP
-  </a>
+  <!-- =========================
+       BOTÓN INICIAR SESIÓN
+       ========================= -->
 
-  <!-- Botón Volver al catálogo -->
+ <a id="btnPatreon"
+   href="https://backend-premium-production-cef8.up.railway.app/login"
+   class="btn btn-login-patreon">
+   🔐 Iniciar sesión con Patreon
+</a>
+
+  <!-- =========================
+       BOTÓN VOLVER AL CATÁLOGO
+       ========================= -->
+
   <a id="btnCatalogo"
      href="index.html"
      class="btn btn-catalogo">
+
      ← Volver al catálogo
+
   </a>
 
-  <!-- Beneficios VIP -->
+  <!-- =========================
+       BOTÓN CERRAR SESIÓN
+       ========================= -->
+
+  <a id="btnLogoutVIP"
+     href="https://backend-premium-production-cef8.up.railway.app/logout-vip"
+     class="btn btn-logout"
+     style="display:none;">
+
+     🚪 Cerrar sesión VIP
+
+  </a>
+
+
+  <!-- =========================
+       SECCIÓN SUSCRIPCIÓN
+       ========================= -->
+
+  <div class="patreon-box">
+
+    <h3>¿Aún no eres VIP?</h3>
+
+    <p>
+      Suscríbete a nuestro Patreon para obtener acceso
+      a todos los beneficios VIP.
+    </p>
+
+    <a href="https://www.patreon.com/cw/ELLINKCONANUNCIOS"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="btn btn-suscribirse">
+
+       ❤️ Suscribirme en Patreon
+
+    </a>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+       BENEFICIOS VIP
+       ========================= -->
+
   <div id="beneficiosVIP" class="beneficios">
+
     <h3>Beneficios VIP</h3>
+
     <ul>
       <li>✔ Descargas sin anuncios</li>
       <li>✔ Enlaces directos premium</li>
       <li>✔ Acceso anticipado a nuevos juegos</li>
       <li>✔ Soporte prioritario</li>
     </ul>
+
   </div>
 
 </div>
+
 
 <script>
 
@@ -274,3 +442,6 @@ else {
 }
 
 </script>
+
+</body>
+</html>
