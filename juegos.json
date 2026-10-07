@@ -1,4 +1,13 @@
 [
+    {
+    "titulo": "Kunoichi Trainer",
+    "version": "v0.33.1",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/KunoichiTrainer/KunoichiTrainer1.jpg",
+    "link": "juegos/KunoichiTrainer/"
+  },
    {
     "titulo": "The Mysterious APP That Summons Hot Girls",
     "version": "v11.0",
