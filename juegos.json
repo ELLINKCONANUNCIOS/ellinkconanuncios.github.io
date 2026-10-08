@@ -1,5 +1,14 @@
 [
   {
+    "titulo": "Sisterlife",
+    "version": "v1.3.0",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/Sisterlife/Sisterlife1.png",
+    "link": "juegos/Sisterlife/"
+  },
+  {
     "titulo": "My Hentai Fantasy)",
     "version": "v0.18.1",
     "idioma": "Español",
