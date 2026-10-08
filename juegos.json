@@ -1,5 +1,14 @@
 [
   {
+    "titulo": "Masters of the Ring (actual)",
+    "version": "v0.6.2",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/MastersoftheRing1/MastersoftheRing11.jpg",
+    "link": "juegos/MastersoftheRing2/"
+  },
+  {
     "titulo": "Masters of the Ring (version 1)",
     "version": "vFINAL",
     "idioma": "Español",
