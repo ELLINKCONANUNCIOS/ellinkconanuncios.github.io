@@ -1,4 +1,13 @@
 [
+    {
+    "titulo": "Masters of the Ring (version 1)",
+    "version": "v11.0",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/MastersoftheRing0/MastersoftheRing1.jpg",
+    "link": "juegos/MastersoftheRing1/"
+  },
    {
     "titulo": "Attack on Survey Corps",
     "version": "v0.32.1",
