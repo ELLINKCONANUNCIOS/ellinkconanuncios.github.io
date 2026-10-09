@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <title>Tutorial para pasar los acortadores - Link con Anuncios</title>
+  <style>
+    :root {
+      --fondo: #111;
+      --texto: #fff;
+      --azul: #3498db;
+      --tarjeta: #1e1e1e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    main {
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: clamp(24px, 4vw, 34px);
+      margin: 12px 0;
+    }
+
+    .intro {
+      color: #ccc;
+      line-height: 1.6;
+      margin: 0 auto 22px;
+      max-width: 700px;
+    }
+
+    .video-card {
+      background: var(--tarjeta);
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .video-container {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .video-container iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .nota {
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 16px 0;
+    }
+
+    .botones {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background .2s, transform .2s;
+    }
+
+    .btn-volver { background: var(--azul); }
+    .btn-volver:hover { background: #2980b9; transform: translateY(-1px); }
+
+    .btn-drive { background: #333; border: 1px solid #555; }
+    .btn-drive:hover { background: #444; }
+
+    @media (max-width: 600px) {
+      body { padding: 18px 12px; }
+      .video-card { padding: 7px; }
+      .btn { width: 100%; max-width: 340px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>📘 Tutorial para pasar los acortadores</h1>
+    <p class="intro">
+      Mira el video para aprender cómo pasar los acortadores y continuar con la descarga de tu juego.
+    </p>
+
+    <section class="video-card" aria-label="Video tutorial">
+      <div class="video-container">
+        <iframe
+          src="https://drive.google.com/file/d/11k6WhG2qRTE4B6PrNA5TCkOpQmfQ9fDr/preview"
+          title="Tutorial para pasar los acortadores"
+          allow="autoplay"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+    <p class="nota">
+      Si el video no se reproduce, comprueba que en Google Drive esté compartido como
+      «Cualquier persona con el enlace» con permiso de lector.
+    </p>
+
+    <nav class="botones" aria-label="Navegación">
+      <a href="index.html" class="btn btn-volver">← Volver al catálogo</a>
+      <a
+        href="https://drive.google.com/file/d/11k6WhG2qRTE4B6PrNA5TCkOpQmfQ9fDr/view?usp=sharing"
+        class="btn btn-drive"
+        target="_blank"
+        rel="noopener noreferrer">
+        Abrir video en Google Drive
+      </a>
+    </nav>
+  </main>
+</body>
+</html>
