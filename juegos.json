@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Genesis Project",
+    "version": "v0.4",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/GenesisProject/GenesisProject1.jpg",
+    "link": "juegos/GenesisProject/"
+  },
+   {
     "titulo": "Eternum",
     "version": "v0.9.5",
     "idioma": "Español",
