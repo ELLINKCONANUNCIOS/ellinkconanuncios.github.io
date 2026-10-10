@@ -1,4 +1,13 @@
 [
+   {
+    "titulo": "Eternum",
+    "version": "v0.9.5",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/Eternumy/Eternum1.jpg",
+    "link": "juegos/Eternum/"
+  },
   {
     "titulo": "Sisterlife",
     "version": "v1.3.0",
@@ -9,7 +18,7 @@
     "link": "juegos/Sisterlife/"
   },
   {
-    "titulo": "My Hentai Fantasy)",
+    "titulo": "My Hentai Fantasy",
     "version": "v0.18.1",
     "idioma": "Español",
     "plataformas": "Android/Windows",
