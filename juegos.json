@@ -1,5 +1,23 @@
 [
    {
+    "titulo": "Winter Memorie",
+    "version": "v1.00",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/WinterMemorie/WinterMemorie1.png",
+    "link": "juegos/WinterMemorie/"
+  },
+   {
+    "titulo": "Summer memories",
+    "version": "v2.03",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/Summermemories/Summermemories1.png",
+    "link": "juegos/Summermemories/"
+  },
+   {
     "titulo": "Peerless Lust",
     "version": "v0.47",
     "idioma": "Español",
