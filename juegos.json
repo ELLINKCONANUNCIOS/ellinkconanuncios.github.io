@@ -4,7 +4,7 @@
     "version": "v1.00",
     "idioma": "Español",
     "plataformas": "Android/Windows",
-    "categoria": "2D",
+    "categoria": "Pixel Art",
     "imagen": "imagenes/WinterMemorie/WinterMemorie1.png",
     "link": "juegos/WinterMemorie/"
   },
@@ -13,7 +13,7 @@
     "version": "v2.03",
     "idioma": "Español",
     "plataformas": "Android/Windows",
-    "categoria": "2D",
+    "categoria": "Pixel Art",
     "imagen": "imagenes/Summermemories/Summermemories1.png",
     "link": "juegos/Summermemories/"
   },
