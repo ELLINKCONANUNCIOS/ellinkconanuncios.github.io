@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "My Girlfriend’s Friends",
+    "version": "v2.5",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/SMyGirlfriend’sFriends/MyGirlfriend’sFriendse1.png",
+    "link": "juegos/MyGirlfriend’sFriends/"
+  },
+   {
     "titulo": "Genesis Project",
     "version": "v0.4",
     "idioma": "Español",
