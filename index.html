@@ -485,6 +485,18 @@ h1 {
 
 }
 
+/* Respeta la preferencia de reducir movimiento del dispositivo */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 </style>
 
 </head>
@@ -513,7 +525,7 @@ h1 {
   type="text"
   id="buscador"
   placeholder="Buscar juego..."
-  oninput="actualizarCatalogo()"
+  oninput="programarActualizacionCatalogo()"
   class="input-busqueda"
 >
 
@@ -646,6 +658,16 @@ let juegos = [];
 let paginaActual = 1;
 
 let categoriaActual = "Todos";
+
+// Evita reconstruir el catálogo en cada pulsación rápida.
+let temporizadorBusqueda;
+
+function programarActualizacionCatalogo() {
+  clearTimeout(temporizadorBusqueda);
+  temporizadorBusqueda = setTimeout(() => {
+    actualizarCatalogo();
+  }, 120);
+}
 
 
 /* ==========================================
@@ -852,7 +874,7 @@ function mostrarPagina(num) {
 
 
     juegosPagina
-      .map(j => `
+      .map((j, index) => `
 
         <div
           class="juego-card"
@@ -865,6 +887,9 @@ function mostrarPagina(num) {
           <img
             src="${j.imagen}"
             alt="${j.titulo}"
+            loading="${index < 4 ? 'eager' : 'lazy'}"
+            decoding="async"
+            fetchpriority="${index === 0 ? 'high' : 'auto'}"
           >
 
 
