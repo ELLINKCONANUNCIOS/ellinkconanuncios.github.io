@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Futa Academy",
+    "version": "v2.4",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/FutaAcademy/FutaAcademy1.png",
+    "link": "juegos/FutaAcademy/"
+  },
+   {
     "titulo": "Fantasy Date",
     "version": "v0.59",
     "idioma": "Español",
