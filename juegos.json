@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Dream Corruption",
+    "version": "v0.47",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/Dream Corruption/Dream Corruption1.png",
+    "link": "juegos/Dream Corruption/"
+  },
+   {
     "titulo": "Winter Memorie",
     "version": "v1.00",
     "idioma": "Español",
