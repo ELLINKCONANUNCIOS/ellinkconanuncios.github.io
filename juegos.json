@@ -1,4 +1,13 @@
 [
+    {
+    "titulo": "Living With Chainsaw ",
+    "version": "v0.85",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/LivingWithChainsaw/LivingWithChainsaw1.png",
+    "link": "juegos/LivingWithChainsaw/"
+  },
    {
     "titulo": "Dream Corruption",
     "version": "v0.47",
