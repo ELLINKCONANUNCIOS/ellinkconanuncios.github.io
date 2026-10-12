@@ -1,5 +1,14 @@
 [
     {
+    "titulo": "Fantasy Date",
+    "version": "v0.59",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/FantasyDate/FantasyDate1.png",
+    "link": "juegos/FantasyDate/"
+  },
+   {
     "titulo": "Living With Chainsaw ",
     "version": "v0.85",
     "idioma": "Español",
