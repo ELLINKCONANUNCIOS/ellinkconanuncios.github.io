@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Welcum to the City",
+    "version": "v0.41.1",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/WelcumtotheCity/WelcumtotheCity1.png",
+    "link": "juegos/WelcumtotheCity/"
+  },
+   {
     "titulo": "The Assessor’s Ledger",
     "version": "v1.11",
     "idioma": "Español",
