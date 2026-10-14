@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Ethereal Ties ",
+    "version": "v0.6",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/EtherealTies/EtherealTies1.png",
+    "link": "juegos/EtherealTies/"
+  },
+   {
     "titulo": "Welcum to the City",
     "version": "v0.41.1",
     "idioma": "Español",
