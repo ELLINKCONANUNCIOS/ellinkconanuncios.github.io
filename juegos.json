@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "PokeSlutsTown",
+    "version": "v0.9",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/PokeSlutsTown/PokeSlutsTown1.jpg",
+    "link": "juegos/PokeSlutsTown/"
+  },
+   {
     "titulo": "Training Slayer",
     "version": "v1.16",
     "idioma": "Español",
