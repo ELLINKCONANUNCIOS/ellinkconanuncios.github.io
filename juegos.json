@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Training Slayer",
+    "version": "v1.16",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/TrainingSlayer/TrainingSlayer1.jpg",
+    "link": "juegos/TrainingSlayer/"
+  },
+   {
     "titulo": "Ethereal Ties ",
     "version": "v0.6",
     "idioma": "Español",
@@ -214,15 +223,6 @@
     "categoria": "3D",
     "imagen": "imagenes/LoveatFirstTail/LoveatFirstTail1.jpg",
     "link": "juegos/LoveatFirstTail/"
-  },
-    {
-    "titulo": "Training Slayer",
-    "version": "v1.15",
-    "idioma": "Español",
-    "plataformas": "Android/Windows",
-    "categoria": "3D",
-    "imagen": "imagenes/TrainingSlayer/TrainingSlayer1.jpg",
-    "link": "juegos/TrainingSlayer/"
   },
    {
     "titulo": "Stuck in My Game",
