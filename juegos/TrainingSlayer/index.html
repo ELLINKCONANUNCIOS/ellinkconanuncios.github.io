@@ -45,7 +45,18 @@
       line-height: 1.6;
       color: #ccc;
     }
+     /* ===== ANUNCIO ADSTERRA ===== */
 
+   .anuncio-adsterra {
+     width: 300px;
+     height: 250px;
+     margin: 10px auto 20px auto;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     overflow: hidden;
+   }
+  
     /* ===== BOTÓN PATREON DEL CREADOR ===== */
 
     .btn-creador {
@@ -148,6 +159,24 @@
 
     .btn-premium:hover {
       background: #d35400;
+    }
+
+    /* ===== BOTÓN TUTORIAL DE ACORTADORES ===== */
+    .btn-tutorial {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 10px;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-tutorial:hover {
+      background: #1d4ed8;
+      transform: scale(1.03);
     }
 
     /* ===== GALERÍA ===== */
@@ -297,9 +326,7 @@
   </a>
 
 
-  <!-- ===== TÍTULO ===== -->
-
-  <h2>Training Slayer</h2>
+   <h2>Training Slayer</h2>
 
 
   <!-- ===== IMAGEN PRINCIPAL ===== -->
@@ -336,15 +363,8 @@
 
 </div>
 
-  <!-- ===== PATREON DEL CREADOR ===== -->
 
-  <a
-    href="https://www.patreon.com/BokunDev"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="btn-creador">
-    ❤️ Patreon del creador
-  </a>
+
 
 
   <!-- ===== MENÚ ===== -->
@@ -412,6 +432,10 @@
         Descargar sin anuncios (Premium)
       </a>
 
+      <a href="../../tutorial/tutorial.html" class="btn-tutorial">
+        📘 Tutorial para pasar los acortadores
+      </a>
+
     </div>
 
 
@@ -437,6 +461,10 @@
         class="btn btn-premium"
         onclick="premiumPC()">
         Descargar sin anuncios (Premium)
+      </a>
+
+      <a href="../../tutorial/tutorial.html" class="btn-tutorial">
+        📘 Tutorial para pasar los acortadores
       </a>
 
     </div>
@@ -506,7 +534,7 @@
 
       <ul class="detalles-lista">
 
-        <li>
+         <li>
           <strong>Versión:</strong> 1.16
         </li>
 
@@ -520,8 +548,6 @@
 
         <li>
           <strong>Peso pc:</strong> 414MB
-        </li>
-
         <li>
           <strong>Última actualización:</strong> 2026
         </li>
