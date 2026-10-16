@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Panel VIP</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .panel {
+      width: min(90%, 420px);
+      background: #1e1e1e;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,.5);
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px;
+      margin: 10px 0;
+      border: 0;
+      border-radius: 8px;
+      background: #2b2b2b;
+      color: white;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: 0;
+      border-radius: 8px;
+      background: #e67e22;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #f39c12;
+    }
+
+    .resultado {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background: #151515;
+      border-radius: 10px;
+    }
+
+    .codigo {
+      margin: 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      word-break: break-all;
+    }
+
+    .copiar {
+      background: #3498db;
+    }
+
+    .error {
+      color: #ff6b6b;
+      margin-top: 15px;
+    }
+
+    .ok {
+      color: #2ecc71;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="panel">
+
+    <h1>🔐 Panel VIP</h1>
+
+    <p>Generar nuevo código VIP</p>
+
+    <input
+      type="password"
+      id="clave"
+      placeholder="Clave de administrador"
+      autocomplete="off"
+    >
+
+    <button onclick="generarCodigo()">
+      🎲 Generar código VIP
+    </button>
+
+    <div id="resultado" class="resultado">
+
+      <div class="ok">
+        Código generado correctamente
+      </div>
+
+      <div id="codigo" class="codigo"></div>
+
+      <div>
+        Válido durante 30 días
+      </div>
+
+      <button class="copiar" onclick="copiarCodigo()">
+        📋 Copiar código
+      </button>
+
+    </div>
+
+    <div id="mensaje" class="error"></div>
+
+  </div>
+
+<script>
+
+const WORKER =
+  "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
+
+let codigoActual = "";
+
+async function generarCodigo() {
+
+  const clave = document.getElementById("clave").value;
+  const mensaje = document.getElementById("mensaje");
+  const resultado = document.getElementById("resultado");
+
+  mensaje.textContent = "";
+  resultado.style.display = "none";
+
+  if (!clave) {
+    mensaje.textContent = "Introduce tu clave de administrador.";
+    return;
+  }
+
+  try {
+
+    const respuesta = await fetch(
+      WORKER + "/crear?clave=" + encodeURIComponent(clave)
+    );
+
+    const datos = await respuesta.json();
+
+    if (!respuesta.ok || !datos.correcto) {
+      mensaje.textContent = "Clave incorrecta o acceso no autorizado.";
+      return;
+    }
+
+    codigoActual = datos.codigo;
+
+    document.getElementById("codigo").textContent =
+      datos.codigo;
+
+    resultado.style.display = "block";
+
+    document.getElementById("clave").value = "";
+
+  } catch (error) {
+
+    mensaje.textContent =
+      "No se pudo conectar con el servidor VIP.";
+
+  }
+
+}
+
+async function copiarCodigo() {
+
+  if (!codigoActual) return;
+
+  try {
+
+    await navigator.clipboard.writeText(codigoActual);
+
+    const boton = document.querySelector(".copiar");
+
+    boton.textContent = "✅ Copiado";
+
+    setTimeout(() => {
+      boton.textContent = "📋 Copiar código";
+    }, 1500);
+
+  } catch {
+
+    alert("No se pudo copiar automáticamente.");
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
