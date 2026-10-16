@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Luna Has Gonen",
+    "version": "v0.0.9 Hf3",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/LunaHasGone/LunaHasGone1.png",
+    "link": "juegos/LunaHasGone/"
+  },
+   {
     "titulo": "PokeSlutsTown",
     "version": "v0.9",
     "idioma": "Español",
