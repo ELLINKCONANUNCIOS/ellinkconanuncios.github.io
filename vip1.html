@@ -269,30 +269,19 @@
 const WORKER =
   "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
 
-const estadoVIP =
-  document.getElementById("estadoVIP");
-
-const panelCodigo =
-  document.getElementById("panelCodigo");
-
-const btnLogoutVIP =
-  document.getElementById("btnLogoutVIP");
-
-const codigoVIP =
-  document.getElementById("codigoVIP");
-
-const btnActivar =
-  document.getElementById("btnActivar");
-
-const mensaje =
-  document.getElementById("mensaje");
+const estadoVIP = document.getElementById("estadoVIP");
+const panelCodigo = document.getElementById("panelCodigo");
+const btnLogoutVIP = document.getElementById("btnLogoutVIP");
+const codigoVIP = document.getElementById("codigoVIP");
+const btnActivar = document.getElementById("btnActivar");
+const mensaje = document.getElementById("mensaje");
 
 
 // =========================
-// MOSTRAR VIP ACTIVO
+// MOSTRAR VIP
 // =========================
 
-function mostrarVIP(expira) {
+function mostrarVIP() {
 
   estadoVIP.innerHTML = `
     <div class="vip-ok">
@@ -302,7 +291,6 @@ function mostrarVIP(expira) {
 
   panelCodigo.style.display = "none";
   btnLogoutVIP.style.display = "inline-block";
-
 }
 
 
@@ -310,7 +298,7 @@ function mostrarVIP(expira) {
 // MOSTRAR NO VIP
 // =========================
 
-function mostrarNoVIP(texto = "✖ No tienes un acceso VIP activo.") {
+function mostrarNoVIP(texto) {
 
   estadoVIP.innerHTML = `
     <div class="vip-no">
@@ -320,22 +308,24 @@ function mostrarNoVIP(texto = "✖ No tienes un acceso VIP activo.") {
 
   panelCodigo.style.display = "block";
   btnLogoutVIP.style.display = "none";
-
 }
 
 
 // =========================
-// COMPROBAR CÓDIGO CON WORKER
+// VERIFICAR CÓDIGO
 // =========================
 
 async function verificarCodigo(codigo) {
 
-  const respuesta = await fetch(
-    WORKER + "/verificar?codigo=" + encodeURIComponent(codigo)
-  );
+  const url =
+    WORKER +
+    "/verificar?codigo=" +
+    encodeURIComponent(codigo);
+
+  const respuesta = await fetch(url);
 
   if (!respuesta.ok) {
-    throw new Error("Error del servidor");
+    throw new Error("Servidor respondió con error");
   }
 
   return await respuesta.json();
@@ -348,54 +338,84 @@ async function verificarCodigo(codigo) {
 
 async function activarVIP() {
 
-  const codigo = codigoVIP.value.trim().toUpperCase();
+  const codigo =
+    codigoVIP.value.trim().toUpperCase();
 
   mensaje.textContent = "";
   mensaje.className = "mensaje";
 
   if (!codigo) {
-    mensaje.textContent = "Introduce tu código VIP.";
+
+    mensaje.textContent =
+      "Introduce tu código VIP.";
+
     mensaje.classList.add("error");
+
     return;
   }
 
   btnActivar.disabled = true;
-  btnActivar.textContent = "⏳ Verificando...";
+  btnActivar.textContent =
+    "⏳ Verificando...";
 
   try {
 
-    const data = await verificarCodigo(codigo);
+    const data =
+      await verificarCodigo(codigo);
 
-    if (!data.vip) {
+    console.log("Respuesta Worker:", data);
+
+    if (data.vip === true) {
+
+      localStorage.setItem(
+        "vipCode",
+        codigo
+      );
+
+      if (data.expira) {
+
+        localStorage.setItem(
+          "vipExpira",
+          String(data.expira)
+        );
+
+      }
+
+      mensaje.textContent =
+        "✅ Código activado correctamente.";
+
+      mensaje.classList.add("exito");
+
+      mostrarVIP();
+
+    } else {
 
       if (data.expirado) {
-        mensaje.textContent = "❌ Este código VIP ha expirado.";
+
+        mensaje.textContent =
+          "❌ Este código VIP ha expirado.";
+
       } else if (data.desactivado) {
-        mensaje.textContent = "❌ Este código VIP fue desactivado.";
+
+        mensaje.textContent =
+          "❌ Este código VIP fue desactivado.";
+
       } else {
-        mensaje.textContent = "❌ Código VIP incorrecto.";
+
+        mensaje.textContent =
+          "❌ Código VIP incorrecto.";
+
       }
 
       mensaje.classList.add("error");
-      return;
     }
-
-    // Guardamos el código para que las páginas de juegos
-    // puedan comprobarlo posteriormente.
-    localStorage.setItem("vipCode", codigo);
-
-    if (data.expira) {
-      localStorage.setItem("vipExpira", String(data.expira));
-    }
-
-    mensaje.textContent = "✅ Código activado correctamente.";
-    mensaje.classList.add("exito");
-
-    mostrarVIP(data.expira);
 
   } catch (error) {
 
-    console.error("Error verificando VIP:", error);
+    console.error(
+      "Error verificando VIP:",
+      error
+    );
 
     mensaje.textContent =
       "✖ No se pudo conectar con el servidor VIP.";
@@ -405,10 +425,10 @@ async function activarVIP() {
   } finally {
 
     btnActivar.disabled = false;
-    btnActivar.textContent = "🔓 Activar VIP";
 
+    btnActivar.textContent =
+      "🔓 Activar VIP";
   }
-
 }
 
 
@@ -418,34 +438,50 @@ async function activarVIP() {
 
 async function comprobarVIPGuardado() {
 
-  const codigo = localStorage.getItem("vipCode");
+  const codigo =
+    localStorage.getItem("vipCode");
 
   if (!codigo) {
+
     mostrarNoVIP(
       "✖ No tienes un acceso VIP activo. Introduce tu código."
     );
+
     return;
   }
 
   try {
 
-    const data = await verificarCodigo(codigo);
+    const data =
+      await verificarCodigo(codigo);
 
-    if (!data.vip) {
+    console.log(
+      "Comprobación VIP:",
+      data
+    );
+
+    if (data.vip === true) {
+
+      mostrarVIP();
+
+    } else {
 
       localStorage.removeItem("vipCode");
       localStorage.removeItem("vipExpira");
 
       if (data.expirado) {
-        mostrarNoVIP("✖ Tu código VIP ha expirado.");
+
+        mostrarNoVIP(
+          "✖ Tu código VIP ha expirado."
+        );
+
       } else {
-        mostrarNoVIP("✖ Tu código VIP ya no es válido.");
+
+        mostrarNoVIP(
+          "✖ Tu código VIP ya no es válido."
+        );
       }
-
-      return;
     }
-
-    mostrarVIP(data.expira);
 
   } catch (error) {
 
@@ -454,20 +490,15 @@ async function comprobarVIPGuardado() {
       error
     );
 
-    estadoVIP.innerHTML = `
-      <div class="vip-no">
-        ✖ No se pudo comprobar tu acceso VIP.
-        Inténtalo nuevamente.
-      </div>
-    `;
-
+    mostrarNoVIP(
+      "✖ No se pudo comprobar tu acceso VIP."
+    );
   }
-
 }
 
 
 // =========================
-// CERRAR SESIÓN VIP
+// CERRAR VIP
 // =========================
 
 function cerrarVIP() {
@@ -475,12 +506,13 @@ function cerrarVIP() {
   localStorage.removeItem("vipCode");
   localStorage.removeItem("vipExpira");
 
+  codigoVIP.value = "";
+
+  mensaje.textContent = "";
+
   mostrarNoVIP(
     "✔ Sesión VIP cerrada correctamente."
   );
-
-  codigoVIP.value = "";
-
 }
 
 
@@ -488,13 +520,16 @@ function cerrarVIP() {
 // ENTER PARA ACTIVAR
 // =========================
 
-codigoVIP.addEventListener("keydown", function(event) {
+codigoVIP.addEventListener(
+  "keydown",
+  function(event) {
 
-  if (event.key === "Enter") {
-    activarVIP();
+    if (event.key === "Enter") {
+      activarVIP();
+    }
+
   }
-
-});
+);
 
 
 // =========================
