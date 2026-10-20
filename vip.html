@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -180,6 +181,15 @@
     #panelActivo {
       display: none;
     }
+
+    .info-persona {
+      margin-top: 15px;
+      padding: 12px;
+      background: #222;
+      border-radius: 8px;
+      color: #ccc;
+      font-size: 14px;
+    }
   </style>
 </head>
 
@@ -189,16 +199,12 @@
 
 <div class="box">
 
-  <!-- =========================
-       ESTADO VIP
-       ========================= -->
+  <!-- ESTADO VIP -->
 
   <div id="estadoVIP"></div>
 
 
-  <!-- =========================
-       ACTIVAR CÓDIGO VIP
-       ========================= -->
+  <!-- ACTIVAR CÓDIGO VIP -->
 
   <div id="panelCodigo" class="vip-code-box">
 
@@ -233,18 +239,14 @@
     </div>
 
     <div class="ayuda">
-
       ¿Ya realizaste el pago y no tienes código?
       Escríbeme por Telegram.
-
     </div>
 
   </div>
 
 
-  <!-- =========================
-       VOLVER AL CATÁLOGO
-       ========================= -->
+  <!-- VOLVER AL CATÁLOGO -->
 
   <a
     id="btnCatalogo"
@@ -256,9 +258,7 @@
   </a>
 
 
-  <!-- =========================
-       CERRAR VIP
-       ========================= -->
+  <!-- CERRAR VIP -->
 
   <button
     id="btnLogoutVIP"
@@ -271,9 +271,7 @@
   </button>
 
 
-  <!-- =========================
-       BENEFICIOS VIP
-       ========================= -->
+  <!-- BENEFICIOS VIP -->
 
   <div
     id="beneficiosVIP"
@@ -282,15 +280,10 @@
     <h3>Beneficios VIP</h3>
 
     <ul>
-
       <li>✔ Descargas sin anuncios</li>
-
       <li>✔ Enlaces directos premium</li>
-
       <li>✔ Acceso anticipado a nuevos juegos</li>
-
       <li>✔ Soporte prioritario</li>
-
     </ul>
 
   </div>
@@ -304,35 +297,27 @@ const WORKER =
   "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
 
 
+// ==================================================
+// ELEMENTOS
+// ==================================================
+
 const estadoVIP =
-  document.getElementById(
-    "estadoVIP"
-  );
+  document.getElementById("estadoVIP");
 
 const panelCodigo =
-  document.getElementById(
-    "panelCodigo"
-  );
+  document.getElementById("panelCodigo");
 
 const btnLogoutVIP =
-  document.getElementById(
-    "btnLogoutVIP"
-  );
+  document.getElementById("btnLogoutVIP");
 
 const codigoVIP =
-  document.getElementById(
-    "codigoVIP"
-  );
+  document.getElementById("codigoVIP");
 
 const btnActivar =
-  document.getElementById(
-    "btnActivar"
-  );
+  document.getElementById("btnActivar");
 
 const mensaje =
-  document.getElementById(
-    "mensaje"
-  );
+  document.getElementById("mensaje");
 
 
 // ==================================================
@@ -342,14 +327,7 @@ const mensaje =
 function obtenerDeviceId() {
 
   let deviceId =
-    localStorage.getItem(
-      "vipDeviceId"
-    );
-
-
-  // Si este navegador todavía
-  // no tiene identificador,
-  // creamos uno.
+    localStorage.getItem("vipDeviceId");
 
   if (!deviceId) {
 
@@ -373,30 +351,81 @@ function obtenerDeviceId() {
 
     }
 
-
     localStorage.setItem(
       "vipDeviceId",
       deviceId
     );
-
   }
 
-
   return deviceId;
-
 }
 
-
-// Crear/recuperar el ID
-// al cargar la página.
 
 const deviceId =
   obtenerDeviceId();
 
-
 console.log(
   "Device ID:",
   deviceId
+);
+
+
+// ==================================================
+// IDENTIFICADOR DE PERSONA
+// ==================================================
+//
+// Este ID permite que una misma persona pueda
+// vincular su PC y su teléfono.
+//
+// IMPORTANTE:
+// El mismo ID debe estar disponible en ambos
+// dispositivos para que el Worker los considere
+// de la misma persona.
+//
+
+function obtenerPersonaId() {
+
+  let personaId =
+    localStorage.getItem("vipPersonaId");
+
+  if (!personaId) {
+
+    if (
+      window.crypto &&
+      crypto.randomUUID
+    ) {
+
+      personaId =
+        crypto.randomUUID();
+
+    } else {
+
+      personaId =
+        "persona-" +
+        Date.now() +
+        "-" +
+        Math.random()
+          .toString(36)
+          .substring(2);
+
+    }
+
+    localStorage.setItem(
+      "vipPersonaId",
+      personaId
+    );
+  }
+
+  return personaId;
+}
+
+
+const personaId =
+  obtenerPersonaId();
+
+console.log(
+  "Persona ID:",
+  personaId
 );
 
 
@@ -410,6 +439,11 @@ function mostrarVIP() {
     <div class="vip-ok">
       ✔ Eres VIP — Acceso completo desbloqueado
     </div>
+
+    <div class="info-persona">
+      👤 Persona vinculada correctamente.<br>
+      💻 Este dispositivo está autorizado.
+    </div>
   `;
 
   panelCodigo.style.display =
@@ -417,7 +451,6 @@ function mostrarVIP() {
 
   btnLogoutVIP.style.display =
     "inline-block";
-
 }
 
 
@@ -425,9 +458,7 @@ function mostrarVIP() {
 // MOSTRAR NO VIP
 // ==================================================
 
-function mostrarNoVIP(
-  texto
-) {
+function mostrarNoVIP(texto) {
 
   estadoVIP.innerHTML = `
     <div class="vip-no">
@@ -440,7 +471,6 @@ function mostrarNoVIP(
 
   btnLogoutVIP.style.display =
     "none";
-
 }
 
 
@@ -448,16 +478,16 @@ function mostrarNoVIP(
 // VERIFICAR CÓDIGO
 // ==================================================
 
-async function verificarCodigo(
-  codigo
-) {
+async function verificarCodigo(codigo) {
 
   const url =
     WORKER +
     "/verificar?codigo=" +
     encodeURIComponent(codigo) +
     "&device=" +
-    encodeURIComponent(deviceId);
+    encodeURIComponent(deviceId) +
+    "&persona=" +
+    encodeURIComponent(personaId);
 
 
   const respuesta =
@@ -469,12 +499,10 @@ async function verificarCodigo(
     throw new Error(
       "Servidor respondió con error"
     );
-
   }
 
 
   return await respuesta.json();
-
 }
 
 
@@ -490,11 +518,8 @@ async function activarVIP() {
       .toUpperCase();
 
 
-  mensaje.textContent =
-    "";
-
-  mensaje.className =
-    "mensaje";
+  mensaje.textContent = "";
+  mensaje.className = "mensaje";
 
 
   if (!codigo) {
@@ -502,12 +527,9 @@ async function activarVIP() {
     mensaje.textContent =
       "Introduce tu código VIP.";
 
-    mensaje.classList.add(
-      "error"
-    );
+    mensaje.classList.add("error");
 
     return;
-
   }
 
 
@@ -521,9 +543,7 @@ async function activarVIP() {
   try {
 
     const data =
-      await verificarCodigo(
-        codigo
-      );
+      await verificarCodigo(codigo);
 
 
     console.log(
@@ -536,9 +556,7 @@ async function activarVIP() {
     // VIP CORRECTO
     // ========================================
 
-    if (
-      data.vip === true
-    ) {
+    if (data.vip === true) {
 
       localStorage.setItem(
         "vipCode",
@@ -550,41 +568,43 @@ async function activarVIP() {
 
         localStorage.setItem(
           "vipExpira",
-          String(
-            data.expira
-          )
+          String(data.expira)
         );
+      }
 
+
+      // Guardamos el personaId que devuelve
+      // el Worker por seguridad.
+
+      if (data.personaId) {
+
+        localStorage.setItem(
+          "vipPersonaId",
+          data.personaId
+        );
       }
 
 
       mensaje.textContent =
         "✅ Código activado correctamente.";
 
-      mensaje.classList.add(
-        "exito"
-      );
+      mensaje.classList.add("exito");
 
 
       mostrarVIP();
 
-
       return;
-
     }
 
 
     // ========================================
-    // CÓDIGO EXPIRADO
+    // EXPIRADO
     // ========================================
 
-    if (
-      data.expirado
-    ) {
+    if (data.expirado) {
 
       mensaje.textContent =
         "❌ Este código VIP ha expirado.";
-
     }
 
 
@@ -592,63 +612,67 @@ async function activarVIP() {
     // DESACTIVADO
     // ========================================
 
-    else if (
-      data.desactivado
-    ) {
+    else if (data.desactivado) {
 
       mensaje.textContent =
         "❌ Este código VIP fue desactivado.";
-
     }
 
 
     // ========================================
-    // LÍMITE DE PC
+    // LÍMITE PC
     // ========================================
 
     else if (
       data.limite &&
       data.error &&
-      data.error.includes(
-        "PC"
-      )
+      data.error.includes("PC")
     ) {
 
       mensaje.textContent =
-        "❌ Este código ya está activado en un PC.";
-
+        "❌ Esta persona ya tiene un PC vinculado.";
     }
 
 
     // ========================================
-    // LÍMITE DE TELÉFONO
+    // LÍMITE TELÉFONO
     // ========================================
 
     else if (
       data.limite &&
       data.error &&
-      data.error.includes(
-        "teléfono"
-      )
+      data.error.includes("teléfono")
     ) {
 
       mensaje.textContent =
-        "❌ Este código ya está activado en un teléfono.";
-
+        "❌ Esta persona ya tiene un teléfono vinculado.";
     }
 
 
     // ========================================
-    // LÍMITE GENERAL
+    // LÍMITE PERSONAS
     // ========================================
 
     else if (
-      data.limite
+      data.limite &&
+      data.error &&
+      data.error.includes("personas")
     ) {
 
       mensaje.textContent =
-        "❌ Este código ya alcanzó el límite de dispositivos.";
+        "❌ Este código ya alcanzó el límite de personas.";
+    }
 
+
+    // ========================================
+    // OTRO LÍMITE
+    // ========================================
+
+    else if (data.limite) {
+
+      mensaje.textContent =
+        data.error ||
+        "❌ Este código alcanzó su límite.";
     }
 
 
@@ -659,14 +683,12 @@ async function activarVIP() {
     else {
 
       mensaje.textContent =
+        data.error ||
         "❌ Código VIP incorrecto.";
-
     }
 
 
-    mensaje.classList.add(
-      "error"
-    );
+    mensaje.classList.add("error");
 
 
   } catch (error) {
@@ -680,9 +702,8 @@ async function activarVIP() {
     mensaje.textContent =
       "✖ No se pudo conectar con el servidor VIP.";
 
-    mensaje.classList.add(
-      "error"
-    );
+    mensaje.classList.add("error");
+
 
   } finally {
 
@@ -691,9 +712,7 @@ async function activarVIP() {
 
     btnActivar.textContent =
       "🔓 Activar VIP";
-
   }
-
 }
 
 
@@ -704,9 +723,7 @@ async function activarVIP() {
 async function comprobarVIPGuardado() {
 
   const codigo =
-    localStorage.getItem(
-      "vipCode"
-    );
+    localStorage.getItem("vipCode");
 
 
   if (!codigo) {
@@ -716,16 +733,13 @@ async function comprobarVIPGuardado() {
     );
 
     return;
-
   }
 
 
   try {
 
     const data =
-      await verificarCodigo(
-        codigo
-      );
+      await verificarCodigo(codigo);
 
 
     console.log(
@@ -734,14 +748,11 @@ async function comprobarVIPGuardado() {
     );
 
 
-    if (
-      data.vip === true
-    ) {
+    if (data.vip === true) {
 
       mostrarVIP();
 
       return;
-
     }
 
 
@@ -757,9 +768,7 @@ async function comprobarVIPGuardado() {
     );
 
 
-    if (
-      data.expirado
-    ) {
+    if (data.expirado) {
 
       mostrarNoVIP(
         "✖ Tu código VIP ha expirado."
@@ -767,9 +776,15 @@ async function comprobarVIPGuardado() {
 
     }
 
-    else if (
-      data.limite
-    ) {
+    else if (data.desactivado) {
+
+      mostrarNoVIP(
+        "✖ Este código VIP fue desactivado."
+      );
+
+    }
+
+    else if (data.limite) {
 
       mostrarNoVIP(
         "✖ Este dispositivo ya no tiene acceso con este código."
@@ -782,7 +797,6 @@ async function comprobarVIPGuardado() {
       mostrarNoVIP(
         "✖ Tu código VIP ya no es válido."
       );
-
     }
 
 
@@ -797,9 +811,7 @@ async function comprobarVIPGuardado() {
     mostrarNoVIP(
       "✖ No se pudo comprobar tu acceso VIP."
     );
-
   }
-
 }
 
 
@@ -831,7 +843,6 @@ function cerrarVIP() {
   mostrarNoVIP(
     "✔ Sesión VIP cerrada correctamente."
   );
-
 }
 
 
@@ -843,12 +854,8 @@ codigoVIP.addEventListener(
   "keydown",
   function(event) {
 
-    if (
-      event.key === "Enter"
-    ) {
-
+    if (event.key === "Enter") {
       activarVIP();
-
     }
 
   }
@@ -865,3 +872,4 @@ comprobarVIPGuardado();
 
 </body>
 </html>
+```
