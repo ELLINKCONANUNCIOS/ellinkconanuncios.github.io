@@ -591,7 +591,8 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
   </a>
 
 
-  <script>
+ 
+ <script>
 
     // =========================
     // CLOUDFLARE VIP
@@ -726,7 +727,7 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
     }
 
 
-        // =========================
+    // =========================
     // PREMIUM ANDROID
     // =========================
 
@@ -734,8 +735,8 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
 
       try {
 
-        const vip = await comprobarVIP();
-
+        const vip =
+          await comprobarVIP();
 
         if (vip) {
 
@@ -773,7 +774,39 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
         const vip = await comprobarVIP();
 
 
+        if (vip) {          return;
+        }
+
+        window.location.href =
+          "../../vip.html";
+
+      } catch (error) {
+
+        console.error(
+          "Error VIP Android:",
+          error
+        );
+
+        alert(
+          "No se pudo comprobar tu acceso VIP. Inténtalo nuevamente."
+        );
+      }
+    }
+
+
+    // =========================
+    // PREMIUM PC
+    // =========================
+
+    async function premiumPC() {
+
+      try {
+
+        const vip =
+          await comprobarVIP();
+
         if (vip) {
+
 
           window.location.href =
             "https://www.mediafire.com/file/5p4rv7xvbnryix9/Stranded+with+You+ES.zip/file";
