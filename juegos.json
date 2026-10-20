@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Stranded with You",
+    "version": "vfinal",
+    "idioma": "Español",
+    "plataformas": "Joiplay/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/StrandedwithYou/StrandedwithYou1.png",
+    "link": "juegos/StrandedwithYou/"
+  },
+   {
     "titulo": "Luna Has Gonen",
     "version": "v0.0.9 Hf3",
     "idioma": "Español",
