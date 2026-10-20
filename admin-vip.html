@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -13,7 +16,6 @@
       color: #fff;
       font-family: Arial, sans-serif;
       padding: 20px;
-      box-sizing: border-box;
     }
 
     .panel {
@@ -23,22 +25,12 @@
       padding: 25px;
       border-radius: 15px;
       border: 1px solid #333;
-      box-sizing: border-box;
     }
 
-    h1 {
-      text-align: center;
-      margin-top: 0;
-    }
+    h1 { text-align: center; margin-top: 0; }
+    .subtitulo { text-align: center; color: #bbb; }
 
-    .subtitulo {
-      text-align: center;
-      color: #bbb;
-    }
-
-    .login-box,
-    .crear-box,
-    .lista-box {
+    .login-box, .crear-box, .lista-box {
       background: #181818;
       border: 1px solid #333;
       border-radius: 12px;
@@ -46,9 +38,8 @@
       margin-top: 20px;
     }
 
-    input {
+    input, select {
       width: 100%;
-      box-sizing: border-box;
       padding: 13px;
       margin: 8px 0;
       border: 1px solid #444;
@@ -56,12 +47,9 @@
       background: #111;
       color: #fff;
       font-size: 16px;
-      outline: none;
     }
 
-    input:focus {
-      border-color: #3498db;
-    }
+    input:focus, select:focus { border-color: #3498db; }
 
     button {
       padding: 12px 18px;
@@ -74,25 +62,12 @@
       margin: 5px;
     }
 
-    button:hover {
-      transform: scale(1.03);
-    }
+    button:hover { filter: brightness(1.1); }
 
-    .btn-principal {
-      background: #e67e22;
-    }
-
-    .btn-actualizar {
-      background: #3498db;
-    }
-
-    .btn-copiar {
-      background: #2ecc71;
-    }
-
-    .btn-desactivar {
-      background: #c0392b;
-    }
+    .btn-principal { background: #e67e22; }
+    .btn-actualizar { background: #3498db; }
+    .btn-copiar { background: #2ecc71; }
+    .btn-desactivar { background: #c0392b; }
 
     .resultado {
       display: none;
@@ -107,32 +82,17 @@
       font-size: 24px;
       font-weight: bold;
       letter-spacing: 1px;
-      word-break: break-all;
+      overflow-wrap: anywhere;
       margin: 12px 0;
     }
 
-    .mensaje {
-      margin-top: 10px;
-      font-weight: bold;
-    }
+    .mensaje { margin-top: 10px; font-weight: bold; }
+    .error { color: #ff6b6b; }
+    .ok { color: #2ecc71; }
+    .contador { font-size: 18px; font-weight: bold; margin-bottom: 15px; }
+    .oculto { display: none; }
 
-    .error {
-      color: #ff6b6b;
-    }
-
-    .ok {
-      color: #2ecc71;
-    }
-
-    .contador {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    .tabla-contenedor {
-      overflow-x: auto;
-    }
+    .tabla-contenedor { overflow-x: auto; }
 
     table {
       width: 100%;
@@ -140,44 +100,25 @@
       min-width: 850px;
     }
 
-    th,
-    td {
+    th, td {
       padding: 10px;
       border-bottom: 1px solid #333;
       text-align: left;
     }
 
-    th {
-      background: #222;
-    }
-
-    .estado-activo {
-      color: #2ecc71;
-      font-weight: bold;
-    }
-
-    .estado-expirado,
-    .estado-desactivado {
-      color: #ff6b6b;
-      font-weight: bold;
-    }
-
-    .estado-invalido {
-      color: #f1c40f;
-      font-weight: bold;
-    }
-
-    .oculto {
-      display: none;
-    }
+    th { background: #222; }
+    .estado-activo { color: #2ecc71; font-weight: bold; }
+    .estado-expirado, .estado-desactivado { color: #ff6b6b; font-weight: bold; }
+    .estado-invalido { color: #f1c40f; font-weight: bold; }
 
     .nota {
       color: #999;
       font-size: 13px;
       margin-top: 12px;
+      line-height: 1.6;
     }
 
-    .fecha-box {
+    .opcion-box {
       margin-top: 15px;
       padding: 15px;
       background: #222;
@@ -185,1080 +126,414 @@
       border: 1px solid #333;
     }
 
-    .fecha-box label {
+    .opcion-box label {
       display: block;
       font-weight: bold;
       margin-bottom: 8px;
     }
 
-    .fecha-box input {
-      margin: 0;
-    }
+    .opcion-box select { margin: 0; }
+    .ayuda { color: #aaa; font-size: 13px; line-height: 1.5; margin-top: 8px; }
+    .uso-personas { line-height: 1.6; white-space: nowrap; }
 
-    .fecha-ayuda {
-      color: #999;
-      font-size: 13px;
-      margin-top: 8px;
-      line-height: 1.5;
-    }
-
-    .dispositivos {
-      line-height: 1.7;
-      white-space: nowrap;
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      .panel { margin: 10px auto; padding: 15px; }
+      .login-box, .crear-box, .lista-box { padding: 14px; }
+      h1 { font-size: 25px; }
+      button { max-width: 100%; }
     }
   </style>
 </head>
 
 <body>
-
 <div class="panel">
-
   <h1>🔐 Panel VIP</h1>
-
-  <p class="subtitulo">
-    Gestión de códigos VIP de Link con Anuncios
-  </p>
-
-
-  <!-- =========================
-       ACCESO ADMINISTRADOR
-       ========================= -->
+  <p class="subtitulo">Gestión de códigos VIP de Link con Anuncios</p>
 
   <div class="login-box">
-
     <h3>🔑 Administrador</h3>
-
     <input
       id="adminKey"
       type="password"
       placeholder="Introduce tu clave de administrador"
-      autocomplete="off"
+      autocomplete="current-password"
     >
-
-    <button
-      class="btn-principal"
-      onclick="entrar()">
-      🔓 Entrar al panel
-    </button>
-
-    <div id="loginMensaje" class="mensaje"></div>
-
+    <button class="btn-principal" onclick="entrar()">🔓 Entrar al panel</button>
+    <div id="loginMensaje" class="mensaje" role="status"></div>
   </div>
 
-
-  <!-- =========================
-       GESTIÓN
-       ========================= -->
-
   <div id="gestion" class="oculto">
-
-
-    <!-- =========================
-         GENERAR
-         ========================= -->
-
     <div class="crear-box">
-
       <h3>🎲 Generar código VIP</h3>
 
-      <div class="fecha-box">
-
-        <label for="fechaExpiracion">
-          📅 Fecha de vencimiento
-        </label>
-
-        <input
-          id="fechaExpiracion"
-          type="date"
-        >
-
-        <div class="fecha-ayuda">
-          Por defecto se coloca automáticamente una fecha
-          de 30 días. Puedes cambiarla si quieres que el
-          código dure menos o más tiempo.
+      <div class="opcion-box">
+        <label for="fechaExpiracion">📅 Fecha de vencimiento</label>
+        <input id="fechaExpiracion" type="date">
+        <div class="ayuda">
+          La fecha predeterminada es de 30 días. Puedes cambiarla antes de generar el código.
         </div>
-
       </div>
 
-      <button
-        class="btn-principal"
-        onclick="generarCodigo()">
+      <div class="opcion-box">
+        <label for="maxPersonas">👥 ¿Cuántas personas podrán usar el código?</label>
+        <select id="maxPersonas">
+          <option value="1">1 persona</option>
+          <option value="2">2 personas</option>
+          <option value="3" selected>3 personas (prueba)</option>
+          <option value="5">5 personas</option>
+          <option value="10">10 personas</option>
+          <option value="25">25 personas</option>
+          <option value="50">50 personas</option>
+          <option value="100">100 personas</option>
+        </select>
+        <div class="ayuda">
+          Cada persona podrá vincular un PC y un teléfono cuando el sistema de vinculación esté configurado.
+          El límite máximo admitido actualmente por el Worker es de 100 personas.
+        </div>
+      </div>
+
+      <button class="btn-principal" onclick="generarCodigo()">
         🎲 Generar nuevo código VIP
       </button>
 
-
-      <!-- RESULTADO -->
-
-      <div
-        id="resultado"
-        class="resultado">
-
-        <div class="ok">
-          ✅ Código generado correctamente
-        </div>
-
-        <div
-          id="codigoGenerado"
-          class="codigo-generado">
-        </div>
-
+      <div id="resultado" class="resultado">
+        <div class="ok">✅ Código generado correctamente</div>
+        <div id="codigoGenerado" class="codigo-generado"></div>
         <div id="vencimientoGenerado"></div>
-
-        <button
-          class="btn-copiar"
-          onclick="copiarCodigo()">
-          📋 Copiar código
-        </button>
-
+        <div id="personasGeneradas" class="nota"></div>
+        <button class="btn-copiar" onclick="copiarCodigo()">📋 Copiar código</button>
       </div>
 
-
-      <div
-        id="crearMensaje"
-        class="mensaje">
-      </div>
-
+      <div id="crearMensaje" class="mensaje" role="status"></div>
     </div>
-
-
-    <!-- =========================
-         LISTA
-         ========================= -->
 
     <div class="lista-box">
-
       <h3>📋 Códigos creados</h3>
+      <div id="contador" class="contador">Cargando...</div>
 
-      <div
-        id="contador"
-        class="contador">
-        Cargando...
-      </div>
-
-
-      <button
-        class="btn-actualizar"
-        onclick="cargarCodigos()">
-        🔄 Actualizar lista
-      </button>
-
+      <button class="btn-actualizar" onclick="cargarCodigos()">🔄 Actualizar lista</button>
 
       <div class="tabla-contenedor">
-
         <table>
-
           <thead>
-
             <tr>
-
               <th>Código</th>
-
               <th>Estado</th>
-
               <th>Creado</th>
-
               <th>Vence</th>
-
+              <th>Personas</th>
               <th>Dispositivos</th>
-
               <th>Acción</th>
-
             </tr>
-
           </thead>
-
-
           <tbody id="listaCodigos"></tbody>
-
         </table>
-
       </div>
 
-
       <p class="nota">
-        Los códigos nuevos tienen 30 días por defecto.
-        Puedes cambiar la fecha antes de generarlos.
+        Los códigos antiguos conservan su límite anterior. Los códigos nuevos guardan el límite de personas elegido al crearlos.
       </p>
-
     </div>
-
   </div>
-
 </div>
 
-
 <script>
-
-  // =========================
-  // WORKER CLOUDFLARE
-  // =========================
-
-  const WORKER =
-    "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
-
+  const WORKER = "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
 
   let adminKey = "";
-
   let codigoActual = "";
 
-
-  // =========================
-  // PONER FECHA +30 DÍAS
-  // =========================
-
   function establecerFechaPorDefecto() {
+    const fecha = new Date();
+    fecha.setDate(fecha.getDate() + 30);
 
-    const fecha =
-      new Date();
+    const año = fecha.getFullYear();
+    const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+    const dia = String(fecha.getDate()).padStart(2, "0");
 
-    fecha.setDate(
-      fecha.getDate() + 30
-    );
-
-
-    const año =
-      fecha.getFullYear();
-
-    const mes =
-      String(
-        fecha.getMonth() + 1
-      ).padStart(2, "0");
-
-    const dia =
-      String(
-        fecha.getDate()
-      ).padStart(2, "0");
-
-
-    document
-      .getElementById("fechaExpiracion")
-      .value =
-      `${año}-${mes}-${dia}`;
-
+    document.getElementById("fechaExpiracion").value = `${año}-${mes}-${dia}`;
   }
 
-
-  // =========================
-  // ENTRAR
-  // =========================
-
   async function entrar() {
-
-    const clave =
-      document
-        .getElementById("adminKey")
-        .value
-        .trim();
-
-
-    const mensaje =
-      document.getElementById(
-        "loginMensaje"
-      );
-
+    const clave = document.getElementById("adminKey").value.trim();
+    const mensaje = document.getElementById("loginMensaje");
 
     if (!clave) {
-
-      mensaje.textContent =
-        "Introduce tu clave.";
-
-      mensaje.className =
-        "mensaje error";
-
+      mensaje.textContent = "Introduce tu clave.";
+      mensaje.className = "mensaje error";
       return;
-
     }
-
 
     adminKey = clave;
 
-
     try {
+      const respuesta = await fetch(WORKER + "/listar", {
+        method: "GET",
+        headers: { "X-Admin-Key": adminKey }
+      });
 
-      const respuesta =
-        await fetch(
-          WORKER + "/listar",
-          {
-            method: "GET",
-
-            headers: {
-              "X-Admin-Key":
-                adminKey
-            }
-          }
-        );
-
-
-      if (
-        respuesta.status === 401
-      ) {
-
+      if (respuesta.status === 401) {
         adminKey = "";
-
-        mensaje.textContent =
-          "❌ Clave incorrecta.";
-
-        mensaje.className =
-          "mensaje error";
-
+        mensaje.textContent = "❌ Clave incorrecta.";
+        mensaje.className = "mensaje error";
         return;
-
       }
 
+      if (!respuesta.ok) throw new Error("Error del servidor");
 
-      if (!respuesta.ok) {
+      document.getElementById("gestion").classList.remove("oculto");
+      document.getElementById("adminKey").value = "";
 
-        throw new Error(
-          "Error del servidor"
-        );
-
-      }
-
-
-      document
-        .getElementById("gestion")
-        .classList
-        .remove("oculto");
-
-
-      document
-        .getElementById("adminKey")
-        .value = "";
-
-
-      mensaje.textContent =
-        "✅ Acceso autorizado.";
-
-      mensaje.className =
-        "mensaje ok";
-
-
-      // Poner automáticamente
-      // los 30 días
+      mensaje.textContent = "✅ Acceso autorizado.";
+      mensaje.className = "mensaje ok";
 
       establecerFechaPorDefecto();
-
-
       await cargarCodigos();
-
-
     } catch (error) {
-
       console.error(error);
-
       adminKey = "";
-
-      mensaje.textContent =
-        "✖ No se pudo conectar con el servidor VIP.";
-
-      mensaje.className =
-        "mensaje error";
-
+      mensaje.textContent = "✖ No se pudo conectar con el servidor VIP.";
+      mensaje.className = "mensaje error";
     }
-
   }
-
-
-  // =========================
-  // GENERAR CÓDIGO
-  // =========================
 
   async function generarCodigo() {
-
-    const mensaje =
-      document.getElementById(
-        "crearMensaje"
-      );
-
-
-    const resultado =
-      document.getElementById(
-        "resultado"
-      );
-
+    const mensaje = document.getElementById("crearMensaje");
+    const resultado = document.getElementById("resultado");
 
     mensaje.textContent = "";
-
-    resultado.style.display =
-      "none";
-
+    resultado.style.display = "none";
 
     if (!adminKey) {
-
-      mensaje.textContent =
-        "Debes entrar al panel primero.";
-
-      mensaje.className =
-        "mensaje error";
-
+      mensaje.textContent = "Debes entrar al panel primero.";
+      mensaje.className = "mensaje error";
       return;
-
     }
 
-
-    // =========================
-    // OBTENER FECHA
-    // =========================
-
-    const fecha =
-      document
-        .getElementById(
-          "fechaExpiracion"
-        )
-        .value;
-
+    const fecha = document.getElementById("fechaExpiracion").value;
+    const maxPersonas = Number(document.getElementById("maxPersonas").value);
 
     if (!fecha) {
-
-      mensaje.textContent =
-        "Selecciona una fecha de vencimiento.";
-
-      mensaje.className =
-        "mensaje error";
-
+      mensaje.textContent = "Selecciona una fecha de vencimiento.";
+      mensaje.className = "mensaje error";
       return;
-
     }
 
+    const fechaSeleccionada = new Date(fecha + "T23:59:59");
 
-    // =========================
-    // CONVERTIR FECHA
-    // =========================
-
-    const fechaSeleccionada =
-      new Date(
-        fecha + "T23:59:59"
-      );
-
-
-    if (
-      isNaN(
-        fechaSeleccionada.getTime()
-      )
-    ) {
-
-      mensaje.textContent =
-        "La fecha seleccionada no es válida.";
-
-      mensaje.className =
-        "mensaje error";
-
+    if (isNaN(fechaSeleccionada.getTime()) || fechaSeleccionada.getTime() <= Date.now()) {
+      mensaje.textContent = "La fecha debe ser posterior a la fecha actual.";
+      mensaje.className = "mensaje error";
       return;
-
     }
 
-
-    if (
-      fechaSeleccionada.getTime()
-      <= Date.now()
-    ) {
-
-      mensaje.textContent =
-        "La fecha debe ser posterior a la fecha actual.";
-
-      mensaje.className =
-        "mensaje error";
-
+    if (!Number.isInteger(maxPersonas) || maxPersonas < 1 || maxPersonas > 100) {
+      mensaje.textContent = "Selecciona un límite válido de personas.";
+      mensaje.className = "mensaje error";
       return;
-
     }
-
 
     try {
+      const respuesta = await fetch(WORKER + "/crear", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Admin-Key": adminKey
+        },
+        body: JSON.stringify({
+          expira: fechaSeleccionada.toISOString(),
+          maxPersonas: maxPersonas
+        })
+      });
 
-      const respuesta =
-        await fetch(
-          WORKER + "/crear",
-          {
+      const datos = await respuesta.json();
 
-            method: "POST",
-
-            headers: {
-
-              "Content-Type":
-                "application/json",
-
-              "X-Admin-Key":
-                adminKey
-
-            },
-
-            body:
-              JSON.stringify({
-
-                expira:
-                  fechaSeleccionada.toISOString()
-
-              })
-
-          }
-        );
-
-
-      const datos =
-        await respuesta.json();
-
-
-      if (
-        respuesta.status === 401
-      ) {
-
+      if (respuesta.status === 401) {
         adminKey = "";
-
-
-        document
-          .getElementById(
-            "gestion"
-          )
-          .classList
-          .add("oculto");
-
-
-        mensaje.textContent =
-          "❌ Tu sesión de administrador ya no es válida.";
-
-        mensaje.className =
-          "mensaje error";
-
+        document.getElementById("gestion").classList.add("oculto");
+        mensaje.textContent = "❌ Tu sesión de administrador ya no es válida.";
+        mensaje.className = "mensaje error";
         return;
-
       }
 
-
-      if (
-        !respuesta.ok ||
-        !datos.correcto
-      ) {
-
-        mensaje.textContent =
-          datos.error ||
-          "No se pudo generar el código.";
-
-        mensaje.className =
-          "mensaje error";
-
+      if (!respuesta.ok || !datos.correcto) {
+        mensaje.textContent = datos.error || "No se pudo generar el código.";
+        mensaje.className = "mensaje error";
         return;
-
       }
 
+      codigoActual = datos.codigo;
+      document.getElementById("codigoGenerado").textContent = datos.codigo;
+      document.getElementById("vencimientoGenerado").textContent =
+        "Vence: " + formatearFecha(datos.expira);
+      document.getElementById("personasGeneradas").textContent =
+        "Límite configurado: " + datos.maxPersonas + " persona(s).";
 
-      codigoActual =
-        datos.codigo;
-
-
-      document
-        .getElementById(
-          "codigoGenerado"
-        )
-        .textContent =
-        datos.codigo;
-
-
-      document
-        .getElementById(
-          "vencimientoGenerado"
-        )
-        .textContent =
-        "Vence: " +
-        formatearFecha(
-          datos.expira
-        );
-
-
-      resultado.style.display =
-        "block";
-
-
+      resultado.style.display = "block";
       await cargarCodigos();
-
-
     } catch (error) {
-
       console.error(error);
-
-      mensaje.textContent =
-        "✖ No se pudo conectar con el servidor VIP.";
-
-      mensaje.className =
-        "mensaje error";
-
+      mensaje.textContent = "✖ No se pudo conectar con el servidor VIP.";
+      mensaje.className = "mensaje error";
     }
-
   }
-
-
-  // =========================
-  // COPIAR CÓDIGO
-  // =========================
 
   async function copiarCodigo() {
-
-    if (!codigoActual)
-      return;
-
+    if (!codigoActual) return;
 
     try {
-
-      await navigator
-        .clipboard
-        .writeText(
-          codigoActual
-        );
-
-
-      const boton =
-        document.querySelector(
-          ".btn-copiar"
-        );
-
-
-      boton.textContent =
-        "✅ Copiado";
-
+      await navigator.clipboard.writeText(codigoActual);
+      const boton = document.querySelector(".btn-copiar");
+      boton.textContent = "✅ Copiado";
 
       setTimeout(() => {
-
-        boton.textContent =
-          "📋 Copiar código";
-
+        boton.textContent = "📋 Copiar código";
       }, 1500);
-
-
     } catch {
-
-      alert(
-        "No se pudo copiar automáticamente.\n\n" +
-        "Código: " +
-        codigoActual
-      );
-
+      alert("No se pudo copiar automáticamente.\n\nCódigo: " + codigoActual);
     }
-
   }
-
-
-  // =========================
-  // CARGAR CÓDIGOS
-  // =========================
 
   async function cargarCodigos() {
+    const contador = document.getElementById("contador");
+    const tabla = document.getElementById("listaCodigos");
 
-    const contador =
-      document.getElementById(
-        "contador"
-      );
-
-
-    const tabla =
-      document.getElementById(
-        "listaCodigos"
-      );
-
-
-    contador.textContent =
-      "Cargando códigos...";
-
+    contador.textContent = "Cargando códigos...";
+    tabla.replaceChildren();
 
     try {
+      const respuesta = await fetch(WORKER + "/listar", {
+        method: "GET",
+        headers: { "X-Admin-Key": adminKey }
+      });
 
-      const respuesta =
-        await fetch(
-          WORKER + "/listar",
-          {
-
-            method: "GET",
-
-            headers: {
-
-              "X-Admin-Key":
-                adminKey
-
-            }
-
-          }
-        );
-
-
-      if (
-        respuesta.status === 401
-      ) {
-
+      if (respuesta.status === 401) {
         adminKey = "";
-
-
-        document
-          .getElementById(
-            "gestion"
-          )
-          .classList
-          .add("oculto");
-
-
-        contador.textContent =
-          "Sesión de administrador expirada.";
-
+        document.getElementById("gestion").classList.add("oculto");
+        contador.textContent = "Sesión de administrador expirada.";
         return;
-
       }
 
+      const datos = await respuesta.json();
+      if (!respuesta.ok) throw new Error(datos.error || "Error del servidor");
 
-      const datos =
-        await respuesta.json();
+      contador.textContent = "Total de códigos creados: " + datos.total;
 
-
-      if (!respuesta.ok) {
-
-        throw new Error(
-          datos.error ||
-          "Error del servidor"
-        );
-
-      }
-
-
-      contador.textContent =
-        "Total de códigos creados: " +
-        datos.total;
-
-
-      tabla.innerHTML = "";
-
-
-      if (
-        !datos.codigos ||
-        !datos.codigos.length
-      ) {
-
-        tabla.innerHTML = `
-
-          <tr>
-
-            <td colspan="6">
-              Todavía no hay códigos.
-            </td>
-
-          </tr>
-
-        `;
-
+      if (!datos.codigos || !datos.codigos.length) {
+        const fila = document.createElement("tr");
+        const celda = document.createElement("td");
+        celda.colSpan = 7;
+        celda.textContent = "Todavía no hay códigos.";
+        fila.appendChild(celda);
+        tabla.appendChild(fila);
         return;
-
       }
 
+      for (const item of datos.codigos) {
+        const fila = document.createElement("tr");
 
-      for (
-        const item of datos.codigos
-      ) {
+        const claseEstado = {
+          "Activo": "estado-activo",
+          "Expirado": "estado-expirado",
+          "Desactivado": "estado-desactivado"
+        }[item.estado] || "estado-invalido";
 
-        const fila =
-          document.createElement(
-            "tr"
-          );
+        let textoPersonas;
 
-
-        let claseEstado =
-          "estado-invalido";
-
-
-        if (
-          item.estado === "Activo"
-        ) {
-
-          claseEstado =
-            "estado-activo";
-
+        if (item.personas === null || item.personas === undefined) {
+          textoPersonas = "Antiguo";
+        } else {
+          textoPersonas = `${item.personas} de ${item.maxPersonas} personas`;
         }
 
-        else if (
-          item.estado === "Expirado"
-        ) {
+        let textoDispositivos = `${item.dispositivos || 0}`;
 
-          claseEstado =
-            "estado-expirado";
+        if (item.pc) textoDispositivos += " · 💻 PC";
+        if (item.telefono) textoDispositivos += " · 📱 Teléfono";
+        if (!item.pc && !item.telefono) textoDispositivos += " · Sin activar";
 
+        agregarCelda(fila, item.codigo);
+        agregarCelda(fila, item.estado, claseEstado);
+        agregarCelda(fila, formatearFecha(item.creado));
+        agregarCelda(fila, formatearFecha(item.expira));
+        agregarCelda(fila, textoPersonas, "uso-personas");
+        agregarCelda(fila, textoDispositivos);
+
+        const celdaAccion = document.createElement("td");
+
+        if (item.estado === "Activo") {
+          const boton = document.createElement("button");
+          boton.className = "btn-desactivar";
+          boton.textContent = "🚫 Desactivar";
+          boton.addEventListener("click", () => desactivarCodigo(item.codigo));
+          celdaAccion.appendChild(boton);
+        } else {
+          celdaAccion.textContent = "—";
         }
 
-        else if (
-          item.estado === "Desactivado"
-        ) {
-
-          claseEstado =
-            "estado-desactivado";
-
-        }
-
-
-        // =========================
-        // DISPOSITIVOS
-        // =========================
-
-        let dispositivos =
-          "0 / 2";
-
-
-        if (
-          item.dispositivos === 1
-        ) {
-
-          if (item.pc) {
-
-            dispositivos =
-              "💻 PC — 1 / 2";
-
-          }
-
-          else if (
-            item.telefono
-          ) {
-
-            dispositivos =
-              "📱 Teléfono — 1 / 2";
-
-          }
-
-        }
-
-        else if (
-          item.dispositivos >= 2
-        ) {
-
-          dispositivos =
-            "💻 PC + 📱 Teléfono — 2 / 2";
-
-        }
-
-
-        // =========================
-        // ACCIÓN
-        // =========================
-
-        let accion = "—";
-
-
-        if (
-          item.estado === "Activo"
-        ) {
-
-          accion = `
-
-            <button
-              class="btn-desactivar"
-              onclick="desactivarCodigo('${item.codigo}')">
-
-              🚫 Desactivar
-
-            </button>
-
-          `;
-
-        }
-
-
-        fila.innerHTML = `
-
-          <td>
-            ${item.codigo}
-          </td>
-
-
-          <td
-            class="${claseEstado}">
-
-            ${item.estado}
-
-          </td>
-
-
-          <td>
-            ${formatearFecha(
-              item.creado
-            )}
-          </td>
-
-
-          <td>
-            ${formatearFecha(
-              item.expira
-            )}
-          </td>
-
-
-          <td class="dispositivos">
-            ${dispositivos}
-          </td>
-
-
-          <td>
-            ${accion}
-          </td>
-
-        `;
-
-
-        tabla.appendChild(
-          fila
-        );
-
+        fila.appendChild(celdaAccion);
+        tabla.appendChild(fila);
       }
-
-
     } catch (error) {
-
       console.error(error);
-
-      contador.textContent =
-        "✖ No se pudo cargar la lista.";
-
+      contador.textContent = "✖ No se pudo cargar la lista.";
     }
-
   }
 
+  function agregarCelda(fila, texto, clase = "") {
+    const celda = document.createElement("td");
+    celda.textContent = texto == null ? "—" : String(texto);
+    if (clase) celda.className = clase;
+    fila.appendChild(celda);
+  }
 
-  // =========================
-  // DESACTIVAR
-  // =========================
-
-  async function desactivarCodigo(
-    codigo
-  ) {
-
-    const confirmar =
-      confirm(
-
-        "¿Seguro que quieres desactivar este código?\n\n" +
-        codigo +
-        "\n\n" +
-        "El usuario perderá el acceso VIP."
-
-      );
-
-
-    if (!confirmar)
-      return;
-
+  async function desactivarCodigo(codigo) {
+    if (!confirm(
+      "¿Seguro que quieres desactivar este código?\n\n" +
+      codigo + "\n\nEl usuario perderá el acceso VIP."
+    )) return;
 
     try {
+      const respuesta = await fetch(WORKER + "/desactivar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Admin-Key": adminKey
+        },
+        body: JSON.stringify({ codigo })
+      });
 
-      const respuesta =
-        await fetch(
-          WORKER + "/desactivar",
-          {
-
-            method: "POST",
-
-            headers: {
-
-              "Content-Type":
-                "application/json",
-
-              "X-Admin-Key":
-                adminKey
-
-            },
-
-            body:
-              JSON.stringify({
-                codigo:
-                  codigo
-              })
-
-          }
-        );
-
-
-      const datos =
-        await respuesta.json();
-
+      const datos = await respuesta.json();
 
       if (!respuesta.ok) {
-
-        alert(
-          datos.error ||
-          "No se pudo desactivar el código."
-        );
-
+        alert(datos.error || "No se pudo desactivar el código.");
         return;
-
       }
 
-
-      alert(
-        "✅ Código desactivado."
-      );
-
-
+      alert("✅ Código desactivado.");
       await cargarCodigos();
-
-
     } catch (error) {
-
       console.error(error);
-
-      alert(
-        "No se pudo conectar con el servidor VIP."
-      );
-
+      alert("No se pudo conectar con el servidor VIP.");
     }
-
   }
 
+  function formatearFecha(timestamp) {
+    if (!timestamp) return "—";
 
-  // =========================
-  // FORMATEAR FECHA
-  // =========================
-
-  function formatearFecha(
-    timestamp
-  ) {
-
-    if (!timestamp)
-      return "—";
-
-
-    return new Date(
-      timestamp
-    ).toLocaleString(
-      "es-ES",
-      {
-
-        day: "2-digit",
-
-        month: "2-digit",
-
-        year: "numeric",
-
-        hour: "2-digit",
-
-        minute: "2-digit"
-
-      }
-    );
-
+    return new Date(timestamp).toLocaleString("es-ES", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
   }
 
-
-  // =========================
-  // ENTER
-  // =========================
-
-  document
-    .getElementById("adminKey")
-    .addEventListener(
-      "keydown",
-      function(event) {
-
-        if (
-          event.key === "Enter"
-        ) {
-
-          entrar();
-
-        }
-
-      }
-    );
-
+  document.getElementById("adminKey").addEventListener("keydown", event => {
+    if (event.key === "Enter") entrar();
+  });
 </script>
-
 </body>
 </html>
