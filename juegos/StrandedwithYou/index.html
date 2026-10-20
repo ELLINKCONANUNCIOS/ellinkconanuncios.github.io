@@ -45,18 +45,19 @@
       line-height: 1.6;
       color: #ccc;
     }
-     /* ===== ANUNCIO ADSTERRA ===== */
 
-   .anuncio-adsterra {
-     width: 300px;
-     height: 250px;
-     margin: 10px auto 20px auto;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     overflow: hidden;
-   }
-  
+    /* ===== ANUNCIO ADSTERRA ===== */
+
+    .anuncio-adsterra {
+      width: 300px;
+      height: 250px;
+      margin: 10px auto 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
     /* ===== BOTÓN PATREON DEL CREADOR ===== */
 
     .btn-creador {
@@ -162,6 +163,7 @@
     }
 
     /* ===== BOTÓN TUTORIAL DE ACORTADORES ===== */
+
     .btn-tutorial {
       display: inline-block;
       background: #2563eb;
@@ -336,44 +338,41 @@
   <img
     src="../../imagenes/StrandedwithYou/StrandedwithYou1.png"
     class="juego-img"
-    alt="StrandedwithYou"
+    alt="Stranded with You"
   >
 
 
   <!-- ===== DESCRIPCIÓN ===== -->
 
   <p class="descripcion-fija">
- Abres los ojos y… ¡¿te encuentras en una isla desierta?!
-Tú y tu amiga de la infancia, Mitsuki Nanami, no habían mantenido contacto durante muchos años.
-Pero un día, te invitó a un viaje de vacaciones de verano.
-Durante el viaje, su barco quedó atrapado en una gran tormenta y ambos terminaron varados en una isla desierta.
+    Abres los ojos y… ¡¿te encuentras en una isla desierta?!
+    Tú y tu amiga de la infancia, Mitsuki Nanami, no habían mantenido contacto durante muchos años.
+    Pero un día, te invitó a un viaje de vacaciones de verano.
+    Durante el viaje, su barco quedó atrapado en una gran tormenta y ambos terminaron varados en una isla desierta.
 
-Ahora deben explorar, conseguir comida y agua, buscar provisiones
-y fabricar objetos para sobrevivir y escapar de la isla.
-Y a través de estas dificultades compartidas, su relación con Mitsuki podría comenzar a cambiar.
-
+    Ahora deben explorar, conseguir comida y agua, buscar provisiones
+    y fabricar objetos para sobrevivir y escapar de la isla.
+    Y a través de estas dificultades compartidas, su relación con Mitsuki podría comenzar a cambiar.
   </p>
 
-<!-- ===== ANUNCIO ADSTERRA ===== -->
 
-<div class="anuncio-adsterra">
+  <!-- ===== ANUNCIO ADSTERRA ===== -->
 
-  <script>
-    atOptions = {
-      'key' : '9cb87cf95b9d0c89cf81fb65d8b21c59',
-      'format' : 'iframe',
-      'height' : 250,
-      'width' : 300,
-      'params' : {}
-    };
-  </script>
+  <div class="anuncio-adsterra">
 
-  <script src="https://biomanos.org/22/9cb87cf95b9d0c89cf81fb65d8b21c59"></script>
+    <script>
+      atOptions = {
+        'key' : '9cb87cf95b9d0c89cf81fb65d8b21c59',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
 
-</div>
+    <script src="https://biomanos.org/22/9cb87cf95b9d0c89cf81fb65d8b21c59"></script>
 
-
-
+  </div>
 
 
   <!-- ===== MENÚ ===== -->
@@ -415,7 +414,6 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
 
   <div class="seccion-contenido">
 
-
     <!-- ⭐ ANDROID -->
 
     <div id="android" class="section">
@@ -436,20 +434,23 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
       </a>
 
       <a
+        href="#"
         class="btn btn-premium"
-        onclick="premiumAndroid()">
+        onclick="premiumAndroid(); return false;">
         Descargar sin anuncios (Premium)
       </a>
 
-      <a href="https://www.mediafire.com/folder/x7aso99zsyn7x/JoiPlay+Up+tioeroge.blogspot.com"
+      <a
+        href="https://www.mediafire.com/folder/x7aso99zsyn7x/JoiPlay+Up+tioeroge.blogspot.com"
         class="btn-tutorial"
         target="_blank"
         rel="noopener noreferrer">
-       🌐 Descargar joiplay (necesario para el juego)
+        🌐 Descargar joiplay (necesario para el juego)
       </a>
 
-
-      <a href="../../tutorial/tutorial.html" class="btn-tutorial">
+      <a
+        href="../../tutorial/tutorial.html"
+        class="btn-tutorial">
         📘 Tutorial para pasar los acortadores
       </a>
 
@@ -475,14 +476,15 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
       </a>
 
       <a
+        href="#"
         class="btn btn-premium"
-        onclick="premiumPC()">
+        onclick="premiumPC(); return false;">
         Descargar sin anuncios (Premium)
       </a>
 
-     
-
-      <a href="../../tutorial/tutorial.html" class="btn-tutorial">
+      <a
+        href="../../tutorial/tutorial.html"
+        class="btn-tutorial">
         📘 Tutorial para pasar los acortadores
       </a>
 
@@ -591,8 +593,7 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
   </a>
 
 
- 
- <script>
+  <script>
 
     // =========================
     // CLOUDFLARE VIP
@@ -600,6 +601,47 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
 
     const VIP_WORKER =
       "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
+
+
+    // =========================
+    // IDENTIFICADOR DEL DISPOSITIVO
+    // =========================
+
+    function obtenerDeviceId() {
+
+      let deviceId =
+        localStorage.getItem("vipDeviceId");
+
+      if (!deviceId) {
+
+        if (
+          window.crypto &&
+          crypto.randomUUID
+        ) {
+
+          deviceId =
+            crypto.randomUUID();
+
+        } else {
+
+          deviceId =
+            "device-" +
+            Date.now() +
+            "-" +
+            Math.random()
+              .toString(36)
+              .substring(2);
+
+        }
+
+        localStorage.setItem(
+          "vipDeviceId",
+          deviceId
+        );
+      }
+
+      return deviceId;
+    }
 
 
     // =========================
@@ -684,11 +726,16 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
         return false;
       }
 
+      const deviceId =
+        obtenerDeviceId();
+
       const respuesta =
         await fetch(
           VIP_WORKER +
           "/verificar?codigo=" +
-          encodeURIComponent(codigo)
+          encodeURIComponent(codigo) +
+          "&device=" +
+          encodeURIComponent(deviceId)
         );
 
       if (!respuesta.ok) {
@@ -711,7 +758,8 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
 
       if (
         data.expirado ||
-        data.desactivado
+        data.desactivado ||
+        data.limite
       ) {
 
         localStorage.removeItem(
@@ -771,42 +819,10 @@ Y a través de estas dificultades compartidas, su relación con Mitsuki podría 
 
       try {
 
-        const vip = await comprobarVIP();
-
-
-        if (vip) {          return;
-        }
-
-        window.location.href =
-          "../../vip.html";
-
-      } catch (error) {
-
-        console.error(
-          "Error VIP Android:",
-          error
-        );
-
-        alert(
-          "No se pudo comprobar tu acceso VIP. Inténtalo nuevamente."
-        );
-      }
-    }
-
-
-    // =========================
-    // PREMIUM PC
-    // =========================
-
-    async function premiumPC() {
-
-      try {
-
         const vip =
           await comprobarVIP();
 
         if (vip) {
-
 
           window.location.href =
             "https://www.mediafire.com/file/5p4rv7xvbnryix9/Stranded+with+You+ES.zip/file";
