@@ -137,7 +137,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 700px;
+      min-width: 850px;
     }
 
     th,
@@ -176,6 +176,36 @@
       font-size: 13px;
       margin-top: 12px;
     }
+
+    .fecha-box {
+      margin-top: 15px;
+      padding: 15px;
+      background: #222;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+
+    .fecha-box label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .fecha-box input {
+      margin: 0;
+    }
+
+    .fecha-ayuda {
+      color: #999;
+      font-size: 13px;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .dispositivos {
+      line-height: 1.7;
+      white-space: nowrap;
+    }
   </style>
 </head>
 
@@ -188,6 +218,7 @@
   <p class="subtitulo">
     Gestión de códigos VIP de Link con Anuncios
   </p>
+
 
   <!-- =========================
        ACCESO ADMINISTRADOR
@@ -221,19 +252,46 @@
 
   <div id="gestion" class="oculto">
 
-    <!-- GENERAR -->
+
+    <!-- =========================
+         GENERAR
+         ========================= -->
 
     <div class="crear-box">
 
-      <h3>🎲 Generar código</h3>
+      <h3>🎲 Generar código VIP</h3>
+
+      <div class="fecha-box">
+
+        <label for="fechaExpiracion">
+          📅 Fecha de vencimiento
+        </label>
+
+        <input
+          id="fechaExpiracion"
+          type="date"
+        >
+
+        <div class="fecha-ayuda">
+          Por defecto se coloca automáticamente una fecha
+          de 30 días. Puedes cambiarla si quieres que el
+          código dure menos o más tiempo.
+        </div>
+
+      </div>
 
       <button
         class="btn-principal"
         onclick="generarCodigo()">
-        Generar nuevo código VIP
+        🎲 Generar nuevo código VIP
       </button>
 
-      <div id="resultado" class="resultado">
+
+      <!-- RESULTADO -->
+
+      <div
+        id="resultado"
+        class="resultado">
 
         <div class="ok">
           ✅ Código generado correctamente
@@ -254,6 +312,7 @@
 
       </div>
 
+
       <div
         id="crearMensaje"
         class="mensaje">
@@ -262,7 +321,9 @@
     </div>
 
 
-    <!-- LISTA -->
+    <!-- =========================
+         LISTA
+         ========================= -->
 
     <div class="lista-box">
 
@@ -274,11 +335,13 @@
         Cargando...
       </div>
 
+
       <button
         class="btn-actualizar"
         onclick="cargarCodigos()">
         🔄 Actualizar lista
       </button>
+
 
       <div class="tabla-contenedor">
 
@@ -287,14 +350,23 @@
           <thead>
 
             <tr>
+
               <th>Código</th>
+
               <th>Estado</th>
+
               <th>Creado</th>
+
               <th>Vence</th>
+
+              <th>Dispositivos</th>
+
               <th>Acción</th>
+
             </tr>
 
           </thead>
+
 
           <tbody id="listaCodigos"></tbody>
 
@@ -302,8 +374,10 @@
 
       </div>
 
+
       <p class="nota">
-        Los códigos nuevos tienen una duración de 30 días.
+        Los códigos nuevos tienen 30 días por defecto.
+        Puedes cambiar la fecha antes de generarlos.
       </p>
 
     </div>
@@ -315,533 +389,874 @@
 
 <script>
 
-const WORKER =
-  "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
+  // =========================
+  // WORKER CLOUDFLARE
+  // =========================
 
-let adminKey = "";
-let codigoActual = "";
+  const WORKER =
+    "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
 
 
-// =========================
-// ENTRAR
-// =========================
+  let adminKey = "";
 
-async function entrar() {
+  let codigoActual = "";
 
-  const clave =
-    document
-      .getElementById("adminKey")
-      .value
-      .trim();
 
-  const mensaje =
-    document.getElementById("loginMensaje");
+  // =========================
+  // PONER FECHA +30 DÍAS
+  // =========================
 
-  if (!clave) {
+  function establecerFechaPorDefecto() {
 
-    mensaje.textContent =
-      "Introduce tu clave.";
+    const fecha =
+      new Date();
 
-    mensaje.className =
-      "mensaje error";
+    fecha.setDate(
+      fecha.getDate() + 30
+    );
 
-    return;
-  }
 
-  adminKey = clave;
+    const año =
+      fecha.getFullYear();
 
-  try {
+    const mes =
+      String(
+        fecha.getMonth() + 1
+      ).padStart(2, "0");
 
-    const respuesta =
-      await fetch(
-        WORKER + "/listar",
-        {
-          method: "GET",
-          headers: {
-            "X-Admin-Key": adminKey
-          }
-        }
-      );
+    const dia =
+      String(
+        fecha.getDate()
+      ).padStart(2, "0");
 
-    if (respuesta.status === 401) {
-
-      adminKey = "";
-
-      mensaje.textContent =
-        "❌ Clave incorrecta.";
-
-      mensaje.className =
-        "mensaje error";
-
-      return;
-    }
-
-    if (!respuesta.ok) {
-      throw new Error(
-        "Error del servidor"
-      );
-    }
 
     document
-      .getElementById("gestion")
-      .classList
-      .remove("oculto");
+      .getElementById("fechaExpiracion")
+      .value =
+      `${año}-${mes}-${dia}`;
 
-    document
-      .getElementById("adminKey")
-      .value = "";
-
-    mensaje.textContent =
-      "✅ Acceso autorizado.";
-
-    mensaje.className =
-      "mensaje ok";
-
-    await cargarCodigos();
-
-  } catch (error) {
-
-    console.error(error);
-
-    adminKey = "";
-
-    mensaje.textContent =
-      "✖ No se pudo conectar con el servidor VIP.";
-
-    mensaje.className =
-      "mensaje error";
-  }
-}
-
-
-// =========================
-// GENERAR CÓDIGO
-// =========================
-
-async function generarCodigo() {
-
-  const mensaje =
-    document.getElementById("crearMensaje");
-
-  const resultado =
-    document.getElementById("resultado");
-
-  mensaje.textContent = "";
-
-  resultado.style.display =
-    "none";
-
-  if (!adminKey) {
-
-    mensaje.textContent =
-      "Debes entrar al panel primero.";
-
-    mensaje.className =
-      "mensaje error";
-
-    return;
   }
 
-  try {
 
-    const respuesta =
-      await fetch(
-        WORKER + "/crear",
-        {
-          method: "POST",
-          headers: {
-            "X-Admin-Key": adminKey
-          }
-        }
-      );
+  // =========================
+  // ENTRAR
+  // =========================
 
-    const datos =
-      await respuesta.json();
+  async function entrar() {
 
-    if (respuesta.status === 401) {
-
-      adminKey = "";
-
+    const clave =
       document
-        .getElementById("gestion")
-        .classList
-        .add("oculto");
-
-      mensaje.textContent =
-        "❌ Tu sesión de administrador ya no es válida.";
-
-      mensaje.className =
-        "mensaje error";
-
-      return;
-    }
-
-    if (
-      !respuesta.ok ||
-      !datos.correcto
-    ) {
-
-      mensaje.textContent =
-        datos.error ||
-        "No se pudo generar el código.";
-
-      mensaje.className =
-        "mensaje error";
-
-      return;
-    }
-
-    codigoActual =
-      datos.codigo;
-
-    document
-      .getElementById("codigoGenerado")
-      .textContent =
-      datos.codigo;
-
-    document
-      .getElementById("vencimientoGenerado")
-      .textContent =
-      "Vence: " +
-      formatearFecha(datos.expira);
-
-    resultado.style.display =
-      "block";
-
-    await cargarCodigos();
-
-  } catch (error) {
-
-    console.error(error);
-
-    mensaje.textContent =
-      "✖ No se pudo conectar con el servidor VIP.";
-
-    mensaje.className =
-      "mensaje error";
-  }
-}
+        .getElementById("adminKey")
+        .value
+        .trim();
 
 
-// =========================
-// COPIAR CÓDIGO
-// =========================
-
-async function copiarCodigo() {
-
-  if (!codigoActual)
-    return;
-
-  try {
-
-    await navigator.clipboard
-      .writeText(codigoActual);
-
-    const boton =
-      document.querySelector(
-        ".btn-copiar"
+    const mensaje =
+      document.getElementById(
+        "loginMensaje"
       );
 
-    boton.textContent =
-      "✅ Copiado";
 
-    setTimeout(() => {
+    if (!clave) {
 
-      boton.textContent =
-        "📋 Copiar código";
+      mensaje.textContent =
+        "Introduce tu clave.";
 
-    }, 1500);
+      mensaje.className =
+        "mensaje error";
 
-  } catch {
+      return;
 
-    alert(
-      "No se pudo copiar automáticamente.\n\n" +
-      "Código: " +
-      codigoActual
-    );
-  }
-}
+    }
 
 
-// =========================
-// CARGAR CÓDIGOS
-// =========================
+    adminKey = clave;
 
-async function cargarCodigos() {
 
-  const contador =
-    document.getElementById(
-      "contador"
-    );
+    try {
 
-  const tabla =
-    document.getElementById(
-      "listaCodigos"
-    );
+      const respuesta =
+        await fetch(
+          WORKER + "/listar",
+          {
+            method: "GET",
 
-  contador.textContent =
-    "Cargando códigos...";
-
-  try {
-
-    const respuesta =
-      await fetch(
-        WORKER + "/listar",
-        {
-          method: "GET",
-          headers: {
-            "X-Admin-Key":
-              adminKey
+            headers: {
+              "X-Admin-Key":
+                adminKey
+            }
           }
-        }
-      );
-
-    if (respuesta.status === 401) {
-
-      adminKey = "";
-
-      document
-        .getElementById("gestion")
-        .classList
-        .add("oculto");
-
-      contador.textContent =
-        "Sesión de administrador expirada.";
-
-      return;
-    }
-
-    const datos =
-      await respuesta.json();
-
-    if (!respuesta.ok) {
-
-      throw new Error(
-        datos.error ||
-        "Error del servidor"
-      );
-    }
-
-    contador.textContent =
-      "Total de códigos creados: " +
-      datos.total;
-
-    tabla.innerHTML = "";
-
-    if (
-      !datos.codigos ||
-      !datos.codigos.length
-    ) {
-
-      tabla.innerHTML = `
-        <tr>
-          <td colspan="5">
-            Todavía no hay códigos.
-          </td>
-        </tr>
-      `;
-
-      return;
-    }
-
-    for (
-      const item of datos.codigos
-    ) {
-
-      const fila =
-        document.createElement(
-          "tr"
         );
 
-      let claseEstado =
-        "estado-invalido";
 
       if (
-        item.estado === "Activo"
+        respuesta.status === 401
       ) {
 
-        claseEstado =
-          "estado-activo";
+        adminKey = "";
 
-      } else if (
-        item.estado === "Expirado"
-      ) {
+        mensaje.textContent =
+          "❌ Clave incorrecta.";
 
-        claseEstado =
-          "estado-expirado";
+        mensaje.className =
+          "mensaje error";
 
-      } else if (
-        item.estado === "Desactivado"
-      ) {
+        return;
 
-        claseEstado =
-          "estado-desactivado";
       }
 
-      let accion = "—";
 
-      if (
-        item.estado === "Activo"
-      ) {
+      if (!respuesta.ok) {
 
-        accion = `
-          <button
-            class="btn-desactivar"
-            onclick="desactivarCodigo('${item.codigo}')">
-            🚫 Desactivar
-          </button>
-        `;
+        throw new Error(
+          "Error del servidor"
+        );
+
       }
 
-      fila.innerHTML = `
-        <td>${item.codigo}</td>
 
-        <td class="${claseEstado}">
-          ${item.estado}
-        </td>
+      document
+        .getElementById("gestion")
+        .classList
+        .remove("oculto");
 
-        <td>
-          ${formatearFecha(item.creado)}
-        </td>
 
-        <td>
-          ${formatearFecha(item.expira)}
-        </td>
+      document
+        .getElementById("adminKey")
+        .value = "";
 
-        <td>
-          ${accion}
-        </td>
-      `;
 
-      tabla.appendChild(
-        fila
-      );
+      mensaje.textContent =
+        "✅ Acceso autorizado.";
+
+      mensaje.className =
+        "mensaje ok";
+
+
+      // Poner automáticamente
+      // los 30 días
+
+      establecerFechaPorDefecto();
+
+
+      await cargarCodigos();
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      adminKey = "";
+
+      mensaje.textContent =
+        "✖ No se pudo conectar con el servidor VIP.";
+
+      mensaje.className =
+        "mensaje error";
+
     }
 
-  } catch (error) {
-
-    console.error(error);
-
-    contador.textContent =
-      "✖ No se pudo cargar la lista.";
   }
-}
 
 
-// =========================
-// DESACTIVAR
-// =========================
+  // =========================
+  // GENERAR CÓDIGO
+  // =========================
 
-async function desactivarCodigo(
-  codigo
-) {
+  async function generarCodigo() {
 
-  const confirmar =
-    confirm(
-      "¿Seguro que quieres desactivar este código?\n\n" +
-      codigo +
-      "\n\n" +
-      "El usuario perderá el acceso VIP."
-    );
-
-  if (!confirmar)
-    return;
-
-  try {
-
-    const respuesta =
-      await fetch(
-        WORKER + "/desactivar",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json",
-
-            "X-Admin-Key":
-              adminKey
-          },
-
-          body: JSON.stringify({
-            codigo: codigo
-          })
-        }
+    const mensaje =
+      document.getElementById(
+        "crearMensaje"
       );
 
-    const datos =
-      await respuesta.json();
 
-    if (!respuesta.ok) {
-
-      alert(
-        datos.error ||
-        "No se pudo desactivar el código."
+    const resultado =
+      document.getElementById(
+        "resultado"
       );
+
+
+    mensaje.textContent = "";
+
+    resultado.style.display =
+      "none";
+
+
+    if (!adminKey) {
+
+      mensaje.textContent =
+        "Debes entrar al panel primero.";
+
+      mensaje.className =
+        "mensaje error";
 
       return;
+
     }
 
-    alert(
-      "✅ Código desactivado."
-    );
 
-    await cargarCodigos();
+    // =========================
+    // OBTENER FECHA
+    // =========================
 
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      "No se pudo conectar con el servidor VIP."
-    );
-  }
-}
+    const fecha =
+      document
+        .getElementById(
+          "fechaExpiracion"
+        )
+        .value;
 
 
-// =========================
-// FORMATEAR FECHA
-// =========================
+    if (!fecha) {
 
-function formatearFecha(
-  timestamp
-) {
+      mensaje.textContent =
+        "Selecciona una fecha de vencimiento.";
 
-  if (!timestamp)
-    return "—";
+      mensaje.className =
+        "mensaje error";
 
-  return new Date(timestamp)
-    .toLocaleString(
-      "es-ES",
-      {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-      }
-    );
-}
+      return;
+
+    }
 
 
-// =========================
-// ENTER
-// =========================
+    // =========================
+    // CONVERTIR FECHA
+    // =========================
 
-document
-  .getElementById("adminKey")
-  .addEventListener(
-    "keydown",
-    function(event) {
+    const fechaSeleccionada =
+      new Date(
+        fecha + "T23:59:59"
+      );
+
+
+    if (
+      isNaN(
+        fechaSeleccionada.getTime()
+      )
+    ) {
+
+      mensaje.textContent =
+        "La fecha seleccionada no es válida.";
+
+      mensaje.className =
+        "mensaje error";
+
+      return;
+
+    }
+
+
+    if (
+      fechaSeleccionada.getTime()
+      <= Date.now()
+    ) {
+
+      mensaje.textContent =
+        "La fecha debe ser posterior a la fecha actual.";
+
+      mensaje.className =
+        "mensaje error";
+
+      return;
+
+    }
+
+
+    try {
+
+      const respuesta =
+        await fetch(
+          WORKER + "/crear",
+          {
+
+            method: "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/json",
+
+              "X-Admin-Key":
+                adminKey
+
+            },
+
+            body:
+              JSON.stringify({
+
+                expira:
+                  fechaSeleccionada.toISOString()
+
+              })
+
+          }
+        );
+
+
+      const datos =
+        await respuesta.json();
+
 
       if (
-        event.key === "Enter"
+        respuesta.status === 401
       ) {
-        entrar();
+
+        adminKey = "";
+
+
+        document
+          .getElementById(
+            "gestion"
+          )
+          .classList
+          .add("oculto");
+
+
+        mensaje.textContent =
+          "❌ Tu sesión de administrador ya no es válida.";
+
+        mensaje.className =
+          "mensaje error";
+
+        return;
+
       }
 
+
+      if (
+        !respuesta.ok ||
+        !datos.correcto
+      ) {
+
+        mensaje.textContent =
+          datos.error ||
+          "No se pudo generar el código.";
+
+        mensaje.className =
+          "mensaje error";
+
+        return;
+
+      }
+
+
+      codigoActual =
+        datos.codigo;
+
+
+      document
+        .getElementById(
+          "codigoGenerado"
+        )
+        .textContent =
+        datos.codigo;
+
+
+      document
+        .getElementById(
+          "vencimientoGenerado"
+        )
+        .textContent =
+        "Vence: " +
+        formatearFecha(
+          datos.expira
+        );
+
+
+      resultado.style.display =
+        "block";
+
+
+      await cargarCodigos();
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      mensaje.textContent =
+        "✖ No se pudo conectar con el servidor VIP.";
+
+      mensaje.className =
+        "mensaje error";
+
     }
-  );
+
+  }
+
+
+  // =========================
+  // COPIAR CÓDIGO
+  // =========================
+
+  async function copiarCodigo() {
+
+    if (!codigoActual)
+      return;
+
+
+    try {
+
+      await navigator
+        .clipboard
+        .writeText(
+          codigoActual
+        );
+
+
+      const boton =
+        document.querySelector(
+          ".btn-copiar"
+        );
+
+
+      boton.textContent =
+        "✅ Copiado";
+
+
+      setTimeout(() => {
+
+        boton.textContent =
+          "📋 Copiar código";
+
+      }, 1500);
+
+
+    } catch {
+
+      alert(
+        "No se pudo copiar automáticamente.\n\n" +
+        "Código: " +
+        codigoActual
+      );
+
+    }
+
+  }
+
+
+  // =========================
+  // CARGAR CÓDIGOS
+  // =========================
+
+  async function cargarCodigos() {
+
+    const contador =
+      document.getElementById(
+        "contador"
+      );
+
+
+    const tabla =
+      document.getElementById(
+        "listaCodigos"
+      );
+
+
+    contador.textContent =
+      "Cargando códigos...";
+
+
+    try {
+
+      const respuesta =
+        await fetch(
+          WORKER + "/listar",
+          {
+
+            method: "GET",
+
+            headers: {
+
+              "X-Admin-Key":
+                adminKey
+
+            }
+
+          }
+        );
+
+
+      if (
+        respuesta.status === 401
+      ) {
+
+        adminKey = "";
+
+
+        document
+          .getElementById(
+            "gestion"
+          )
+          .classList
+          .add("oculto");
+
+
+        contador.textContent =
+          "Sesión de administrador expirada.";
+
+        return;
+
+      }
+
+
+      const datos =
+        await respuesta.json();
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          datos.error ||
+          "Error del servidor"
+        );
+
+      }
+
+
+      contador.textContent =
+        "Total de códigos creados: " +
+        datos.total;
+
+
+      tabla.innerHTML = "";
+
+
+      if (
+        !datos.codigos ||
+        !datos.codigos.length
+      ) {
+
+        tabla.innerHTML = `
+
+          <tr>
+
+            <td colspan="6">
+              Todavía no hay códigos.
+            </td>
+
+          </tr>
+
+        `;
+
+        return;
+
+      }
+
+
+      for (
+        const item of datos.codigos
+      ) {
+
+        const fila =
+          document.createElement(
+            "tr"
+          );
+
+
+        let claseEstado =
+          "estado-invalido";
+
+
+        if (
+          item.estado === "Activo"
+        ) {
+
+          claseEstado =
+            "estado-activo";
+
+        }
+
+        else if (
+          item.estado === "Expirado"
+        ) {
+
+          claseEstado =
+            "estado-expirado";
+
+        }
+
+        else if (
+          item.estado === "Desactivado"
+        ) {
+
+          claseEstado =
+            "estado-desactivado";
+
+        }
+
+
+        // =========================
+        // DISPOSITIVOS
+        // =========================
+
+        let dispositivos =
+          "0 / 2";
+
+
+        if (
+          item.dispositivos === 1
+        ) {
+
+          if (item.pc) {
+
+            dispositivos =
+              "💻 PC — 1 / 2";
+
+          }
+
+          else if (
+            item.telefono
+          ) {
+
+            dispositivos =
+              "📱 Teléfono — 1 / 2";
+
+          }
+
+        }
+
+        else if (
+          item.dispositivos >= 2
+        ) {
+
+          dispositivos =
+            "💻 PC + 📱 Teléfono — 2 / 2";
+
+        }
+
+
+        // =========================
+        // ACCIÓN
+        // =========================
+
+        let accion = "—";
+
+
+        if (
+          item.estado === "Activo"
+        ) {
+
+          accion = `
+
+            <button
+              class="btn-desactivar"
+              onclick="desactivarCodigo('${item.codigo}')">
+
+              🚫 Desactivar
+
+            </button>
+
+          `;
+
+        }
+
+
+        fila.innerHTML = `
+
+          <td>
+            ${item.codigo}
+          </td>
+
+
+          <td
+            class="${claseEstado}">
+
+            ${item.estado}
+
+          </td>
+
+
+          <td>
+            ${formatearFecha(
+              item.creado
+            )}
+          </td>
+
+
+          <td>
+            ${formatearFecha(
+              item.expira
+            )}
+          </td>
+
+
+          <td class="dispositivos">
+            ${dispositivos}
+          </td>
+
+
+          <td>
+            ${accion}
+          </td>
+
+        `;
+
+
+        tabla.appendChild(
+          fila
+        );
+
+      }
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      contador.textContent =
+        "✖ No se pudo cargar la lista.";
+
+    }
+
+  }
+
+
+  // =========================
+  // DESACTIVAR
+  // =========================
+
+  async function desactivarCodigo(
+    codigo
+  ) {
+
+    const confirmar =
+      confirm(
+
+        "¿Seguro que quieres desactivar este código?\n\n" +
+        codigo +
+        "\n\n" +
+        "El usuario perderá el acceso VIP."
+
+      );
+
+
+    if (!confirmar)
+      return;
+
+
+    try {
+
+      const respuesta =
+        await fetch(
+          WORKER + "/desactivar",
+          {
+
+            method: "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/json",
+
+              "X-Admin-Key":
+                adminKey
+
+            },
+
+            body:
+              JSON.stringify({
+                codigo:
+                  codigo
+              })
+
+          }
+        );
+
+
+      const datos =
+        await respuesta.json();
+
+
+      if (!respuesta.ok) {
+
+        alert(
+          datos.error ||
+          "No se pudo desactivar el código."
+        );
+
+        return;
+
+      }
+
+
+      alert(
+        "✅ Código desactivado."
+      );
+
+
+      await cargarCodigos();
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        "No se pudo conectar con el servidor VIP."
+      );
+
+    }
+
+  }
+
+
+  // =========================
+  // FORMATEAR FECHA
+  // =========================
+
+  function formatearFecha(
+    timestamp
+  ) {
+
+    if (!timestamp)
+      return "—";
+
+
+    return new Date(
+      timestamp
+    ).toLocaleString(
+      "es-ES",
+      {
+
+        day: "2-digit",
+
+        month: "2-digit",
+
+        year: "numeric",
+
+        hour: "2-digit",
+
+        minute: "2-digit"
+
+      }
+    );
+
+  }
+
+
+  // =========================
+  // ENTER
+  // =========================
+
+  document
+    .getElementById("adminKey")
+    .addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key === "Enter"
+        ) {
+
+          entrar();
+
+        }
+
+      }
+    );
 
 </script>
 
