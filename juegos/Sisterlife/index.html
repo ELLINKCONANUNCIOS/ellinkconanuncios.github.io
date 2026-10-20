@@ -45,18 +45,19 @@
       line-height: 1.6;
       color: #ccc;
     }
-     /* ===== ANUNCIO ADSTERRA ===== */
 
-   .anuncio-adsterra {
-     width: 300px;
-     height: 250px;
-     margin: 10px auto 20px auto;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     overflow: hidden;
-   }
-  
+    /* ===== ANUNCIO ADSTERRA ===== */
+
+    .anuncio-adsterra {
+      width: 300px;
+      height: 250px;
+      margin: 10px auto 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
     /* ===== BOTÓN PATREON DEL CREADOR ===== */
 
     .btn-creador {
@@ -161,7 +162,8 @@
       background: #d35400;
     }
 
-    /* ===== BOTÓN TUTORIAL DE ACORTADORES ===== */
+    /* ===== BOTÓN TUTORIAL ===== */
+
     .btn-tutorial {
       display: inline-block;
       background: #2563eb;
@@ -285,6 +287,7 @@
     /* ===== MÓVILES ===== */
 
     @media (max-width: 600px) {
+
       body {
         padding: 12px;
       }
@@ -343,32 +346,33 @@
   <!-- ===== DESCRIPCIÓN ===== -->
 
   <p class="descripcion-fija">
- Tomas el papel de un alquimista que cuida de su hermana adoptiva, Mio, quien sufre una extraña enfermedad que
- le impide salir al sol. Tu misión es adentrarte en un laberinto peligroso llamado "The Abyss" para recolectar
- ingredientes y fabricar el legendario Elixir Rubrum, la única cura posible para su condición
-
+    Tomas el papel de un alquimista que cuida de su hermana adoptiva, Mio,
+    quien sufre una extraña enfermedad que le impide salir al sol.
+    Tu misión es adentrarte en un laberinto peligroso llamado "The Abyss"
+    para recolectar ingredientes y fabricar el legendario Elixir Rubrum,
+    la única cura posible para su condición.
   </p>
 
-<!-- ===== ANUNCIO ADSTERRA ===== -->
 
-<div class="anuncio-adsterra">
+  <!-- ===== ANUNCIO ADSTERRA ===== -->
 
-  <script>
-    atOptions = {
-      'key' : '9cb87cf95b9d0c89cf81fb65d8b21c59',
-      'format' : 'iframe',
-      'height' : 250,
-      'width' : 300,
-      'params' : {}
-    };
-  </script>
+  <div class="anuncio-adsterra">
 
-  <script src="https://biomanos.org/22/9cb87cf95b9d0c89cf81fb65d8b21c59"></script>
+    <script>
+      atOptions = {
+        'key' : '9cb87cf95b9d0c89cf81fb65d8b21c59',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
 
-</div>
+    <script
+      src="https://biomanos.org/22/9cb87cf95b9d0c89cf81fb65d8b21c59">
+    </script>
 
-
-
+  </div>
 
 
   <!-- ===== MENÚ ===== -->
@@ -411,15 +415,15 @@
   <div class="seccion-contenido">
 
 
-    <!-- ⭐ ANDROID -->
+    <!-- ===== ANDROID ===== -->
 
     <div id="android" class="section">
 
       <h3>Enlaces para Android</h3>
 
       <p>
-        La descarga normal contiene publicidad.
-        La Premium es directa mediante Patreon.
+        La descarga normal contiene publicidad.<br>
+        La Premium es directa.
       </p>
 
       <a
@@ -431,19 +435,22 @@
       </a>
 
       <a
+        href="javascript:void(0)"
         class="btn btn-premium"
         onclick="premiumAndroid()">
         Descargar sin anuncios (Premium)
       </a>
 
-      <a href="../../tutorial/tutorial.html" class="btn-tutorial">
+      <a
+        href="../../tutorial/tutorial.html"
+        class="btn-tutorial">
         📘 Tutorial para pasar los acortadores
       </a>
 
     </div>
 
 
-    <!-- ⭐ PC -->
+    <!-- ===== PC ===== -->
 
     <div id="pc" class="section">
 
@@ -462,19 +469,22 @@
       </a>
 
       <a
+        href="javascript:void(0)"
         class="btn btn-premium"
         onclick="premiumPC()">
         Descargar sin anuncios (Premium)
       </a>
 
-      <a href="../../tutorial/tutorial.html" class="btn-tutorial">
+      <a
+        href="../../tutorial/tutorial.html"
+        class="btn-tutorial">
         📘 Tutorial para pasar los acortadores
       </a>
 
     </div>
 
 
-    <!-- ⭐ GALERÍA -->
+    <!-- ===== GALERÍA ===== -->
 
     <div id="galeria" class="section">
 
@@ -530,7 +540,7 @@
     </div>
 
 
-    <!-- ⭐ DETALLES -->
+    <!-- ===== DETALLES ===== -->
 
     <div id="detalles" class="section">
 
@@ -578,216 +588,211 @@
 
   <script>
 
-// =========================
-// CLOUDFLARE VIP
-// =========================
+    // =========================
+    // CLOUDFLARE VIP
+    // =========================
 
-const VIP_WORKER =
-  "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
-
-
-// =========================
-// CAMBIAR SECCIÓN
-// =========================
-
-function cambiarSeccion(idSeccion) {
-
-  document
-    .querySelectorAll('.section')
-    .forEach(sec => sec.style.display = 'none');
-
-  document
-    .querySelectorAll('.menu-btn')
-    .forEach(btn => btn.classList.remove('activo'));
-
-  document
-    .getElementById(idSeccion)
-    .style.display = 'block';
-
-  document
-    .getElementById('btn-' + idSeccion)
-    .classList.add('activo');
-}
+    const VIP_WORKER =
+      "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
 
 
-// =========================
-// SECCIÓN INICIAL
-// =========================
+    // =========================
+    // CAMBIAR SECCIÓN
+    // =========================
 
-window.onload = function() {
-  cambiarSeccion('android');
-};
+    function cambiarSeccion(idSeccion) {
 
+      document
+        .querySelectorAll('.section')
+        .forEach(function(sec) {
+          sec.style.display = 'none';
+        });
 
-// =========================
-// ZOOM DE IMÁGENES
-// =========================
+      document
+        .querySelectorAll('.menu-btn')
+        .forEach(function(btn) {
+          btn.classList.remove('activo');
+        });
 
-function zoomImagen(src) {
+      const seccion =
+        document.getElementById(idSeccion);
 
-  document
-    .getElementById("zoom-img")
-    .src = src;
+      const boton =
+        document.getElementById(
+          'btn-' + idSeccion
+        );
 
-  document
-    .getElementById("zoom-overlay")
-    .style.display = "flex";
-}
+      if (seccion) {
+        seccion.style.display = 'block';
+      }
 
-
-function cerrarZoom() {
-
-  document
-    .getElementById("zoom-overlay")
-    .style.display = "none";
-}
-
-
-// =========================
-// COMPROBAR VIP CLOUDFLARE
-// =========================
-
-async function comprobarVIP() {
-
-  // Recuperar el código que el usuario activó
-  const codigo =
-    localStorage.getItem("vipCode");
-
-  // Si no hay código, no es VIP
-  if (!codigo) {
-    return false;
-  }
-
-  try {
-
-    const res = await fetch(
-      VIP_WORKER +
-      "/verificar?codigo=" +
-      encodeURIComponent(codigo)
-    );
-
-    if (!res.ok) {
-      throw new Error(
-        "No se pudo comprobar el código VIP"
-      );
+      if (boton) {
+        boton.classList.add('activo');
+      }
     }
 
-    const data =
-      await res.json();
 
-    console.log(
-      "Respuesta VIP:",
-      data
-    );
+    // =========================
+    // SECCIÓN INICIAL
+    // =========================
 
-    // Código válido
-    if (data.vip === true) {
+    window.onload = function() {
+      cambiarSeccion('android');
+    };
 
-      return true;
 
+    // =========================
+    // ZOOM
+    // =========================
+
+    function zoomImagen(src) {
+
+      document
+        .getElementById("zoom-img")
+        .src = src;
+
+      document
+        .getElementById("zoom-overlay")
+        .style.display = "flex";
     }
 
-    // Si expiró o fue desactivado,
-    // eliminarlo del navegador
-    if (
-      data.expirado ||
-      data.desactivado
-    ) {
 
-      localStorage.removeItem(
-        "vipCode"
+    function cerrarZoom() {
+
+      document
+        .getElementById("zoom-overlay")
+        .style.display = "none";
+    }
+
+
+    // =========================
+    // COMPROBAR VIP
+    // =========================
+
+    async function comprobarVIP() {
+
+      const codigo =
+        localStorage.getItem("vipCode");
+
+      if (!codigo) {
+        return false;
+      }
+
+      const respuesta =
+        await fetch(
+          VIP_WORKER +
+          "/verificar?codigo=" +
+          encodeURIComponent(codigo)
+        );
+
+      if (!respuesta.ok) {
+        throw new Error(
+          "Error comprobando VIP"
+        );
+      }
+
+      const data =
+        await respuesta.json();
+
+      console.log(
+        "Comprobación VIP:",
+        data
       );
 
-      localStorage.removeItem(
-        "vipExpira"
-      );
+      if (data.vip === true) {
+        return true;
+      }
+
+      if (
+        data.expirado ||
+        data.desactivado
+      ) {
+
+        localStorage.removeItem(
+          "vipCode"
+        );
+
+        localStorage.removeItem(
+          "vipExpira"
+        );
+      }
+
+      return false;
     }
 
-    return false;
 
-  } catch (error) {
+    // =========================
+    // PREMIUM ANDROID
+    // =========================
 
-    console.error(
-      "Error comprobando VIP:",
-      error
-    );
+    async function premiumAndroid() {
 
-    throw error;
-  }
-}
+      try {
 
+        const vip =
+          await comprobarVIP();
 
-// =========================
-// PREMIUM ANDROID
-// =========================
+        if (vip) {
 
-async function premiumAndroid() {
+          window.location.href =
+            "https://gofile.io/d/FIBUZcal";
 
-  try {
+          return;
+        }
 
-    const vip =
-      await comprobarVIP();
+        window.location.href =
+          "../../vip.html";
 
-    if (vip) {
+      } catch (error) {
 
-      // 🔓 ENLACE DIRECTO PREMIUM
-      window.location.href =
-        "https://gofile.io/d/FIBUZcal";
+        console.error(
+          "Error VIP Android:",
+          error
+        );
 
-    } else {
-
-      // No tiene VIP
-      window.location.href =
-        "../../vip.html";
+        alert(
+          "No se pudo comprobar tu acceso VIP. Inténtalo nuevamente."
+        );
+      }
     }
 
-  } catch (error) {
 
-    console.error(
-      "Error comprobando VIP:",
-      error
-    );
+    // =========================
+    // PREMIUM PC
+    // =========================
 
-    alert(
-      "No se pudo comprobar tu acceso VIP. Inténtalo nuevamente."
-    );
-  }
-}
+    async function premiumPC() {
 
+      try {
 
-// =========================
-// PREMIUM PC
-// =========================
+        const vip =
+          await comprobarVIP();
 
-async function premiumPC() {
+        if (vip) {
 
-  try {
+          window.location.href =
+            "https://gofile.io/d/IyVfqfeZ";
 
-    const vip =
-      await comprobarVIP();
+          return;
+        }
 
-    if (vip) {
+        window.location.href =
+          "../../vip.html";
 
-      // 🔓 ENLACE DIRECTO PREMIUM
-      window.location.href =
-        "https://gofile.io/d/IyVfqfeZ";
+      } catch (error) {
 
-    } else {
+        console.error(
+          "Error VIP PC:",
+          error
+        );
 
-      // No tiene VIP
-      window.location.href =
-        "../../vip.html";
+        alert(
+          "No se pudo comprobar tu acceso VIP. Inténtalo nuevamente."
+        );
+      }
     }
 
-  } catch (error) {
+  </script>
 
-    console.error(
-      "Error comprobando VIP:",
-      error
-    );
-
-    alert(
-      "No se pudo comprobar tu acceso VIP. Inténtalo nuevamente."
-    );
-  }
-}
+</body>
+</html>
