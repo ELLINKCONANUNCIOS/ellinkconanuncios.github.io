@@ -1,7 +1,16 @@
 [
    {
+    "titulo": "Darling Touch ",
+    "version": "v0.13.0",
+    "idioma": "Multidioma",
+    "plataformas": "Android/Windows",
+    "categoria": "3D,2D",
+    "imagen": "imagenes/DarlingTouch/DarlingTouch1.png",
+    "link": "juegos/DarlingTouch/"
+  },
+   {
     "titulo": "Stranded with You",
-    "version": "vfinal",
+    "version": "vFinal",
     "idioma": "Español",
     "plataformas": "Joiplay/Windows",
     "categoria": "2D",
