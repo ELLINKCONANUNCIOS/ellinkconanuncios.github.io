@@ -586,7 +586,7 @@
   </a>
 
 
-  <script>
+ <script>
 
     // =========================
     // CLOUDFLARE VIP
@@ -594,6 +594,47 @@
 
     const VIP_WORKER =
       "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
+
+
+    // =========================
+    // IDENTIFICADOR DEL DISPOSITIVO
+    // =========================
+
+    function obtenerDeviceId() {
+
+      let deviceId =
+        localStorage.getItem("vipDeviceId");
+
+      if (!deviceId) {
+
+        if (
+          window.crypto &&
+          crypto.randomUUID
+        ) {
+
+          deviceId =
+            crypto.randomUUID();
+
+        } else {
+
+          deviceId =
+            "device-" +
+            Date.now() +
+            "-" +
+            Math.random()
+              .toString(36)
+              .substring(2);
+
+        }
+
+        localStorage.setItem(
+          "vipDeviceId",
+          deviceId
+        );
+      }
+
+      return deviceId;
+    }
 
 
     // =========================
@@ -674,172 +715,63 @@ async function comprobarVIP() {
   const codigo =
     localStorage.getItem("vipCode");
 
-  console.log("Código VIP guardado:", codigo);
+  const deviceId =
+    localStorage.getItem("vipDeviceId");
+
+  const personaId =
+    localStorage.getItem("vipPersonaId");
 
   if (!codigo) {
-
-    console.log("No hay código VIP guardado.");
-
     return false;
   }
 
-
-  // =========================
-  // OBTENER IDENTIFICADOR
-  // =========================
-
-  let deviceId =
-    localStorage.getItem("vipDeviceId");
-
-
   if (!deviceId) {
-
-    if (
-      window.crypto &&
-      crypto.randomUUID
-    ) {
-
-      deviceId =
-        crypto.randomUUID();
-
-    } else {
-
-      deviceId =
-        "device-" +
-        Date.now() +
-        "-" +
-        Math.random()
-          .toString(36)
-          .substring(2);
-    }
-
-
-    localStorage.setItem(
-      "vipDeviceId",
-      deviceId
-    );
+    console.error("No existe vipDeviceId");
+    return false;
   }
 
-
-  console.log(
-    "Device ID:",
-    deviceId
-  );
-
-
-  // =========================
-  // CONSULTAR CLOUDFLARE
-  // =========================
-
-  const url =
-    VIP_WORKER +
-    "/verificar?codigo=" +
-    encodeURIComponent(codigo) +
-    "&device=" +
-    encodeURIComponent(deviceId);
-
-
-  console.log(
-    "Consultando:",
-    url
-  );
-
+  if (!personaId) {
+    console.error("No existe vipPersonaId");
+    return false;
+  }
 
   const respuesta =
-    await fetch(url, {
-      method: "GET",
-      headers: {
-        "Accept": "application/json"
-      }
-    });
-
-
-  console.log(
-    "Estado servidor:",
-    respuesta.status
-  );
-
+    await fetch(
+      VIP_WORKER +
+      "/verificar?codigo=" +
+      encodeURIComponent(codigo) +
+      "&device=" +
+      encodeURIComponent(deviceId) +
+      "&persona=" +
+      encodeURIComponent(personaId)
+    );
 
   if (!respuesta.ok) {
-
     throw new Error(
-      "Error comprobando VIP: HTTP " +
-      respuesta.status
+      "Error comprobando VIP"
     );
   }
-
 
   const data =
     await respuesta.json();
 
-
   console.log(
-    "Respuesta VIP:",
+    "Comprobación VIP:",
     data
   );
 
-
-  // =========================
-  // VIP ACTIVO
-  // =========================
-
   if (data.vip === true) {
-
-    console.log(
-      "✅ VIP reconocido en Sister."
-    );
-
     return true;
   }
 
+  if (
+    data.expirado ||
+    data.desactivado
+  ) {
 
-  // =========================
-  // CÓDIGO EXPIRADO
-  // =========================
-
-  if (data.expirado) {
-
-    console.log(
-      "❌ Código VIP expirado."
-    );
-
-    localStorage.removeItem(
-      "vipCode"
-    );
-
-    localStorage.removeItem(
-      "vipExpira"
-    );
-
-    return false;
+    localStorage.removeItem("vipCode");
+    localStorage.removeItem("vipExpira");
   }
-
-
-  // =========================
-  // CÓDIGO DESACTIVADO
-  // =========================
-
-  if (data.desactivado) {
-
-    console.log(
-      "❌ Código VIP desactivado."
-    );
-
-    localStorage.removeItem(
-      "vipCode"
-    );
-
-    localStorage.removeItem(
-      "vipExpira"
-    );
-
-    return false;
-  }
-
-
-  console.log(
-    "❌ Código VIP no válido."
-  );
 
   return false;
 }
