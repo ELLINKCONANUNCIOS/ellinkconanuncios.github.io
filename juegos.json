@@ -1,10 +1,20 @@
 [
    {
+    "titulo": "THE GRIM REAPER WHO REAPED MY HEART",
+    "version": "v0.02 Final",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/THEGRIMREAPER/THEGRIMREAPER1.png",
+    "link": "juegos/THEGRIMREAPER/"
+  },
+   {
     "titulo": "Darling Touch ",
     "version": "v0.13.0",
     "idioma": "Multidioma",
     "plataformas": "Android/Windows",
     "categoria": "3D,2D",
+    "categoria": "2D",
     "imagen": "imagenes/DarlingTouch/DarlingTouch1.png",
     "link": "juegos/DarlingTouch/"
   },
