@@ -45,7 +45,18 @@
       line-height: 1.6;
       color: #ccc;
     }
+     /* ===== ANUNCIO ADSTERRA ===== */
 
+   .anuncio-adsterra {
+     width: 300px;
+     height: 250px;
+     margin: 10px auto 20px auto;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     overflow: hidden;
+   }
+  
     /* ===== BOTÓN PATREON DEL CREADOR ===== */
 
     .btn-creador {
@@ -148,6 +159,24 @@
 
     .btn-premium:hover {
       background: #d35400;
+    }
+
+    /* ===== BOTÓN TUTORIAL DE ACORTADORES ===== */
+    .btn-tutorial {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 10px;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-tutorial:hover {
+      background: #1d4ed8;
+      transform: scale(1.03);
     }
 
     /* ===== GALERÍA ===== */
@@ -323,6 +352,23 @@ Descubre por qué, cómo y quién ha modificado tu juego y, sobre todo,
 cómo escapar de él…
   </p>
 
+<!-- ===== ANUNCIO ADSTERRA ===== -->
+
+<div class="anuncio-adsterra">
+
+  <script>
+    atOptions = {
+      'key' : '9cb87cf95b9d0c89cf81fb65d8b21c59',
+      'format' : 'iframe',
+      'height' : 250,
+      'width' : 300,
+      'params' : {}
+    };
+  </script>
+
+  <script src="https://biomanos.org/22/9cb87cf95b9d0c89cf81fb65d8b21c59"></script>
+
+</div>
 
   <!-- ===== PATREON DEL CREADOR ===== -->
 
@@ -400,6 +446,10 @@ cómo escapar de él…
         Descargar sin anuncios (Premium)
       </a>
 
+    <a href="../../tutorial/tutorial.html" class="btn-tutorial">
+        📘 Tutorial para pasar los acortadores
+      </a>
+
     </div>
 
 
@@ -425,6 +475,10 @@ cómo escapar de él…
         class="btn btn-premium"
         onclick="premiumPC()">
         Descargar sin anuncios (Premium)
+      </a>
+
+    <a href="../../tutorial/tutorial.html" class="btn-tutorial">
+        📘 Tutorial para pasar los acortadores
       </a>
 
     </div>
@@ -535,11 +589,52 @@ cómo escapar de él…
   <script>
 
     // =========================
-    // BACKEND
+    // CLOUDFLARE VIP
     // =========================
 
-    const backend =
-      "https://backend-premium-production-cef8.up.railway.app";
+    const VIP_WORKER =
+      "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
+
+
+    // =========================
+    // IDENTIFICADOR DEL DISPOSITIVO
+    // =========================
+
+    function obtenerDeviceId() {
+
+      let deviceId =
+        localStorage.getItem("vipDeviceId");
+
+      if (!deviceId) {
+
+        if (
+          window.crypto &&
+          crypto.randomUUID
+        ) {
+
+          deviceId =
+            crypto.randomUUID();
+
+        } else {
+
+          deviceId =
+            "device-" +
+            Date.now() +
+            "-" +
+            Math.random()
+              .toString(36)
+              .substring(2);
+
+        }
+
+        localStorage.setItem(
+          "vipDeviceId",
+          deviceId
+        );
+      }
+
+      return deviceId;
+    }
 
 
     // =========================
@@ -550,23 +645,31 @@ cómo escapar de él…
 
       document
         .querySelectorAll('.section')
-        .forEach(sec => sec.style.display = 'none');
-
+        .forEach(function(sec) {
+          sec.style.display = 'none';
+        });
 
       document
         .querySelectorAll('.menu-btn')
-        .forEach(btn => btn.classList.remove('activo'));
+        .forEach(function(btn) {
+          btn.classList.remove('activo');
+        });
 
+      const seccion =
+        document.getElementById(idSeccion);
 
-      document
-        .getElementById(idSeccion)
-        .style.display = 'block';
+      const boton =
+        document.getElementById(
+          'btn-' + idSeccion
+        );
 
+      if (seccion) {
+        seccion.style.display = 'block';
+      }
 
-      document
-        .getElementById('btn-' + idSeccion)
-        .classList.add('activo');
-
+      if (boton) {
+        boton.classList.add('activo');
+      }
     }
 
 
@@ -575,14 +678,12 @@ cómo escapar de él…
     // =========================
 
     window.onload = function() {
-
       cambiarSeccion('android');
-
     };
 
 
     // =========================
-    // ZOOM DE IMÁGENES
+    // ZOOM
     // =========================
 
     function zoomImagen(src) {
@@ -591,11 +692,9 @@ cómo escapar de él…
         .getElementById("zoom-img")
         .src = src;
 
-
       document
         .getElementById("zoom-overlay")
         .style.display = "flex";
-
     }
 
 
@@ -604,7 +703,6 @@ cómo escapar de él…
       document
         .getElementById("zoom-overlay")
         .style.display = "none";
-
     }
 
 
@@ -614,29 +712,60 @@ cómo escapar de él…
 
     async function comprobarVIP() {
 
-      const res = await fetch(
-        backend + "/vip-check",
-        {
-          credentials: "include"
-        }
-      );
+      const codigo =
+        localStorage.getItem("vipCode");
 
-
-      if (!res.ok) {
-
-        throw new Error(
-          "No se pudo comprobar el estado VIP"
-        );
-
+      if (!codigo) {
+        return false;
       }
 
+      const deviceId =
+        obtenerDeviceId();
 
-      const data = await res.json();
+      const respuesta =
+        await fetch(
+          VIP_WORKER +
+          "/verificar?codigo=" +
+          encodeURIComponent(codigo) +
+          "&device=" +
+          encodeURIComponent(deviceId)
+        );
 
-      return data.vip === true;
+      if (!respuesta.ok) {
+        throw new Error(
+          "Error comprobando VIP"
+        );
+      }
 
+      const data =
+        await respuesta.json();
+
+      console.log(
+        "Comprobación VIP:",
+        data
+      );
+
+      if (data.vip === true) {
+        return true;
+      }
+
+      if (
+        data.expirado ||
+        data.desactivado ||
+        data.limite
+      ) {
+
+        localStorage.removeItem(
+          "vipCode"
+        );
+
+        localStorage.removeItem(
+          "vipExpira"
+        );
+      }
+
+      return false;
     }
-
 
     // =========================
     // PREMIUM ANDROID
