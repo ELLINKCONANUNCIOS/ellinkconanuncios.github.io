@@ -654,65 +654,74 @@
 
 
     // =========================
-    // COMPROBAR VIP
-    // =========================
+// COMPROBAR VIP
+// =========================
 
-    async function comprobarVIP() {
+async function comprobarVIP() {
 
-      const codigo =
-        localStorage.getItem("vipCode");
+  const codigo =
+    localStorage.getItem("vipCode");
 
-      if (!codigo) {
-        return false;
-      }
+  const deviceId =
+    localStorage.getItem("vipDeviceId");
 
-      const deviceId =
-        obtenerDeviceId();
+  const personaId =
+    localStorage.getItem("vipPersonaId");
 
-      const respuesta =
-        await fetch(
-          VIP_WORKER +
-          "/verificar?codigo=" +
-          encodeURIComponent(codigo) +
-          "&device=" +
-          encodeURIComponent(deviceId)
-        );
+  if (!codigo) {
+    return false;
+  }
 
-      if (!respuesta.ok) {
-        throw new Error(
-          "Error comprobando VIP"
-        );
-      }
+  if (!deviceId) {
+    console.error("No existe vipDeviceId");
+    return false;
+  }
 
-      const data =
-        await respuesta.json();
+  if (!personaId) {
+    console.error("No existe vipPersonaId");
+    return false;
+  }
 
-      console.log(
-        "Comprobación VIP:",
-        data
-      );
+  const respuesta =
+    await fetch(
+      VIP_WORKER +
+      "/verificar?codigo=" +
+      encodeURIComponent(codigo) +
+      "&device=" +
+      encodeURIComponent(deviceId) +
+      "&persona=" +
+      encodeURIComponent(personaId)
+    );
 
-      if (data.vip === true) {
-        return true;
-      }
+  if (!respuesta.ok) {
+    throw new Error(
+      "Error comprobando VIP"
+    );
+  }
 
-      if (
-        data.expirado ||
-        data.desactivado ||
-        data.limite
-      ) {
+  const data =
+    await respuesta.json();
 
-        localStorage.removeItem(
-          "vipCode"
-        );
+  console.log(
+    "Comprobación VIP:",
+    data
+  );
 
-        localStorage.removeItem(
-          "vipExpira"
-        );
-      }
+  if (data.vip === true) {
+    return true;
+  }
 
-      return false;
-    }
+  if (
+    data.expirado ||
+    data.desactivado
+  ) {
+
+    localStorage.removeItem("vipCode");
+    localStorage.removeItem("vipExpira");
+  }
+
+  return false;
+}
 
 
     // =========================
