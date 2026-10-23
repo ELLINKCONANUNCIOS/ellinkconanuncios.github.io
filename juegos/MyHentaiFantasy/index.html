@@ -45,18 +45,19 @@
       line-height: 1.6;
       color: #ccc;
     }
-     /* ===== ANUNCIO ADSTERRA ===== */
 
-   .anuncio-adsterra {
-     width: 300px;
-     height: 250px;
-     margin: 10px auto 20px auto;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     overflow: hidden;
-   }
-  
+    /* ===== ANUNCIO ADSTERRA ===== */
+
+    .anuncio-adsterra {
+      width: 300px;
+      height: 250px;
+      margin: 10px auto 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
     /* ===== BOTÓN PATREON DEL CREADOR ===== */
 
     .btn-creador {
@@ -159,6 +160,25 @@
 
     .btn-premium:hover {
       background: #d35400;
+    }
+
+    /* ===== BOTÓN TUTORIAL DE ACORTADORES ===== */
+
+    .btn-tutorial {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 10px;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-tutorial:hover {
+      background: #1d4ed8;
+      transform: scale(1.03);
     }
 
     /* ===== GALERÍA ===== */
@@ -422,8 +442,13 @@ Disfruta de un rico en historias novela visual con minijuegos y un mundo abierto
         Descargar sin anuncios (Premium)
       </a>
 
-    </div>
+    <a
+        href="../../tutorial/tutorial.html"
+        class="btn-tutorial">
+        📘 Tutorial para pasar los acortadores
+      </a>
 
+    </div>
 
     <!-- ⭐ PC -->
 
@@ -447,6 +472,12 @@ Disfruta de un rico en historias novela visual con minijuegos y un mundo abierto
         class="btn btn-premium"
         onclick="premiumPC()">
         Descargar sin anuncios (Premium)
+      </a>
+
+   <a
+        href="../../tutorial/tutorial.html"
+        class="btn-tutorial">
+        📘 Tutorial para pasar los acortadores
       </a>
 
     </div>
@@ -554,14 +585,55 @@ Disfruta de un rico en historias novela visual con minijuegos y un mundo abierto
   </a>
 
 
-  <script>
+   <script>
 
     // =========================
-    // BACKEND
+    // CLOUDFLARE VIP
     // =========================
 
-    const backend =
-      "https://backend-premium-production-cef8.up.railway.app";
+    const VIP_WORKER =
+      "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
+
+
+    // =========================
+    // IDENTIFICADOR DEL DISPOSITIVO
+    // =========================
+
+    function obtenerDeviceId() {
+
+      let deviceId =
+        localStorage.getItem("vipDeviceId");
+
+      if (!deviceId) {
+
+        if (
+          window.crypto &&
+          crypto.randomUUID
+        ) {
+
+          deviceId =
+            crypto.randomUUID();
+
+        } else {
+
+          deviceId =
+            "device-" +
+            Date.now() +
+            "-" +
+            Math.random()
+              .toString(36)
+              .substring(2);
+
+        }
+
+        localStorage.setItem(
+          "vipDeviceId",
+          deviceId
+        );
+      }
+
+      return deviceId;
+    }
 
 
     // =========================
@@ -572,23 +644,31 @@ Disfruta de un rico en historias novela visual con minijuegos y un mundo abierto
 
       document
         .querySelectorAll('.section')
-        .forEach(sec => sec.style.display = 'none');
-
+        .forEach(function(sec) {
+          sec.style.display = 'none';
+        });
 
       document
         .querySelectorAll('.menu-btn')
-        .forEach(btn => btn.classList.remove('activo'));
+        .forEach(function(btn) {
+          btn.classList.remove('activo');
+        });
 
+      const seccion =
+        document.getElementById(idSeccion);
 
-      document
-        .getElementById(idSeccion)
-        .style.display = 'block';
+      const boton =
+        document.getElementById(
+          'btn-' + idSeccion
+        );
 
+      if (seccion) {
+        seccion.style.display = 'block';
+      }
 
-      document
-        .getElementById('btn-' + idSeccion)
-        .classList.add('activo');
-
+      if (boton) {
+        boton.classList.add('activo');
+      }
     }
 
 
@@ -597,14 +677,12 @@ Disfruta de un rico en historias novela visual con minijuegos y un mundo abierto
     // =========================
 
     window.onload = function() {
-
       cambiarSeccion('android');
-
     };
 
 
     // =========================
-    // ZOOM DE IMÁGENES
+    // ZOOM
     // =========================
 
     function zoomImagen(src) {
@@ -613,11 +691,9 @@ Disfruta de un rico en historias novela visual con minijuegos y un mundo abierto
         .getElementById("zoom-img")
         .src = src;
 
-
       document
         .getElementById("zoom-overlay")
         .style.display = "flex";
-
     }
 
 
@@ -626,7 +702,6 @@ Disfruta de un rico en historias novela visual con minijuegos y un mundo abierto
       document
         .getElementById("zoom-overlay")
         .style.display = "none";
-
     }
 
 
@@ -634,30 +709,71 @@ Disfruta de un rico en historias novela visual con minijuegos y un mundo abierto
     // COMPROBAR VIP
     // =========================
 
-    async function comprobarVIP() {
+async function comprobarVIP() {
 
-      const res = await fetch(
-        backend + "/vip-check",
-        {
-          credentials: "include"
-        }
-      );
+  const codigo =
+    localStorage.getItem("vipCode");
 
+  const deviceId =
+    localStorage.getItem("vipDeviceId");
 
-      if (!res.ok) {
+  const personaId =
+    localStorage.getItem("vipPersonaId");
 
-        throw new Error(
-          "No se pudo comprobar el estado VIP"
-        );
+  if (!codigo) {
+    return false;
+  }
 
-      }
+  if (!deviceId) {
+    console.error("No existe vipDeviceId");
+    return false;
+  }
 
+  if (!personaId) {
+    console.error("No existe vipPersonaId");
+    return false;
+  }
 
-      const data = await res.json();
+  const respuesta =
+    await fetch(
+      VIP_WORKER +
+      "/verificar?codigo=" +
+      encodeURIComponent(codigo) +
+      "&device=" +
+      encodeURIComponent(deviceId) +
+      "&persona=" +
+      encodeURIComponent(personaId)
+    );
 
-      return data.vip === true;
+  if (!respuesta.ok) {
+    throw new Error(
+      "Error comprobando VIP"
+    );
+  }
 
-    }
+  const data =
+    await respuesta.json();
+
+  console.log(
+    "Comprobación VIP:",
+    data
+  );
+
+  if (data.vip === true) {
+    return true;
+  }
+
+  if (
+    data.expirado ||
+    data.desactivado
+  ) {
+
+    localStorage.removeItem("vipCode");
+    localStorage.removeItem("vipExpira");
+  }
+
+  return false;
+}
 
 
     // =========================
