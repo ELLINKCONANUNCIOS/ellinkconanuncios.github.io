@@ -584,11 +584,52 @@
   <script>
 
     // =========================
-    // BACKEND
+    // CLOUDFLARE VIP
     // =========================
 
-    const backend =
-      "https://backend-premium-production-cef8.up.railway.app";
+    const VIP_WORKER =
+      "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
+
+
+    // =========================
+    // IDENTIFICADOR DEL DISPOSITIVO
+    // =========================
+
+    function obtenerDeviceId() {
+
+      let deviceId =
+        localStorage.getItem("vipDeviceId");
+
+      if (!deviceId) {
+
+        if (
+          window.crypto &&
+          crypto.randomUUID
+        ) {
+
+          deviceId =
+            crypto.randomUUID();
+
+        } else {
+
+          deviceId =
+            "device-" +
+            Date.now() +
+            "-" +
+            Math.random()
+              .toString(36)
+              .substring(2);
+
+        }
+
+        localStorage.setItem(
+          "vipDeviceId",
+          deviceId
+        );
+      }
+
+      return deviceId;
+    }
 
 
     // =========================
@@ -599,23 +640,31 @@
 
       document
         .querySelectorAll('.section')
-        .forEach(sec => sec.style.display = 'none');
-
+        .forEach(function(sec) {
+          sec.style.display = 'none';
+        });
 
       document
         .querySelectorAll('.menu-btn')
-        .forEach(btn => btn.classList.remove('activo'));
+        .forEach(function(btn) {
+          btn.classList.remove('activo');
+        });
 
+      const seccion =
+        document.getElementById(idSeccion);
 
-      document
-        .getElementById(idSeccion)
-        .style.display = 'block';
+      const boton =
+        document.getElementById(
+          'btn-' + idSeccion
+        );
 
+      if (seccion) {
+        seccion.style.display = 'block';
+      }
 
-      document
-        .getElementById('btn-' + idSeccion)
-        .classList.add('activo');
-
+      if (boton) {
+        boton.classList.add('activo');
+      }
     }
 
 
@@ -624,14 +673,12 @@
     // =========================
 
     window.onload = function() {
-
       cambiarSeccion('android');
-
     };
 
 
     // =========================
-    // ZOOM DE IMÁGENES
+    // ZOOM
     // =========================
 
     function zoomImagen(src) {
@@ -640,11 +687,9 @@
         .getElementById("zoom-img")
         .src = src;
 
-
       document
         .getElementById("zoom-overlay")
         .style.display = "flex";
-
     }
 
 
@@ -653,12 +698,12 @@
       document
         .getElementById("zoom-overlay")
         .style.display = "none";
-
     }
 
+
     // =========================
-   // COMPROBAR VIP
-   // =========================
+    // COMPROBAR VIP
+    // =========================
 
 async function comprobarVIP() {
 
@@ -726,6 +771,44 @@ async function comprobarVIP() {
   return false;
 }
 
+// =========================
+    // PREMIUM ANDROID
+    // =========================
+
+    async function premiumAndroid() {
+
+      try {
+
+        const vip = await comprobarVIP();
+
+
+        if (vip) {
+
+          window.location.href =
+            "https://www.mediafire.com/file_premium/t9pt8vc7gbbdkso/R3C_ES.apk/file";
+
+        } else {
+
+          window.location.href =
+            "../../vip.html";
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Error comprobando VIP:",
+          error
+        );
+
+
+        alert(
+          "No se pudo comprobar tu membresía VIP. Inténtalo nuevamente."
+        );
+
+      }
+
+    }
 
     // =========================
     // PREMIUM PC
