@@ -417,6 +417,12 @@
         Descargar sin anuncios (Premium)
       </a>
 
+    <a
+        href="../../tutorial/tutorial.html"
+        class="btn-tutorial">
+        📘 Tutorial para pasar los acortadores
+      </a>
+
     </div>
 
 
@@ -442,6 +448,12 @@
         class="btn btn-premium"
         onclick="premiumPC()">
         Descargar sin anuncios (Premium)
+      </a>
+
+     <a
+        href="../../tutorial/tutorial.html"
+        class="btn-tutorial">
+        📘 Tutorial para pasar los acortadores
       </a>
 
     </div>
@@ -624,75 +636,75 @@
 
     }
 
-
     // =========================
-    // COMPROBAR VIP
-    // =========================
+   // COMPROBAR VIP
+   // =========================
 
-    async function comprobarVIP() {
+async function comprobarVIP() {
 
-      const res = await fetch(
-        backend + "/vip-check",
-        {
-          credentials: "include"
-        }
-      );
+  const codigo =
+    localStorage.getItem("vipCode");
 
+  const deviceId =
+    localStorage.getItem("vipDeviceId");
 
-      if (!res.ok) {
+  const personaId =
+    localStorage.getItem("vipPersonaId");
 
-        throw new Error(
-          "No se pudo comprobar el estado VIP"
-        );
+  if (!codigo) {
+    return false;
+  }
 
-      }
+  if (!deviceId) {
+    console.error("No existe vipDeviceId");
+    return false;
+  }
 
+  if (!personaId) {
+    console.error("No existe vipPersonaId");
+    return false;
+  }
 
-      const data = await res.json();
+  const respuesta =
+    await fetch(
+      VIP_WORKER +
+      "/verificar?codigo=" +
+      encodeURIComponent(codigo) +
+      "&device=" +
+      encodeURIComponent(deviceId) +
+      "&persona=" +
+      encodeURIComponent(personaId)
+    );
 
-      return data.vip === true;
+  if (!respuesta.ok) {
+    throw new Error(
+      "Error comprobando VIP"
+    );
+  }
 
-    }
+  const data =
+    await respuesta.json();
 
+  console.log(
+    "Comprobación VIP:",
+    data
+  );
 
-    // =========================
-    // PREMIUM ANDROID
-    // =========================
+  if (data.vip === true) {
+    return true;
+  }
 
-    async function premiumAndroid() {
+  if (
+    data.expirado ||
+    data.desactivado
+  ) {
 
-      try {
+    localStorage.removeItem("vipCode");
+    localStorage.removeItem("vipExpira");
+  }
 
-        const vip = await comprobarVIP();
-
-
-        if (vip) {
-
-          window.location.href =
-            "https://www.mediafire.com/file_premium/t9pt8vc7gbbdkso/R3C_ES.apk/file";
-
-        } else {
-
-          window.location.href =
-            "../../vip.html";
-
-        }
-
-      } catch (error) {
-
-        console.error(
-          "Error comprobando VIP:",
-          error
-        );
-
-
-        alert(
-          "No se pudo comprobar tu membresía VIP. Inténtalo nuevamente."
-        );
-
-      }
-
-    }
+  return false;
+}
 
 
     // =========================
