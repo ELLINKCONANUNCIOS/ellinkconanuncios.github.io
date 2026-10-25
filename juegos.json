@@ -1,5 +1,14 @@
 [
     {
+    "titulo": "Harem of Ankhutep",
+    "version": "v0.33",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/HaremofAnkhutep/HaremofAnkhutep1.png",
+    "link": "juegos/HaremofAnkhutep/"
+  },
+    {
     "titulo": "Fantasy Date",
     "version": "v0.60",
     "idioma": "Español",
