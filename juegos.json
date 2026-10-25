@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Academy34",
+    "version": "v0.36.1.3",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/Academy34/Academy341.png",
+    "link": "juegos/Academy34/"
+  },
+   {
     "titulo": "THE GRIM REAPER WHO REAPED MY HEART",
     "version": "v0.02 Final",
     "idioma": "Español",
@@ -13,7 +22,7 @@
     "version": "v0.13.0",
     "idioma": "Multidioma",
     "plataformas": "Android/Windows",
-    "categoria": "3D,2D",
+    "categoria": "3D",
     "categoria": "2D",
     "imagen": "imagenes/DarlingTouch/DarlingTouch1.png",
     "link": "juegos/DarlingTouch/"
