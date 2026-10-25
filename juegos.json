@@ -1,5 +1,14 @@
 [
-    {
+   {
+    "titulo": "After Dark",
+    "version": "v0.26.1",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/AfterDark/AfterDark1.png",
+    "link": "juegos/AfterDark/"
+  },
+   {
     "titulo": "Harem of Ankhutep",
     "version": "v0.33",
     "idioma": "Español",
@@ -8,7 +17,7 @@
     "imagen": "imagenes/HaremofAnkhutep/HaremofAnkhutep1.png",
     "link": "juegos/HaremofAnkhutep/"
   },
-    {
+   {
     "titulo": "Fantasy Date",
     "version": "v0.60",
     "idioma": "Español",
