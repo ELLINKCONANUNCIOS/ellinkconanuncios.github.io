@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Spirit Lover",
+    "version": "v0.62",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/SpiritLover/SpiritLover1.png",
+    "link": "juegos/SpiritLover/"
+  },
+   {
     "titulo": "IsekaiBrothel",
     "version": "v0.92",
     "idioma": "Español",
