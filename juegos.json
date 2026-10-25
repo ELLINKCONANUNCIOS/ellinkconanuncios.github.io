@@ -1,4 +1,13 @@
 [
+    {
+    "titulo": "Fantasy Date",
+    "version": "v0.60",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/FantasyDate/FantasyDate1.png",
+    "link": "juegos/FantasyDate/"
+  },
    {
     "titulo": "Spirit Lover",
     "version": "v0.62",
@@ -134,16 +143,7 @@
     "categoria": "3D",
     "imagen": "imagenes/FutaAcademy/FutaAcademy1.png",
     "link": "juegos/FutaAcademy/"
-  },
-   {
-    "titulo": "Fantasy Date",
-    "version": "v0.59",
-    "idioma": "Español",
-    "plataformas": "Android/Windows",
-    "categoria": "3D",
-    "imagen": "imagenes/FantasyDate/FantasyDate1.png",
-    "link": "juegos/FantasyDate/"
-  },
+  },  
    {
     "titulo": "Living With Chainsaw ",
     "version": "v0.85",
