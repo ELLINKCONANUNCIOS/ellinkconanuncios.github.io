@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Impact Hotel: World",
+    "version": "v0.67",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/ImpactHotelWorld/ImpactHotelWorld1.png",
+    "link": "juegos/ImpactHotelWorld/"
+  },
+   {
     "titulo": "After Dark",
     "version": "v0.26.1",
     "idioma": "Español",
