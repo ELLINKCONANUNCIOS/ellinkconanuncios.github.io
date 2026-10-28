@@ -5,7 +5,7 @@
 
 <meta charset="UTF-8">
 
-<title>Link con Anuncios - Catálogo de Juegos Android y PC</title>
+<title>Link Conanuncios - Catálogo de Juegos Android y PC</title>
 
 <meta
   name="description"
@@ -254,6 +254,12 @@ h1 {
   box-sizing: border-box;
 }
 
+
+/* Los enlaces de juegos conservan el aspecto original de las tarjetas */
+.juego-card {
+  text-decoration: none;
+  color: inherit;
+}
 
 .juego-card:hover {
 
@@ -891,11 +897,10 @@ function mostrarPagina(num) {
     juegosPagina
       .map((j, index) => `
 
-        <div
+        <a
+          href="${j.link}"
           class="juego-card"
-          onclick="
-            location.href='${j.link}'
-          "
+          aria-label="Ver ${j.titulo}"
         >
 
 
@@ -944,7 +949,7 @@ function mostrarPagina(num) {
           </p>
 
 
-        </div>
+        </a>
 
       `)
       .join("");
