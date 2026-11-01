@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Goodbye Eternity",
+    "version": "v0.14.1",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/GoodbyeEternity/GoodbyeEternity1.png",
+    "link": "juegos/GoodbyeEternity/"
+  },
+   {
     "titulo": "Impact Hotel: World",
     "version": "v0.67",
     "idioma": "Español",
