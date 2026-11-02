@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Dimension69",
+    "version": "v0.34.3b",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/Dimension69/v1.png",
+    "link": "juegos/Dimension69/"
+  },
+   {
     "titulo": "Goodbye Eternity",
     "version": "v0.14.1",
     "idioma": "Español",
