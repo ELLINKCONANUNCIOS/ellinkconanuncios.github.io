@@ -1,4 +1,13 @@
 [
+   {
+    "titulo": "Valerie’s Life",
+    "version": "v1.3.3",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/Valerie’sLife/Valerie’sLife1.png",
+    "link": "juegos/Valerie’sLife/"
+  }
     {
     "titulo": "LewdMultiverse",
     "version": "v0.3.0.20.5",
@@ -8,7 +17,7 @@
     "imagen": "imagenes/LewdMultiverse/LewdMultiverse1.png",
     "link": "juegos/LewdMultiverse/"
   },
-    {
+   {
     "titulo": "My Futa Family",
     "version": "v0.23",
     "idioma": "Español",
