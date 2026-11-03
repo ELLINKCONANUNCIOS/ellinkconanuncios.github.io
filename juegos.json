@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Futakin Valley",
+    "version": "v0.045",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/FutakinValley/FutakinValley1.png",
+    "link": "juegos/FutakinValley/"
+  },
+   {
     "titulo": "Shakai Seikatsu",
     "version": "v0.26.0",
     "idioma": "Español",
