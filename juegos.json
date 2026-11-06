@@ -1,5 +1,23 @@
 [
    {
+    "titulo": "Nothing Weird",
+    "version": "v0.57.1.3",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/NothingWeird/NothingWeird1.png",
+    "link": "juegos/NothingWeird/"
+  },
+   {
+    "titulo": "Love Android Workshop ",
+    "version": "v0.55",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/LoveAndroidWorkshop/LoveAndroidWorkshop1.png",
+    "link": "juegos/LoveAndroidWorkshop/"
+  },
+   {
     "titulo": "Futakin Valley",
     "version": "v0.045",
     "idioma": "Español",
