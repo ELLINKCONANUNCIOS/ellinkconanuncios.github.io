@@ -1,5 +1,23 @@
 [
    {
+    "titulo": "Crimson Prison",
+    "version": "v0.1.7.1",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/CrimsonPrison/CrimsonPrison1.png",
+    "link": "juegos/CrimsonPrison/"
+  },
+   {
+    "titulo": "Animeverse Island",
+    "version": "v1.021",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/AnimeverseIsland/AnimeverseIsland1.png",
+    "link": "juegos/AnimeverseIsland/"
+  },
+   {
     "titulo": "Nothing Weird",
     "version": "v0.57.1.3",
     "idioma": "Español",
