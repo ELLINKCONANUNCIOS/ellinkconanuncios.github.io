@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Love at First Tail",
+    "version": "v0.6.1",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/LoveatFirstTail/LoveatFirstTail1.jpg",
+    "link": "juegos/LoveatFirstTail/"
+  },
+   {
     "titulo": "Jikage Rising 3",
     "version": "v2.38",
     "idioma": "Español",
@@ -422,15 +431,6 @@
     "categoria": "3D",
     "imagen": "imagenes/TheMysteriousAPP/TheMysteriousAPP1.jpg",
     "link": "juegos/TheMysteriousAPP/"
-  },
-    {
-    "titulo": "Love at First Tail",
-    "version": "v0.6",
-    "idioma": "Español",
-    "plataformas": "Android/Windows",
-    "categoria": "3D",
-    "imagen": "imagenes/LoveatFirstTail/LoveatFirstTail1.jpg",
-    "link": "juegos/LoveatFirstTail/"
   },
    {
     "titulo": "Stuck in My Game",
