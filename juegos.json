@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Jikage Rising 3",
+    "version": "v2.38",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/JikageRising3/JikageRising31.png",
+    "link": "juegos/JikageRising3/"
+  },
+   {
     "titulo": "Crimson Prison",
     "version": "v0.1.7.1",
     "idioma": "Español",
