@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Naughty Tai",
+    "version": "v0.3.6",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/NaughtyTail/NaughtyTail1.jpg",
+    "link": "juegos/NaughtyTail/"
+  },
+   {
     "titulo": "Love at First Tail",
     "version": "v0.6.1",
     "idioma": "Español",
