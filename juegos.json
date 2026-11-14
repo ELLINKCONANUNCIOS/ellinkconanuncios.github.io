@@ -1,4 +1,13 @@
 [
+   {
+    "titulo": "Hornycraft",
+    "version": "v0.34,
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/Hornycraft/Hornycraft1.png",
+    "link": "juegos/Hornycraft/"
+  },
     {
     "titulo": "Lustin Suburbs",
     "version": "v0.1.07",
