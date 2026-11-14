@@ -1,5 +1,14 @@
 [
     {
+    "titulo": "Lustin Suburbs",
+    "version": "v0.1.07",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/LustinSuburbs/LustinSuburbs1.png",
+    "link": "juegos/LustinSuburbs/"
+  },
+    {
     "titulo": "My Femboy Roommate (Halloween)",
     "version": "v2.0",
     "idioma": "Español",
