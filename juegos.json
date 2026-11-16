@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "The Assessor’s Ledger",
+    "version": "v1.14",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/TheAssessor’sLedger/TheAssessor’sLedger1.png",
+    "link": "juegos/TheAssessor’sLedger/"
+  },
+   {
     "titulo": "PokeSlutsTown",
     "version": "v0.10",
     "idioma": "Español",
@@ -271,15 +280,6 @@
     "link": "juegos/LunaHasGone/"
   },
    {
-    "titulo": "PokeSlutsTown",
-    "version": "v0.9",
-    "idioma": "Español",
-    "plataformas": "Android/Windows",
-    "categoria": "2D",
-    "imagen": "imagenes/PokeSlutsTown/PokeSlutsTown1.png",
-    "link": "juegos/PokeSlutsTown/"
-  },
-   {
     "titulo": "Training Slayer",
     "version": "v1.16",
     "idioma": "Español",
@@ -305,15 +305,6 @@
     "categoria": "2D",
     "imagen": "imagenes/WelcumtotheCity/WelcumtotheCity1.png",
     "link": "juegos/WelcumtotheCity/"
-  },
-   {
-    "titulo": "The Assessor’s Ledger",
-    "version": "v1.11",
-    "idioma": "Español",
-    "plataformas": "Android/Windows",
-    "categoria": "3D",
-    "imagen": "imagenes/TheAssessor’sLedger/TheAssessor’sLedger1.png",
-    "link": "juegos/TheAssessor’sLedger/"
   },
    {
     "titulo": "Waifu Slut",
