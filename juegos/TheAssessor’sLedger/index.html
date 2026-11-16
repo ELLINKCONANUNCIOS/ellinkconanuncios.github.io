@@ -426,7 +426,7 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
       </p>
 
       <a
-        href="https://cuty.io/fravyHG6aNHD"
+        href="https://cuty.io/2fdXnI"
         class="btn btn-normal"
         target="_blank"
         rel="noopener noreferrer">
@@ -457,7 +457,7 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
       </p>
 
       <a
-        href="https://cuty.io/Nm5aszUQ"
+        href="https://cuty.io/ZDFMuUj"
         class="btn btn-pc"
         target="_blank"
         rel="noopener noreferrer">
@@ -542,7 +542,7 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
       <ul class="detalles-lista">
 
         <li>
-          <strong>Versión:</strong> 1.11
+          <strong>Versión:</strong> 1.14
         </li>
 
         <li>
@@ -550,11 +550,11 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
         </li>
 
         <li>
-          <strong>Peso apk:</strong> 379MB
+          <strong>Peso apk:</strong> 382MB
         </li>
 
         <li>
-          <strong>Peso pc:</strong> 352MB
+          <strong>Peso pc:</strong> 354MB
         </li>
 
         <li>
@@ -582,52 +582,11 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
   <script>
 
     // =========================
-    // CLOUDFLARE VIP
+    // BACKEND
     // =========================
 
-    const VIP_WORKER =
-      "https://link-anuncios-vip.miguelrodriguezloreto09.workers.dev";
-
-
-    // =========================
-    // IDENTIFICADOR DEL DISPOSITIVO
-    // =========================
-
-    function obtenerDeviceId() {
-
-      let deviceId =
-        localStorage.getItem("vipDeviceId");
-
-      if (!deviceId) {
-
-        if (
-          window.crypto &&
-          crypto.randomUUID
-        ) {
-
-          deviceId =
-            crypto.randomUUID();
-
-        } else {
-
-          deviceId =
-            "device-" +
-            Date.now() +
-            "-" +
-            Math.random()
-              .toString(36)
-              .substring(2);
-
-        }
-
-        localStorage.setItem(
-          "vipDeviceId",
-          deviceId
-        );
-      }
-
-      return deviceId;
-    }
+    const backend =
+      "https://backend-premium-production-cef8.up.railway.app";
 
 
     // =========================
@@ -638,31 +597,23 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
 
       document
         .querySelectorAll('.section')
-        .forEach(function(sec) {
-          sec.style.display = 'none';
-        });
+        .forEach(sec => sec.style.display = 'none');
+
 
       document
         .querySelectorAll('.menu-btn')
-        .forEach(function(btn) {
-          btn.classList.remove('activo');
-        });
+        .forEach(btn => btn.classList.remove('activo'));
 
-      const seccion =
-        document.getElementById(idSeccion);
 
-      const boton =
-        document.getElementById(
-          'btn-' + idSeccion
-        );
+      document
+        .getElementById(idSeccion)
+        .style.display = 'block';
 
-      if (seccion) {
-        seccion.style.display = 'block';
-      }
 
-      if (boton) {
-        boton.classList.add('activo');
-      }
+      document
+        .getElementById('btn-' + idSeccion)
+        .classList.add('activo');
+
     }
 
 
@@ -671,12 +622,14 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
     // =========================
 
     window.onload = function() {
+
       cambiarSeccion('android');
+
     };
 
 
     // =========================
-    // ZOOM
+    // ZOOM DE IMÁGENES
     // =========================
 
     function zoomImagen(src) {
@@ -685,9 +638,11 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
         .getElementById("zoom-img")
         .src = src;
 
+
       document
         .getElementById("zoom-overlay")
         .style.display = "flex";
+
     }
 
 
@@ -696,6 +651,7 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
       document
         .getElementById("zoom-overlay")
         .style.display = "none";
+
     }
 
 
@@ -705,59 +661,27 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
 
     async function comprobarVIP() {
 
-      const codigo =
-        localStorage.getItem("vipCode");
-
-      if (!codigo) {
-        return false;
-      }
-
-      const deviceId =
-        obtenerDeviceId();
-
-      const respuesta =
-        await fetch(
-          VIP_WORKER +
-          "/verificar?codigo=" +
-          encodeURIComponent(codigo) +
-          "&device=" +
-          encodeURIComponent(deviceId)
-        );
-
-      if (!respuesta.ok) {
-        throw new Error(
-          "Error comprobando VIP"
-        );
-      }
-
-      const data =
-        await respuesta.json();
-
-      console.log(
-        "Comprobación VIP:",
-        data
+      const res = await fetch(
+        backend + "/vip-check",
+        {
+          credentials: "include"
+        }
       );
 
-      if (data.vip === true) {
-        return true;
-      }
 
-      if (
-        data.expirado ||
-        data.desactivado ||
-        data.limite
-      ) {
+      if (!res.ok) {
 
-        localStorage.removeItem(
-          "vipCode"
+        throw new Error(
+          "No se pudo comprobar el estado VIP"
         );
 
-        localStorage.removeItem(
-          "vipExpira"
-        );
       }
 
-      return false;
+
+      const data = await res.json();
+
+      return data.vip === true;
+
     }
 
 
@@ -775,7 +699,7 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
         if (vip) {
 
           window.location.href =
-            "https://gofile.io/d/ywL9hdhH";
+            "https://gofile.io/d/tZOdYjVv";
 
         } else {
 
@@ -815,7 +739,7 @@ Esta es la historia de un hombre cansado y corruptible que intenta sobrevivir en
         if (vip) {
 
           window.location.href =
-            "https://gofile.io/d/vrmGNAVU";
+            "https://gofile.io/d/QHnDpOXJ";
 
         } else {
 
