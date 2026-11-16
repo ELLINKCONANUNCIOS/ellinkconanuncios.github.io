@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "PokeSlutsTown",
+    "version": "v0.10",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/PokeSlutsTown/PokeSlutsTown1.png",
+    "link": "juegos/PokeSlutsTown/"
+  },
+   {
     "titulo": "Hornycraft",
     "version": "v0.34",
     "idioma": "Español",
