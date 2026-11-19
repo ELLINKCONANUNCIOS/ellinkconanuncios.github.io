@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Shuggerlain",
+    "version": "v1.10",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/Shuggerlain/Shuggerlain1.png",
+    "link": "juegos/Shuggerlain/"
+  },
+   {
     "titulo": "Futas World of NTR",
     "version": "v1.4.3a",
     "idioma": "Español",
