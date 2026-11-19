@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "School Tales",
+    "version": "v11.5",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/SchoolTales/SchoolTales1.png",
+    "link": "juegos/SchoolTales/"
+  },
+   {
     "titulo": "Shuggerlain",
     "version": "v1.10",
     "idioma": "Español",
