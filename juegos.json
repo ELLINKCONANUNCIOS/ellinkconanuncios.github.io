@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Lewd Piece",
+    "version": "v0.550]",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "2D",
+    "imagen": "imagenes/LewdPiece/LewdPiece1.png",
+    "link": "juegos/LewdPiece/"
+  },
+   {
     "titulo": "School Tales",
     "version": "v11.5",
     "idioma": "Español",
