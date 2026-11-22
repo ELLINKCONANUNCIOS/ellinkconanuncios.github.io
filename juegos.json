@@ -1,14 +1,5 @@
 [
    {
-    "titulo": "Not a Succubus",
-    "version": "v1.3",
-    "idioma": "Español",
-    "plataformas": "Android/Windows",
-    "categoria": "2D",
-    "imagen": "imagenes/NotaSuccubus/NotaSuccubus1.png",
-    "link": "juegos/NotaSuccubus/"
-  },
-   {
     "titulo": "My Summer Job",
     "version": "v0.6a",
     "idioma": "Español",
