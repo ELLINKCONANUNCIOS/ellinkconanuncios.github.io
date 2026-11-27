@@ -1,5 +1,14 @@
 [
    {
+    "titulo": "Secret Island",
+    "version": "v0.19.4.0",
+    "idioma": "Español",
+    "plataformas": "Android/Windows",
+    "categoria": "3D",
+    "imagen": "imagenes/SecretIsland/SecretIsland1.png",
+    "link": "juegos/SecretIsland/"
+  },
+   {
     "titulo": "Dimension 69",
     "version": "v0.34.4b",
     "idioma": "Español",
